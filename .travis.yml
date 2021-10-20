@@ -1,8 +1,13 @@
 language: java
 jdk:
-  - oraclejdk8
+- openjdk8
 deploy:
+  strategy: api
   provider: heroku
-  api-key:
-    secure: ${HEROKU_API_KEY}
+  on:
+    branch: master
+  api_key:
+    secure: 5J/Q1trMgjFiCX7n+KltiF7OMqZiGVVQ1mQp08wC9J9p1F4X6Y1Uk1cLVpi7HZA+VoCXSZwrOJJXkgMr3gl2eUisdrqAWs02PoNknY9nW4QoqEJPGR7qiviCni4DFZja3FxVx2mNrUhcrM4WheMNF4CCqVCUhDxuSWSXZwoD1yl4AYhXi02RiPB7+eFC8akUDaxOzV94hc9i/7Q6vAv4Hs086Y09+wv+S0ORTypuMWoBQZ1gZsSYykWRHMZFGJUTCACpaGHbba5iHody4qSOuUTpbN55WPIXSd9ZnEV9DXAMLqmD6Xgadh2Jr6OU/bPyXmKGPL4Rg1YsizAOB0NID7eDdwR701oX7oCsUq7R1gg11NCqbkSqtl+ftuveroHT8hV1P0dWul7akD6DBoUCVcOJ+Aq273vorMcbcr/BWkd2+rlPOuk6d4RVjniRWEicIBzxOBZ4rU6G86lOZ0ET49yooNxgZDA4+4F4EtAmOeG8fbHEmRDhFknbwv6yFm3w/4n2rplRBDuq+PakBBiZUnRBgMQf87jMQA5b2gKDQvRV/OCWAmEc4l/Xpc8t5sgvEla28wpz8oeVRhXZUK9xCU+TRZ5rnn+v8sxO5Ti70PoIv2sGG+GfYyYthrXfWBriJYIL1ZJdZrUISzMOOFcqZabMwyjAI47D2WzKINuJTOk=
   app: overclock-nc-project
+before_install:
+- chmod +x mvnw
