@@ -4,10 +4,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class InitControler {
+public class InitController {
 
     @GetMapping
     public String index() {
-        return "HELLO";
+        return "Hello! It's work!";
     }
 }
