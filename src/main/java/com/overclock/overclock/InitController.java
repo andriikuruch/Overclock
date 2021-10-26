@@ -8,6 +8,6 @@ public class InitController {
 
     @GetMapping
     public String index() {
-        return "Hello! It's work!" + "spring.datasource.username";
+        return "Hello! It's work!" + System.getProperty("spring.datasource.username");
     }
 }
