@@ -62,40 +62,49 @@ public class Overclock {
             this.overclock = new Overclock();
         }
 
-        public void setId(BigInteger id) {
+        public Builder setId(BigInteger id) {
             overclock.id = id;
+            return this;
         }
 
-        public void setCPUFrequency(BigDecimal CPUFrequency) {
+        public Builder setCPUFrequency(BigDecimal CPUFrequency) {
             overclock.CPUFrequency = CPUFrequency;
+            return this;
         }
 
-        public void setCPUVoltage(BigDecimal CPUVoltage) {
+        public Builder setCPUVoltage(BigDecimal CPUVoltage) {
             overclock.CPUVoltage = CPUVoltage;
+            return this;
         }
 
-        public void setGPUCoreFrequency(BigInteger GPUCoreFrequency) {
+        public Builder setGPUCoreFrequency(BigInteger GPUCoreFrequency) {
             overclock.GPUCoreFrequency = GPUCoreFrequency;
+            return this;
         }
 
-        public void setGPUMemoryFrequency(BigInteger GPUMemoryFrequency) {
+        public Builder setGPUMemoryFrequency(BigInteger GPUMemoryFrequency) {
             overclock.GPUMemoryFrequency = GPUMemoryFrequency;
+            return this;
         }
 
-        public void setGPUVoltage(BigDecimal GPUVoltage) {
+        public Builder setGPUVoltage(BigDecimal GPUVoltage) {
             overclock.GPUVoltage = GPUVoltage;
+            return this;
         }
 
-        public void setRAMVoltage(BigDecimal RAMVoltage) {
+        public Builder setRAMVoltage(BigDecimal RAMVoltage) {
             overclock.RAMVoltage = RAMVoltage;
+            return this;
         }
 
-        public void setRAMTimings(String RAMTimings) {
+        public Builder setRAMTimings(String RAMTimings) {
             overclock.RAMTimings = RAMTimings;
+            return this;
         }
 
-        public void setRAMFrequency(BigInteger RAMFrequency) {
+        public Builder setRAMFrequency(BigInteger RAMFrequency) {
             overclock.RAMFrequency = RAMFrequency;
+            return this;
         }
 
         public Overclock build() {
