@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 public class Overclock {
+
     @Positive
     private BigInteger id;
 
@@ -146,5 +147,41 @@ public class Overclock {
 
     public BigInteger getRAMFrequency() {
         return RAMFrequency;
+    }
+
+    public void setId(BigInteger id) {
+        this.id = id;
+    }
+
+    public void setCPUFrequency(BigDecimal CPUFrequency) {
+        this.CPUFrequency = CPUFrequency;
+    }
+
+    public void setCPUVoltage(BigDecimal CPUVoltage) {
+        this.CPUVoltage = CPUVoltage;
+    }
+
+    public void setGPUCoreFrequency(BigInteger GPUCoreFrequency) {
+        this.GPUCoreFrequency = GPUCoreFrequency;
+    }
+
+    public void setGPUMemoryFrequency(BigInteger GPUMemoryFrequency) {
+        this.GPUMemoryFrequency = GPUMemoryFrequency;
+    }
+
+    public void setGPUVoltage(BigDecimal GPUVoltage) {
+        this.GPUVoltage = GPUVoltage;
+    }
+
+    public void setRAMVoltage(BigDecimal RAMVoltage) {
+        this.RAMVoltage = RAMVoltage;
+    }
+
+    public void setRAMTimings(String RAMTimings) {
+        this.RAMTimings = RAMTimings;
+    }
+
+    public void setRAMFrequency(BigInteger RAMFrequency) {
+        this.RAMFrequency = RAMFrequency;
     }
 }
