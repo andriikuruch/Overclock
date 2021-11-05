@@ -19,13 +19,13 @@ public class OverclockController {
     }
 
     @GetMapping("/{assembly_id}/overclock/{overclock_id}/default")
-    public Overclock getDefaultValues(@PathVariable("assembly_id") int overclockId,
-                                      @PathVariable("overclock_id") int assemblyId) {
+    public Overclock getDefaultValues(@PathVariable("assembly_id") BigInteger overclockId,
+                                      @PathVariable("overclock_id") BigInteger assemblyId) {
         return null;
     }
 
     @GetMapping("/{assembly_id}/overclock/{overclock_id}")
-    public Overclock getOverclock(@PathVariable("overclock_id") int id) {
+    public Overclock getOverclock(@PathVariable("overclock_id") BigInteger id) {
         return null;
     }
 

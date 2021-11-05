@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+
 @Service
 @Scope("singleton")
 public class OverclockServiceImpl implements OverclockService {
@@ -18,7 +20,7 @@ public class OverclockServiceImpl implements OverclockService {
     }
 
     @Override
-    public Overclock getOverclockById(int id) {
+    public Overclock getOverclockById(BigInteger id) {
         return null;
     }
 
@@ -28,12 +30,12 @@ public class OverclockServiceImpl implements OverclockService {
     }
 
     @Override
-    public boolean update(int id, Overclock newOverclock) {
+    public boolean update(BigInteger id, Overclock newOverclock) {
         return false;
     }
 
     @Override
-    public Overclock getDefaultValues(int overclockId, int assemblyId) {
+    public Overclock getDefaultValues(BigInteger overclockId, BigInteger assemblyId) {
         return null;
     }
 

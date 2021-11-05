@@ -1,15 +1,16 @@
 package com.overclock.overclock.dao.impl;
 
-import com.overclock.overclock.dao.OverclockDAO;
-import com.overclock.overclock.model.Overclock;
+import com.overclock.overclock.dao.CommentDAO;
+import com.overclock.overclock.model.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
+import java.util.List;
 
 @Repository
-public class OverclockDAOImpl implements OverclockDAO {
+public class CommentDAOImpl implements CommentDAO {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -18,17 +19,22 @@ public class OverclockDAOImpl implements OverclockDAO {
     }
 
     @Override
-    public Overclock getOverclockById(BigInteger id) {
-        return null;
-    }
-
-    @Override
-    public boolean save(Overclock overclock) {
+    public boolean save(Comment comment, BigInteger assemblyId) {
         return false;
     }
 
     @Override
-    public boolean update(BigInteger id, Overclock newOverclock) {
+    public List<Comment> getLimitListOfCommentsToAssembly(BigInteger assemblyId, int limit) {
+        return null;
+    }
+
+    @Override
+    public List<Comment> getAllCommentsToAssembly(BigInteger assemblyId) {
+        return null;
+    }
+
+    @Override
+    public boolean delete(BigInteger id) {
         return false;
     }
 }

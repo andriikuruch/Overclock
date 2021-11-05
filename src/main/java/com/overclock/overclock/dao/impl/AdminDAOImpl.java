@@ -1,7 +1,7 @@
 package com.overclock.overclock.dao.impl;
 
-import com.overclock.overclock.dao.OverclockDAO;
-import com.overclock.overclock.model.Overclock;
+import com.overclock.overclock.dao.AdminDAO;
+import com.overclock.overclock.model.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.math.BigInteger;
 
 @Repository
-public class OverclockDAOImpl implements OverclockDAO {
+public class AdminDAOImpl implements AdminDAO {
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -18,17 +18,7 @@ public class OverclockDAOImpl implements OverclockDAO {
     }
 
     @Override
-    public Overclock getOverclockById(BigInteger id) {
+    public Admin getById(BigInteger id) {
         return null;
-    }
-
-    @Override
-    public boolean save(Overclock overclock) {
-        return false;
-    }
-
-    @Override
-    public boolean update(BigInteger id, Overclock newOverclock) {
-        return false;
     }
 }
