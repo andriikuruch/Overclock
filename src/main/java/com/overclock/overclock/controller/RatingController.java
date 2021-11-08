@@ -8,14 +8,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api/v1/raiting/")
-public class RaitingController {
+@RequestMapping(value = "/api/v1/rating")
+public class RatingController {
     private RatingService ratingService;
+
     @Autowired
-    public void setRatingService(RatingService ratingService){this.ratingService = ratingService;}
+    public void setRatingService(RatingService ratingService) {
+        this.ratingService = ratingService;
+    }
+
+    @GetMapping("/default")
+    public String viewTopByDefault() {
+        return null;
+    }
 
     @GetMapping
-    public String viewTopByDefault(){return null;}
-    @GetMapping
-    public String viewTopByOverclock(){return null;}
+    public String viewTopByOverclock() {
+        return null;
+    }
 }

@@ -8,15 +8,21 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigInteger;
 
 @RestController
-@RequestMapping(value = "/api/v1/admin/")
+@RequestMapping(value = "/api/v1/admin")
 public class AdminController {
     private AdminService adminService;
     @Autowired
-    public void setAdminService(AdminService adminService){this.adminService = adminService;}
+    public void setAdminService(AdminService adminService) {
+        this.adminService = adminService;
+    }
 
-    @GetMapping
-    public void unblockUser(BigInteger id){}
+    @GetMapping("/unblock/{user_id}")
+    public void unblockUser(@RequestParam("user_id") BigInteger id) {
 
-    @GetMapping
-    public String blockUser(BigInteger id, Authentication authentication){return null;}
+    }
+
+    @GetMapping("/block/{user_id}")
+    public String blockUser(@RequestParam("user_id") BigInteger id, Authentication authentication) {
+        return null;
+    }
 }
