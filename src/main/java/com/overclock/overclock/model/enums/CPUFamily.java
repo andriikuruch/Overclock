@@ -1,4 +1,4 @@
-package com.overclock.overclock.model;
+package com.overclock.overclock.model.enums;
 
 public enum CPUFamily {
 

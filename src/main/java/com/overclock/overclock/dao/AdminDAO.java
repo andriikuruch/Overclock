@@ -1,9 +1,9 @@
 package com.overclock.overclock.dao;
 
-import com.overclock.overclock.model.Admin;
+import com.overclock.overclock.model.User;
 
 import java.math.BigInteger;
 
 public interface AdminDAO {
-    Admin getById(BigInteger id);
+    User getById(BigInteger id);
 }

@@ -1,5 +1,10 @@
 package com.overclock.overclock.model;
 
+import com.overclock.overclock.model.enums.CPUFamily;
+import com.overclock.overclock.model.enums.CPUGeneration;
+import com.overclock.overclock.model.enums.CPUManufacturer;
+import com.overclock.overclock.model.enums.Socket;
+
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;

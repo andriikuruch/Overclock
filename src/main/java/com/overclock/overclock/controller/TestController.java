@@ -1,6 +1,6 @@
 package com.overclock.overclock.controller;
 
-import com.overclock.overclock.model.*;
+import com.overclock.overclock.model.enums.Program;
 import com.overclock.overclock.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

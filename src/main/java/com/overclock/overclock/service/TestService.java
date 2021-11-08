@@ -1,7 +1,7 @@
 package com.overclock.overclock.service;
 
 import com.overclock.overclock.model.*;
-import com.overclock.overclock.model.Program;
+import com.overclock.overclock.model.enums.Program;
 
 public interface TestService {
     int testOverclock(Overclock overclock);

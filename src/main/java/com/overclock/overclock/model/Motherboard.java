@@ -1,5 +1,9 @@
 package com.overclock.overclock.model;
 
+import com.overclock.overclock.model.enums.Chipset;
+import com.overclock.overclock.model.enums.ChipsetManufacturer;
+import com.overclock.overclock.model.enums.Socket;
+
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 

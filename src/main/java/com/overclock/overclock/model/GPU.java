@@ -1,5 +1,8 @@
 package com.overclock.overclock.model;
 
+import com.overclock.overclock.model.enums.GPUChip;
+import com.overclock.overclock.model.enums.GPUChipManufacturer;
+
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;

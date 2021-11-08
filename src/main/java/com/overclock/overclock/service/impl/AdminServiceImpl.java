@@ -1,7 +1,7 @@
 package com.overclock.overclock.service.impl;
 
 import com.overclock.overclock.dao.AdminDAO;
-import com.overclock.overclock.model.Admin;
+import com.overclock.overclock.model.User;
 import com.overclock.overclock.service.AdminService;
 import com.overclock.overclock.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Admin getAdminById(BigInteger id) {
+    public User getAdminById(BigInteger id) {
         return null;
     }
 
@@ -42,12 +42,12 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Admin getAdminByUsername(String username) {
+    public User getAdminByUsername(String username) {
         return null;
     }
 
     @Override
-    public boolean update(BigInteger id, Admin newAdmin) {
+    public boolean update(BigInteger id, User newAdmin) {
         return false;
     }
 }

@@ -1,13 +1,13 @@
-package com.overclock.overclock.model;
+package com.overclock.overclock.model.enums;
 
-public enum ChipsetManufacturer {
+public enum GPUChipManufacturer {
 
-    Intel("Intel"),
+    Nvidia("Nvidia"),
     AMD("AMD");
 
     private String fullName;
 
-    ChipsetManufacturer(String fullName) {
+    GPUChipManufacturer(String fullName) {
         this.fullName = fullName;
     }
 

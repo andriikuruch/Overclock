@@ -1,13 +1,13 @@
 package com.overclock.overclock.service;
 
-import com.overclock.overclock.model.Admin;
+import com.overclock.overclock.model.User;
 
 import java.math.BigInteger;
 
 public interface AdminService {
-    Admin getAdminById(BigInteger id);
+    User getAdminById(BigInteger id);
     boolean blockUser(BigInteger id);
     boolean unblockUser(BigInteger id);
-    Admin getAdminByUsername(String username);
-    boolean update(BigInteger id, Admin newAdmin);
+    User getAdminByUsername(String username);
+    boolean update(BigInteger id, User newAdmin);
 }
