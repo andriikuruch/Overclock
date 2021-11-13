@@ -6,6 +6,7 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.Objects;
 
 public class Comment {
 
@@ -22,6 +23,9 @@ public class Comment {
 
     @NotNull
     private Date dateOfComment;
+
+    private Comment() {
+    }
 
     public static class Builder {
 
@@ -86,5 +90,16 @@ public class Comment {
 
     public void setDateOfComment(Date dateOfComment) {
         this.dateOfComment = dateOfComment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Comment comment = (Comment) o;
+        return Objects.equals(getId(), comment.getId()) &&
+                Objects.equals(getCommentMessage(), comment.getCommentMessage()) &&
+                Objects.equals(getAuthor(), comment.getAuthor()) &&
+                Objects.equals(getDateOfComment(), comment.getDateOfComment());
     }
 }

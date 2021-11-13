@@ -1,9 +1,13 @@
 package com.overclock.overclock.model;
 
-import javax.validation.constraints.*;
-import java.math.BigDecimal;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Assembly {
 
@@ -16,92 +20,103 @@ public class Assembly {
     private String name;
 
     @NotNull
-    private Motherboard motherboard;
+    private final Motherboard motherboard;
 
     @NotNull
-    private CPU cpu;
+    private final CPU cpu;
 
     @NotNull
-    private GPU gpu;
+    private final GPU gpu;
 
     @NotNull
-    private RAM ram;
+    private final RAM ram;
 
     @NotNull
-    @NotEmpty
-    @Size(min = 4, max = 23)
-    private String author;
+    private final BigInteger author;
 
     @NotNull
-    private List<Comment> comments;
+    private final List<Comment> comments;
 
     @NotNull
-    private Overclock overclock;
+    private final BigInteger overclock;
 
     @NotNull
     @Positive
     private BigInteger score;
 
+    private Assembly(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.motherboard = builder.motherboard;
+        this.cpu = builder.cpu;
+        this.gpu = builder.gpu;
+        this.ram = builder.ram;
+        this.author = builder.author;
+        this.comments = builder.comments;
+        this.overclock = builder.overclock;
+        this.score = builder.score;
+    }
+
     public static class Builder {
+        private final BigInteger id;
+        private final String name;
+        private Motherboard motherboard;
+        private CPU cpu;
+        private GPU gpu;
+        private RAM ram;
+        private BigInteger author;
+        private List<Comment> comments;
+        private BigInteger overclock;
+        private BigInteger score;
 
-        private Assembly assembly;
-
-        public Builder() {
-            this.assembly = new Assembly();
-        }
-
-        public Builder setId(BigInteger id) {
-            assembly.id = id;
-            return this;
-        }
-
-        public Builder setName(String name) {
-            assembly.name = name;
-            return this;
+        public Builder(BigInteger id, String name) {
+            this.id = id;
+            this.name = name;
+            this.comments = new ArrayList<>();
         }
 
         public Builder setMotherboard(Motherboard motherboard) {
-            assembly.motherboard = motherboard;
+            this.motherboard = motherboard;
             return this;
         }
 
         public Builder setCpu(CPU cpu) {
-            assembly.cpu = cpu;
+            this.cpu = cpu;
             return this;
         }
 
         public Builder setGpu(GPU gpu) {
-            assembly.gpu = gpu;
+            this.gpu = gpu;
             return this;
         }
 
         public Builder setRam(RAM ram) {
-            assembly.ram = ram;
+            this.ram = ram;
             return this;
         }
 
-        public Builder setAuthor(String author) {
-            assembly.author = author;
+        public Builder setAuthor(BigInteger authorId) {
+            this.author = authorId;
             return this;
         }
 
         public Builder setComments(List<Comment> comments) {
-            assembly.comments = comments;
+            this.comments = comments;
             return this;
         }
 
-        public Builder setOverclock(Overclock overclock) {
-            assembly.overclock = overclock;
+        public Builder setOverclock(BigInteger overclockId) {
+            this.overclock = overclockId;
             return this;
         }
 
         public Builder setScore(BigInteger score) {
-            assembly.score = score;
+            this.score = score;
             return this;
         }
 
         public Assembly build() {
-            return assembly;
+            return new Assembly(this);
         }
     }
 
@@ -109,79 +124,61 @@ public class Assembly {
         return id;
     }
 
-    public void setId(BigInteger id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Motherboard getMotherboard() {
         return motherboard;
     }
 
-    public void setMotherboard(Motherboard motherboard) {
-        this.motherboard = motherboard;
-    }
-
     public CPU getCpu() {
         return cpu;
-    }
-
-    public void setCpu(CPU cpu) {
-        this.cpu = cpu;
     }
 
     public GPU getGpu() {
         return gpu;
     }
 
-    public void setGpu(GPU gpu) {
-        this.gpu = gpu;
-    }
-
     public RAM getRam() {
         return ram;
     }
 
-    public void setRam(RAM ram) {
-        this.ram = ram;
-    }
-
-    public String getAuthor() {
+    public BigInteger getAuthor() {
         return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
     public List<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
-
-    public Overclock getOverclock() {
+    public BigInteger getOverclock() {
         return overclock;
-    }
-
-    public void setOverclock(Overclock overclock) {
-        this.overclock = overclock;
     }
 
     public BigInteger getScore() {
         return score;
     }
 
-    public void setScore(BigInteger score) {
-        this.score = score;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Assembly assembly = (Assembly) o;
+        return Objects.equals(getId(), assembly.getId()) &&
+                Objects.equals(getName(), assembly.getName()) &&
+                Objects.equals(getMotherboard(), assembly.getMotherboard()) &&
+                Objects.equals(getCpu(), assembly.getCpu()) &&
+                Objects.equals(getGpu(), assembly.getGpu()) &&
+                Objects.equals(getRam(), assembly.getRam()) &&
+                Objects.equals(getAuthor(), assembly.getAuthor()) &&
+                Objects.equals(getComments(), assembly.getComments()) &&
+                Objects.equals(getOverclock(), assembly.getOverclock()) &&
+                Objects.equals(getScore(), assembly.getScore());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getMotherboard(), getCpu(), getGpu(), getRam(), getAuthor(), getComments(), getOverclock(), getScore());
     }
 }

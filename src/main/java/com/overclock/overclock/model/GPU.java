@@ -6,6 +6,7 @@ import com.overclock.overclock.model.enums.GPUChipManufacturer;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Objects;
 
 public class GPU extends AbstractComponent {
 
@@ -36,56 +37,64 @@ public class GPU extends AbstractComponent {
     @Digits(integer = 1, fraction = 1)
     private BigDecimal voltage;
 
+    private GPU(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.chipManufacturer = builder.chipManufacturer;
+        this.chip = builder.chip;
+        this.coreFrequency = builder.coreFrequency;
+        this.memoryFrequency = builder.memoryFrequency;
+        this.memoryCapacity = builder.memoryCapacity;
+        this.voltage = builder.voltage;
+    }
+
     public static class Builder {
+        private final BigInteger id;
+        private final String name;
+        private GPUChipManufacturer chipManufacturer;
+        private GPUChip chip;
+        private BigInteger memoryCapacity;
+        private BigInteger coreFrequency;
+        private BigInteger memoryFrequency;
+        private BigDecimal voltage;
 
-        private GPU gpu;
-
-        public Builder() {
-            this.gpu = new GPU();
-        }
-
-        public Builder setId(BigInteger id) {
-            gpu.id = id;
-            return this;
-        }
-
-        public Builder setName(String name) {
-            gpu.name = name;
-            return this;
+        public Builder(BigInteger id, String name) {
+            this.id = id;
+            this.name = name;
         }
 
         public Builder setChipManufacturer(GPUChipManufacturer chipManufacturer) {
-            gpu.chipManufacturer = chipManufacturer;
+            this.chipManufacturer = chipManufacturer;
             return this;
         }
 
         public Builder setChip(GPUChip chip) {
-            gpu.chip = chip;
+            this.chip = chip;
             return this;
         }
 
         public Builder setMemoryCapacity(BigInteger memoryCapacity) {
-            gpu.memoryCapacity = memoryCapacity;
+            this.memoryCapacity = memoryCapacity;
             return this;
         }
 
         public Builder setCoreFrequency(BigInteger coreFrequency) {
-            gpu.coreFrequency = coreFrequency;
+            this.coreFrequency = coreFrequency;
             return this;
         }
 
         public Builder setMemoryFrequency(BigInteger memoryFrequency) {
-            gpu.memoryFrequency = memoryFrequency;
+            this.memoryFrequency = memoryFrequency;
             return this;
         }
 
         public Builder setVoltage(BigDecimal voltage) {
-            gpu.voltage = voltage;
+            this.voltage = voltage;
             return this;
         }
 
         public GPU build() {
-            return gpu;
+            return new GPU(this);
         }
     }
 
@@ -93,47 +102,42 @@ public class GPU extends AbstractComponent {
         return chipManufacturer;
     }
 
-    public void setChipManufacturer(GPUChipManufacturer chipManufacturer) {
-        this.chipManufacturer = chipManufacturer;
-    }
-
     public GPUChip getChip() {
         return chip;
-    }
-
-    public void setChip(GPUChip chip) {
-        this.chip = chip;
     }
 
     public BigInteger getMemoryCapacity() {
         return memoryCapacity;
     }
 
-    public void setMemoryCapacity(BigInteger memoryCapacity) {
-        this.memoryCapacity = memoryCapacity;
-    }
-
     public BigInteger getCoreFrequency() {
         return coreFrequency;
-    }
-
-    public void setCoreFrequency(BigInteger coreFrequency) {
-        this.coreFrequency = coreFrequency;
     }
 
     public BigInteger getMemoryFrequency() {
         return memoryFrequency;
     }
 
-    public void setMemoryFrequency(BigInteger memoryFrequency) {
-        this.memoryFrequency = memoryFrequency;
-    }
-
     public BigDecimal getVoltage() {
         return voltage;
     }
 
-    public void setVoltage(BigDecimal voltage) {
-        this.voltage = voltage;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        GPU gpu = (GPU) o;
+        return getChipManufacturer() == gpu.getChipManufacturer() &&
+                getChip() == gpu.getChip() &&
+                Objects.equals(getMemoryCapacity(), gpu.getMemoryCapacity()) &&
+                Objects.equals(getCoreFrequency(), gpu.getCoreFrequency()) &&
+                Objects.equals(getMemoryFrequency(), gpu.getMemoryFrequency()) &&
+                Objects.equals(getVoltage(), gpu.getVoltage());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getChipManufacturer(), getChip(), getMemoryCapacity(), getCoreFrequency(), getMemoryFrequency(), getVoltage());
     }
 }

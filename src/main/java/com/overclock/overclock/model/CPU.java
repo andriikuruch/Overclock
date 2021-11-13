@@ -8,6 +8,7 @@ import com.overclock.overclock.model.enums.Socket;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Objects;
 
 public class CPU extends AbstractComponent {
 
@@ -45,66 +46,78 @@ public class CPU extends AbstractComponent {
     @NotNull
     private CPUFamily family;
 
+    private CPU(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.coresNumber = builder.coresNumber;
+        this.family = builder.family;
+        this.frequency = builder.frequency;
+        this.generation = builder.generation;
+        this.manufacturer = builder.manufacturer;
+        this.voltage = builder.voltage;
+        this.threadsNumber = builder.threadsNumber;
+        this.socket = builder.socket;
+    }
+
     public static class Builder {
+        private final BigInteger id;
+        private String name;
+        private Socket socket;
+        private CPUManufacturer manufacturer;
+        private CPUGeneration generation;
+        private BigDecimal voltage;
+        private BigDecimal frequency;
+        private BigInteger threadsNumber;
+        private BigInteger coresNumber;
+        private CPUFamily family;
 
-        private CPU cpu;
-
-        public Builder() {
-            this.cpu = new CPU();
-        }
-
-        public Builder setId(BigInteger id) {
-            cpu.id = id;
-            return this;
-        }
-
-        public Builder setName(String name) {
-            cpu.name = name;
-            return this;
+        public Builder(BigInteger id, String name) {
+            this.id = id;
+            this.name = name;
         }
 
         public Builder setSocket(Socket socket) {
-            cpu.socket = socket;
+            this.socket = socket;
             return this;
         }
 
         public Builder setManufacturer(CPUManufacturer manufacturer) {
-            cpu.manufacturer = manufacturer;
+            this.manufacturer = manufacturer;
             return this;
         }
 
         public Builder setGeneration(CPUGeneration generation) {
-            cpu.generation = generation;
+            this.generation = generation;
             return this;
         }
 
         public Builder setVoltage(BigDecimal voltage) {
-            cpu.voltage = voltage;
+            this.voltage = voltage;
             return this;
         }
 
         public Builder setFrequency(BigDecimal frequency) {
-            cpu.frequency = frequency;
+            this.frequency = frequency;
             return this;
         }
 
         public Builder setThreadsNumber(BigInteger threadsNumber) {
-            cpu.threadsNumber = threadsNumber;
+            this.threadsNumber = threadsNumber;
             return this;
         }
 
         public Builder setCoresNumber(BigInteger coresNumber) {
-            cpu.coresNumber = coresNumber;
+            this.coresNumber = coresNumber;
             return this;
         }
 
         public Builder setFamily(CPUFamily family) {
-            cpu.family = family;
+            this.family = family;
             return this;
         }
 
         public CPU build() {
-            return cpu;
+            return new CPU(this);
         }
     }
 
@@ -112,63 +125,52 @@ public class CPU extends AbstractComponent {
         return socket;
     }
 
-    public void setSocket(Socket socket) {
-        this.socket = socket;
-    }
-
     public CPUManufacturer getManufacturer() {
         return manufacturer;
-    }
-
-    public void setManufacturer(CPUManufacturer manufacturer) {
-        this.manufacturer = manufacturer;
     }
 
     public CPUGeneration getGeneration() {
         return generation;
     }
 
-    public void setGeneration(CPUGeneration generation) {
-        this.generation = generation;
-    }
-
     public BigDecimal getVoltage() {
         return voltage;
-    }
-
-    public void setVoltage(BigDecimal voltage) {
-        this.voltage = voltage;
     }
 
     public BigDecimal getFrequency() {
         return frequency;
     }
 
-    public void setFrequency(BigDecimal frequency) {
-        this.frequency = frequency;
-    }
-
     public BigInteger getThreadsNumber() {
         return threadsNumber;
-    }
-
-    public void setThreadsNumber(BigInteger threadsNumber) {
-        this.threadsNumber = threadsNumber;
     }
 
     public BigInteger getCoresNumber() {
         return coresNumber;
     }
 
-    public void setCoresNumber(BigInteger coresNumber) {
-        this.coresNumber = coresNumber;
-    }
-
     public CPUFamily getFamily() {
         return family;
     }
 
-    public void setFamily(CPUFamily family) {
-        this.family = family;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        CPU cpu = (CPU) o;
+        return getSocket() == cpu.getSocket() &&
+                getManufacturer() == cpu.getManufacturer() &&
+                getGeneration() == cpu.getGeneration() &&
+                Objects.equals(getVoltage(), cpu.getVoltage()) &&
+                Objects.equals(getFrequency(), cpu.getFrequency()) &&
+                Objects.equals(getThreadsNumber(), cpu.getThreadsNumber()) &&
+                Objects.equals(getCoresNumber(), cpu.getCoresNumber()) &&
+                getFamily() == cpu.getFamily();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getSocket(), getManufacturer(), getGeneration(), getVoltage(), getFrequency(), getThreadsNumber(), getCoresNumber(), getFamily());
     }
 }

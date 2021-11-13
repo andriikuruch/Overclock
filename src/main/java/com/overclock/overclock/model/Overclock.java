@@ -3,6 +3,8 @@ package com.overclock.overclock.model;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 public class Overclock {
 
@@ -53,7 +55,7 @@ public class Overclock {
     @Min(value = 2133)
     private BigInteger RAMFrequency;
 
-    public Overclock() {
+    private Overclock() {
     }
 
     public static class Builder {
@@ -183,5 +185,26 @@ public class Overclock {
 
     public void setRAMFrequency(BigInteger RAMFrequency) {
         this.RAMFrequency = RAMFrequency;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Overclock overclock = (Overclock) o;
+        return Objects.equals(getId(), overclock.getId()) &&
+                Objects.equals(getCPUFrequency(), overclock.getCPUFrequency()) &&
+                Objects.equals(getCPUVoltage(), overclock.getCPUVoltage()) &&
+                Objects.equals(getGPUCoreFrequency(), overclock.getGPUCoreFrequency()) &&
+                Objects.equals(getGPUMemoryFrequency(), overclock.getGPUMemoryFrequency()) &&
+                Objects.equals(getGPUVoltage(), overclock.getGPUVoltage()) &&
+                Objects.equals(getRAMVoltage(), overclock.getRAMVoltage()) &&
+                Objects.equals(getRAMTimings(), overclock.getRAMTimings()) &&
+                Objects.equals(getRAMFrequency(), overclock.getRAMFrequency());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getCPUFrequency(), getCPUVoltage(), getGPUCoreFrequency(), getGPUMemoryFrequency(), getGPUVoltage(), getRAMVoltage(), getRAMTimings(), getRAMFrequency());
     }
 }

@@ -3,6 +3,7 @@ package com.overclock.overclock.model;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Objects;
 
 public class RAM extends AbstractComponent {
 
@@ -27,46 +28,50 @@ public class RAM extends AbstractComponent {
     @Digits(integer = 1, fraction = 1)
     private BigDecimal voltage;
 
+    private RAM(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.capacity = builder.capacity;
+        this.frequency = builder.frequency;
+        this.timings = builder.timings;
+        this.voltage = builder.voltage;
+    }
+
     public static class Builder {
+        private final BigInteger id;
+        private final String name;
+        private BigInteger capacity;
+        private BigInteger frequency;
+        private String timings;
+        private BigDecimal voltage;
 
-        private RAM ram;
-
-        public Builder() {
-            this.ram = new RAM();
-        }
-
-        public Builder setId(BigInteger id) {
-            ram.id = id;
-            return this;
-        }
-
-        public Builder setName(String name) {
-            ram.name = name;
-            return this;
+        public Builder(BigInteger id, String name) {
+            this.id = id;
+            this.name = name;
         }
 
         public Builder setCapacity(BigInteger capacity) {
-            ram.capacity = capacity;
+            this.capacity = capacity;
             return this;
         }
 
         public Builder setFrequency(BigInteger frequency) {
-            ram.frequency = frequency;
+            this.frequency = frequency;
             return this;
         }
 
         public Builder setTimings(String timings) {
-            ram.timings = timings;
+            this.timings = timings;
             return this;
         }
 
         public Builder setVoltage(BigDecimal voltage) {
-            ram.voltage = voltage;
+            this.voltage = voltage;
             return this;
         }
 
         public RAM build() {
-            return ram;
+            return new RAM(this);
         }
     }
 
@@ -74,31 +79,32 @@ public class RAM extends AbstractComponent {
         return capacity;
     }
 
-    public void setCapacity(BigInteger capacity) {
-        this.capacity = capacity;
-    }
-
     public BigInteger getFrequency() {
         return frequency;
-    }
-
-    public void setFrequency(BigInteger frequency) {
-        this.frequency = frequency;
     }
 
     public String getTimings() {
         return timings;
     }
 
-    public void setTimings(String timings) {
-        this.timings = timings;
-    }
-
     public BigDecimal getVoltage() {
         return voltage;
     }
 
-    public void setVoltage(BigDecimal voltage) {
-        this.voltage = voltage;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        RAM ram = (RAM) o;
+        return Objects.equals(getCapacity(), ram.getCapacity()) &&
+                Objects.equals(getFrequency(), ram.getFrequency()) &&
+                Objects.equals(getTimings(), ram.getTimings()) &&
+                Objects.equals(getVoltage(), ram.getVoltage());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getCapacity(), getFrequency(), getTimings(), getVoltage());
     }
 }

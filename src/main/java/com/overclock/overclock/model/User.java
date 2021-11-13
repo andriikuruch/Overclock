@@ -5,6 +5,7 @@ import com.overclock.overclock.model.enums.Role;
 import javax.validation.constraints.*;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.Objects;
 
 public class User {
     @Positive
@@ -29,6 +30,9 @@ public class User {
 
     @NotNull
     private Role role;
+
+    private User() {
+    }
 
     public BigInteger getId() {
         return id;
@@ -119,5 +123,23 @@ public class User {
         public User build() {
             return user;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(getId(), user.getId()) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(getPassword(), user.getPassword()) &&
+                Objects.equals(getEmail(), user.getEmail()) &&
+                Objects.equals(getRegistrationDate(), user.getRegistrationDate()) &&
+                getRole() == user.getRole();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), name, getPassword(), getEmail(), getRegistrationDate(), getRole());
     }
 }

@@ -6,6 +6,7 @@ import com.overclock.overclock.model.enums.Socket;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
+import java.util.Objects;
 
 public class Motherboard extends AbstractComponent {
 
@@ -18,41 +19,44 @@ public class Motherboard extends AbstractComponent {
     @NotNull
     private Chipset chipset;
 
+    private Motherboard(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.chipset = builder.chipset;
+        this.chipsetManufacturer = builder.chipsetManufacturer;
+        this.socket = builder.socket;
+    }
+
     public static class Builder {
 
-        private Motherboard motherboard;
+        private final BigInteger id;
+        private final String name;
+        private Socket socket;
+        private ChipsetManufacturer chipsetManufacturer;
+        private Chipset chipset;
 
-        public Builder() {
-            this.motherboard = new Motherboard();
-        }
-
-        public Builder setId(BigInteger id) {
-            motherboard.id = id;
-            return this;
-        }
-
-        public Builder setName(String name) {
-            motherboard.name = name;
-            return this;
+        public Builder(BigInteger id, String name) {
+            this.id = id;
+            this.name = name;
         }
 
         public Builder setSocket(Socket socket) {
-            motherboard.socket = socket;
+            this.socket = socket;
             return this;
         }
 
         public Builder setChipsetManufacturer(ChipsetManufacturer chipsetManufacturer) {
-            motherboard.chipsetManufacturer = chipsetManufacturer;
+            this.chipsetManufacturer = chipsetManufacturer;
             return this;
         }
 
         public Builder setChipset(Chipset chipset) {
-            motherboard.chipset = chipset;
+            this.chipset = chipset;
             return this;
         }
 
         public Motherboard build() {
-            return motherboard;
+            return new Motherboard(this);
         }
     }
 
@@ -68,15 +72,19 @@ public class Motherboard extends AbstractComponent {
         return chipsetManufacturer;
     }
 
-    public void setSocket(Socket socket) {
-        this.socket = socket;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Motherboard that = (Motherboard) o;
+        return getSocket() == that.getSocket() &&
+                getChipsetManufacturer() == that.getChipsetManufacturer() &&
+                getChipset() == that.getChipset();
     }
 
-    public void setChipsetManufacturer(ChipsetManufacturer chipsetManufacturer) {
-        this.chipsetManufacturer = chipsetManufacturer;
-    }
-
-    public void setChipset(Chipset chipset) {
-        this.chipset = chipset;
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getSocket(), getChipsetManufacturer(), getChipset());
     }
 }
