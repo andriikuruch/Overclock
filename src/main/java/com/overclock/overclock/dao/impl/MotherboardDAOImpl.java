@@ -24,6 +24,11 @@ public class MotherboardDAOImpl implements MotherboardDAO {
     }
 
     @Override
+    public Motherboard getByAssemblyId(BigInteger assemblyId) {
+        return null;
+    }
+
+    @Override
     public List<Motherboard> getAll() {
         return null;
     }

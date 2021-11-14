@@ -24,6 +24,11 @@ public class RAM_DAOImpl implements RAM_DAO {
     }
 
     @Override
+    public RAM getByAssemblyId(BigInteger assemblyId) {
+        return null;
+    }
+
+    @Override
     public List<RAM> getAll() {
         return null;
     }

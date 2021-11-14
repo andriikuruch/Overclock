@@ -24,6 +24,11 @@ public class GPU_DAOImpl implements GPU_DAO {
     }
 
     @Override
+    public GPU getByAssemblyId(BigInteger assemblyId) {
+        return null;
+    }
+
+    @Override
     public List<GPU> getAll() {
         return null;
     }

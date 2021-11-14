@@ -24,6 +24,11 @@ public class CPU_DAOImpl implements CPU_DAO {
     }
 
     @Override
+    public CPU getByAssemblyId(BigInteger assemblyId) {
+        return null;
+    }
+
+    @Override
     public List<CPU> getAll() {
         return null;
     }
