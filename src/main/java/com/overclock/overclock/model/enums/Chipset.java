@@ -1,32 +1,42 @@
 package com.overclock.overclock.model.enums;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 public enum Chipset {
+    H310(3),
+    B360(4),
+    Z390(5),
+    H410(6),
+    B460(7),
+    Z490(8),
+    H510(9),
+    B560(10),
+    Z590(11),
+    A320(12),
+    B350(13),
+    X370(14),
+    B450(15),
+    X470(16),
+    A520(17),
+    B550(18),
+    X570(19);
 
-    H310("H310"),
-    B360("B360"),
-    Z390("Z390"),
-    H410("H410"),
-    B460("B460"),
-    Z490("Z490"),
-    H510("H510"),
-    B560("B560"),
-    Z590("Z590"),
-    A320("A320"),
-    B350("B350"),
-    X370("X370"),
-    B450("B450"),
-    X470("X470"),
-    A520("A520"),
-    B550("B550"),
-    X570("X570");
+    private int id;
+    private static Map<Integer, Chipset> map = Arrays.stream(Chipset.values())
+            .collect(Collectors.toMap(Chipset::toInt, Function.identity()));
 
-    private String fullName;
-
-    Chipset(String fullName) {
-        this.fullName = fullName;
+    Chipset(int id) {
+        this.id = id;
     }
 
-    String getFullName() {
-        return fullName;
+    public int toInt() {
+        return id;
+    }
+
+    public static Chipset fromInt(int id) {
+        return map.getOrDefault(id, null);
     }
 }

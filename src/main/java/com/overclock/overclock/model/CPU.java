@@ -3,7 +3,7 @@ package com.overclock.overclock.model;
 import com.overclock.overclock.model.enums.CPUFamily;
 import com.overclock.overclock.model.enums.CPUGeneration;
 import com.overclock.overclock.model.enums.CPUManufacturer;
-import com.overclock.overclock.model.enums.Socket;
+import com.overclock.overclock.model.enums.CPUSocket;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
@@ -13,7 +13,7 @@ import java.util.Objects;
 public class CPU extends AbstractComponent {
 
     @NotNull
-    private Socket socket;
+    private CPUSocket socket;
 
     @NotNull
     private CPUManufacturer manufacturer;
@@ -62,7 +62,7 @@ public class CPU extends AbstractComponent {
     public static class Builder {
         private final BigInteger id;
         private String name;
-        private Socket socket;
+        private CPUSocket socket;
         private CPUManufacturer manufacturer;
         private CPUGeneration generation;
         private BigDecimal voltage;
@@ -76,7 +76,7 @@ public class CPU extends AbstractComponent {
             this.name = name;
         }
 
-        public Builder setSocket(Socket socket) {
+        public Builder setSocket(CPUSocket socket) {
             this.socket = socket;
             return this;
         }
@@ -121,7 +121,7 @@ public class CPU extends AbstractComponent {
         }
     }
 
-    public Socket getSocket() {
+    public CPUSocket getSocket() {
         return socket;
     }
 

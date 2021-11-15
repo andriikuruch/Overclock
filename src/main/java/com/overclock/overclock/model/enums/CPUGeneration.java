@@ -1,23 +1,33 @@
 package com.overclock.overclock.model.enums;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 public enum CPUGeneration {
+    EightGen(36),
+    NineGen(37),
+    TenGen(38),
+    ElevenGen(39),
+    Zen(40),
+    ZenPlus(41),
+    ZenTwo(42),
+    ZenThree(43);
 
-    EightGen("8 поколение (Coffee Lake)"),
-    NineGen("9 поколение (Coffee Lake Refresh)"),
-    TenGen("10 поколение (Comet Lake)"),
-    ElevenGen("11 поколение (Rocket Lake)"),
-    Zen("Zen"),
-    ZenPlus("Zen+"),
-    ZenTwo("Zen 2"),
-    ZenThree("Zen 3");
+    private int id;
+    private static Map<Integer, CPUGeneration> map = Arrays.stream(CPUGeneration.values())
+            .collect(Collectors.toMap(CPUGeneration::toInt, Function.identity()));
 
-    private String fullName;
-
-    CPUGeneration(String fullName) {
-        this.fullName = fullName;
+    CPUGeneration(int id) {
+        this.id = id;
     }
 
-    String getFullName() {
-        return fullName;
+    public int toInt() {
+        return id;
+    }
+
+    public static CPUGeneration fromInt(int id) {
+        return map.getOrDefault(id, null);
     }
 }

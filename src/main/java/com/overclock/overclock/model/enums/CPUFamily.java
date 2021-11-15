@@ -1,23 +1,33 @@
 package com.overclock.overclock.model.enums;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 public enum CPUFamily {
+    Core_i3(25),
+    Core_i5(26),
+    Core_i7(27),
+    Core_i9(28),
+    Ryzen3(29),
+    Ryzen5(30),
+    Ryzen7(31),
+    Ryzen9(32);
 
-    Core_i3("Intel Core i3"),
-    Core_i5("Intel Core i5"),
-    Core_i7("Intel Core i7"),
-    Core_i9("Intel Core i9"),
-    Ryzen3("AMD Ryzen 3"),
-    Ryzen5("AMD Ryzen 5"),
-    Ryzen7("AMD Ryzen 7"),
-    Ryzen9("AMD Ryzen 9");
+    private int id;
+    private static Map<Integer, CPUFamily> map = Arrays.stream(CPUFamily.values())
+            .collect(Collectors.toMap(CPUFamily::toInt, Function.identity()));
 
-    private String fullName;
-
-    CPUFamily(String fullName) {
-        this.fullName = fullName;
+    CPUFamily(int id) {
+        this.id = id;
     }
 
-    String getFullName() {
-        return fullName;
+    public int toInt() {
+        return id;
+    }
+
+    public static CPUFamily fromInt(int id) {
+        return map.getOrDefault(id, null);
     }
 }

@@ -1,16 +1,26 @@
 package com.overclock.overclock.model.enums;
 
 public enum Role {
-    admin("Admin"),
-    user("User");
+    ADMIN(90),
+    USER(89);
 
-    private String fullName;
+    private int id;
 
-    Role(String fullName) {
-        this.fullName = fullName;
+    Role(int id) {
+        this.id = id;
     }
 
-    String getFullName() {
-        return fullName;
+    public int toInt() {
+        return id;
+    }
+
+    public static Role fromInt(int id) {
+        if (USER.toInt() == id)
+            return USER;
+
+        if (ADMIN.toInt() == id)
+            return ADMIN;
+
+        return null;
     }
 }

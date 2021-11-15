@@ -2,7 +2,7 @@ package com.overclock.overclock.model;
 
 import com.overclock.overclock.model.enums.Chipset;
 import com.overclock.overclock.model.enums.ChipsetManufacturer;
-import com.overclock.overclock.model.enums.Socket;
+import com.overclock.overclock.model.enums.MotherboardSocket;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Motherboard extends AbstractComponent {
 
     @NotNull
-    private Socket socket;
+    private MotherboardSocket socket;
 
     @NotNull
     private ChipsetManufacturer chipsetManufacturer;
@@ -31,7 +31,7 @@ public class Motherboard extends AbstractComponent {
 
         private final BigInteger id;
         private final String name;
-        private Socket socket;
+        private MotherboardSocket socket;
         private ChipsetManufacturer chipsetManufacturer;
         private Chipset chipset;
 
@@ -40,7 +40,7 @@ public class Motherboard extends AbstractComponent {
             this.name = name;
         }
 
-        public Builder setSocket(Socket socket) {
+        public Builder setSocket(MotherboardSocket socket) {
             this.socket = socket;
             return this;
         }
@@ -60,7 +60,7 @@ public class Motherboard extends AbstractComponent {
         }
     }
 
-    public Socket getSocket() {
+    public MotherboardSocket getSocket() {
         return socket;
     }
 

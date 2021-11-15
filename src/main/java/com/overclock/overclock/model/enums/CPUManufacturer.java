@@ -1,17 +1,26 @@
 package com.overclock.overclock.model.enums;
 
 public enum CPUManufacturer {
+    Intel(23),
+    AMD(24);
 
-    Intel("Intel"),
-    AMD("AMD");
+    private int id;
 
-    private String fullName;
-
-    CPUManufacturer(String fullName) {
-        this.fullName = fullName;
+    CPUManufacturer(int id) {
+        this.id = id;
     }
 
-    String getFullName() {
-        return fullName;
+    public int toInt() {
+        return id;
+    }
+
+    public static CPUManufacturer fromInt(int id) {
+        if (Intel.toInt() == id)
+            return Intel;
+
+        if (AMD.toInt() == id)
+            return AMD;
+
+        return null;
     }
 }
