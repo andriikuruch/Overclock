@@ -96,4 +96,25 @@ public class CreateUtilities {
                 .setCommentMessage("Bad Message")
                 .build();
     }
+
+    public static Overclock createOverclock() {
+        return new Overclock.Builder()
+                .setId(BigInteger.valueOf(1))
+                .setCPUFrequency(BigDecimal.valueOf(4.0))
+                .setCPUVoltage(BigDecimal.valueOf(1.5))
+                .setGPUCoreFrequency(BigInteger.valueOf(1500))
+                .setGPUMemoryFrequency(BigInteger.valueOf(18000))
+                .setGPUVoltage(BigDecimal.valueOf(2.0))
+                .setRAMVoltage(BigDecimal.valueOf(2.5))
+                .setRAMTimings("5-5-5-15")
+                .setRAMFrequency(BigInteger.valueOf(3112)).build();
+    }
+
+    public static Overclock createBadOverclock() {
+        return new Overclock.Builder()
+                .setId(BigInteger.valueOf(1))
+                .setCPUFrequency(BigDecimal.valueOf(4.0))
+                .setGPUVoltage(BigDecimal.valueOf(2.0))
+                .setRAMFrequency(BigInteger.valueOf(3112)).build();
+    }
 }

@@ -4,7 +4,6 @@ import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Objects;
-import java.util.StringJoiner;
 
 public class Overclock {
 
@@ -54,9 +53,6 @@ public class Overclock {
     @Max(value = 5000)
     @Min(value = 2133)
     private BigInteger RAMFrequency;
-
-    private Overclock() {
-    }
 
     public static class Builder {
         private Overclock overclock;
