@@ -31,9 +31,6 @@ public class User {
     @NotNull
     private Role role;
 
-    private User() {
-    }
-
     public BigInteger getId() {
         return id;
     }

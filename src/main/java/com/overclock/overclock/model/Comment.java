@@ -19,13 +19,11 @@ public class Comment {
     private String commentMessage;
 
     @NotNull
-    private User author;
+    @NotEmpty
+    private String author;
 
     @NotNull
     private Date dateOfComment;
-
-    private Comment() {
-    }
 
     public static class Builder {
 
@@ -45,7 +43,7 @@ public class Comment {
             return this;
         }
 
-        public Builder setAuthor(User author) {
+        public Builder setAuthor(String  author) {
             comment.author = author;
             return this;
         }
@@ -76,11 +74,11 @@ public class Comment {
         this.commentMessage = commentMessage;
     }
 
-    public User getAuthor() {
+    public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(String author) {
         this.author = author;
     }
 

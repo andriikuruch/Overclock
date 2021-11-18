@@ -5,6 +5,7 @@ import com.overclock.overclock.model.enums.*;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Date;
 
 public class CreateUtilities {
     public static Motherboard createMotherboard() {
@@ -78,6 +79,21 @@ public class CreateUtilities {
                 .setMotherboard(createMotherboard())
                 .setScore(BigInteger.valueOf(5600))
                 .setAuthor(BigInteger.valueOf(-1))
+                .build();
+    }
+
+    public static Comment createComment() {
+        return new Comment.Builder()
+                .setId(BigInteger.valueOf(18))
+                .setCommentMessage("Test Message")
+                .setAuthor("Mike")
+                .setDateOfComment(new Date())
+                .build();
+    }
+
+    public static Comment createBadComment() {
+        return new Comment.Builder()
+                .setCommentMessage("Bad Message")
                 .build();
     }
 }

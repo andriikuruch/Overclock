@@ -6,8 +6,8 @@ import java.math.BigInteger;
 import java.util.List;
 
 public interface CommentDAO {
-    boolean save(Comment comment, BigInteger assemblyId);
-    List<Comment> getLimitListOfCommentsToAssembly(BigInteger assemblyId, int limit);
-    List<Comment> getAllCommentsToAssembly(BigInteger assemblyId);
+    boolean save(Comment comment, BigInteger assemblyId, BigInteger authorId);
+    List<Comment> getLimitedListOfCommentsByAssemblyId(BigInteger assemblyId, BigInteger limit);
+    List<Comment> getAllCommentsByAssemblyId(BigInteger assemblyId);
     boolean delete(BigInteger id);
 }
