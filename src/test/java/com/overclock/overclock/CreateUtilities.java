@@ -2,6 +2,7 @@ package com.overclock.overclock;
 
 import com.overclock.overclock.model.*;
 import com.overclock.overclock.model.enums.*;
+import org.junit.jupiter.api.Assertions;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -10,9 +11,15 @@ import java.util.Date;
 public class CreateUtilities {
     public static Motherboard createMotherboard() {
         return new Motherboard.Builder(BigInteger.valueOf(3), "Asus Prime B560M-A")
-                .setSocket(MotherboardSocket.Soc1200)
                 .setChipsetManufacturer(ChipsetManufacturer.Intel)
                 .setChipset(Chipset.B560)
+                .setSocket(MotherboardSocket.Soc1200)
+                .build();
+    }
+
+    public static Motherboard createBadMotherboard() {
+        return new Motherboard.Builder(BigInteger.valueOf(3), "Bad Motherboard")
+                .setChipsetManufacturer(ChipsetManufacturer.Intel)
                 .build();
     }
 
