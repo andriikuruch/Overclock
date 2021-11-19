@@ -79,6 +79,13 @@ public class CommentDAOImplTest {
 
     @Test
     @Transactional
+    public void saveComment_WrongAuthorIdAndAssemblyId() {
+        Assertions.assertFalse(commentDAO.save(CreateUtilities.createComment(), BigInteger.valueOf(10), BigInteger.valueOf(12)));
+        Assertions.assertFalse(commentDAO.save(CreateUtilities.createComment(), BigInteger.valueOf(2), BigInteger.valueOf(2)));
+    }
+
+    @Test
+    @Transactional
     public void saveInvalidComment() {
         Assertions.assertFalse(commentDAO.save(CreateUtilities.createBadComment(), BigInteger.valueOf(2), BigInteger.valueOf(12)));
     }
@@ -91,7 +98,19 @@ public class CommentDAOImplTest {
 
     @Test
     @Transactional
-    public void deleteNotAComment() {
+    public void deleteComment_WrongId() {
         Assertions.assertFalse(commentDAO.delete(BigInteger.valueOf(1)));
+    }
+
+    @Test
+    @Transactional
+    public void deleteAllCommentsByAssemblyId() {
+        Assertions.assertTrue(commentDAO.deleteAllCommentsByAssemblyId(BigInteger.valueOf(1)));
+    }
+
+    @Test
+    @Transactional
+    public void deleteAllCommentsByAssemblyId_WrongAssemblyId() {
+        Assertions.assertFalse(commentDAO.deleteAllCommentsByAssemblyId(BigInteger.valueOf(3)));
     }
 }

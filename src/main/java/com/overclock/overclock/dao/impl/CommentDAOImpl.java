@@ -2,6 +2,7 @@ package com.overclock.overclock.dao.impl;
 
 import com.overclock.overclock.dao.CommentDAO;
 import com.overclock.overclock.dao.impl.mapper.CommentRowMapper;
+import com.overclock.overclock.dao.impl.mapper.CommentsIdRowMapper;
 import com.overclock.overclock.model.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -40,19 +41,28 @@ public class CommentDAOImpl implements CommentDAO {
             return false;
         }
         try {
-            String commentName = "comment" + UUID.randomUUID();
-            String commentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(comment.getDateOfComment());
+            int assemblyObjectTypeId = jdbcTemplate.queryForObject("SELECT OBJECT_TYPE_ID FROM OBJECTS " +
+                    "WHERE object_id = " + assemblyId, Integer.class);
+            int  authorObjectTypeId = jdbcTemplate.queryForObject("SELECT OBJECT_TYPE_ID FROM OBJECTS " +
+                    "WHERE object_id = " + authorId, Integer.class);
+            if (assemblyObjectTypeId == 1 && authorObjectTypeId == 7) {
+                String commentName = "comment" + UUID.randomUUID();
+                String commentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(comment.getDateOfComment());
 
-            jdbcTemplate.update("INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION) "
-                    + "VALUES (OBJECT_ID_SEQ.NEXTVAL, " + assemblyId + ", 8, '" + commentName + "', NULL)");
-            String sql = "INSERT INTO ATTRIBUTES (ATTR_ID, OBJECT_ID, DATE_VALUE) "
-                    + "VALUES (45, OBJECT_ID_SEQ.CURRVAL, TO_DATE('" + commentDate + "', 'dd/mm/yyyy hh24:mi'))";
-            jdbcTemplate.update(sql);
-            jdbcTemplate.update("INSERT INTO ATTRIBUTES (ATTR_ID, OBJECT_ID, VALUE) "
-                    + "VALUES (43, OBJECT_ID_SEQ.CURRVAL, '" + comment.getCommentMessage() + "')");
-            jdbcTemplate.update("INSERT INTO OBJREFERENCE (ATTR_ID, OBJECT_ID, REFERENCE) " +
-                    "VALUES (44, " + authorId + ", OBJECT_ID_SEQ.CURRVAL)");
-            return true;
+                jdbcTemplate.update("INSERT INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION) "
+                        + "VALUES (OBJECT_ID_SEQ.NEXTVAL, " + assemblyId + ", 8, '" + commentName + "', NULL)");
+                String sql = "INSERT INTO ATTRIBUTES (ATTR_ID, OBJECT_ID, DATE_VALUE) "
+                        + "VALUES (45, OBJECT_ID_SEQ.CURRVAL, TO_DATE('" + commentDate + "', 'dd/mm/yyyy hh24:mi'))";
+                jdbcTemplate.update(sql);
+                jdbcTemplate.update("INSERT INTO ATTRIBUTES (ATTR_ID, OBJECT_ID, VALUE) "
+                        + "VALUES (43, OBJECT_ID_SEQ.CURRVAL, '" + comment.getCommentMessage() + "')");
+                jdbcTemplate.update("INSERT INTO OBJREFERENCE (ATTR_ID, OBJECT_ID, REFERENCE) " +
+                        "VALUES (44, " + authorId + ", OBJECT_ID_SEQ.CURRVAL)");
+                return true;
+            } else {
+                LOGGER.log(Level.WARNING, "Wrong assembly or author identifier");
+                return false;
+            }
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -72,6 +82,34 @@ public class CommentDAOImpl implements CommentDAO {
                 return true;
             } else {
                 LOGGER.log(Level.WARNING, "Identifier belongs not to a comment");
+                return false;
+            }
+        } catch (DataAccessException dataAccessException) {
+            LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return false;
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = DataAccessException.class)
+    public boolean deleteAllCommentsByAssemblyId(BigInteger assemblyId) {
+        try {
+            int objectTypeId = jdbcTemplate.queryForObject("SELECT OBJECT_TYPE_ID FROM OBJECTS " +
+                    "WHERE OBJECT_ID = " + assemblyId, Integer.class);
+            if (objectTypeId == 1) {
+                List<BigInteger> identifiers = jdbcTemplate.query("SELECT OBJECT_ID COMMENT_ID FROM OBJECTS " +
+                        "WHERE PARENT_ID = " + assemblyId + " AND OBJECT_TYPE_ID = 8", new CommentsIdRowMapper());
+                for (BigInteger id: identifiers) {
+                    if (!delete(id)) {
+                        LOGGER.log(Level.WARNING, "Comment with id = " + id + " was`nt deleted");
+                        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                        return false;
+                    }
+                }
+                return true;
+            } else {
+                LOGGER.log(Level.WARNING,"Identifier belongs not to an assembly");
                 return false;
             }
         } catch (DataAccessException dataAccessException) {
@@ -125,7 +163,8 @@ public class CommentDAOImpl implements CommentDAO {
                     "        AND DATES.ATTR_ID = 45 " +
                     "        AND MESSAGES.OBJECT_ID = COMMENTS.OBJECT_ID " +
                     "        AND DATES.OBJECT_ID = COMMENTS.OBJECT_ID " +
-                    "        AND COMMENTS.PARENT_ID = ASSEMBLIES.OBJECT_ID ";
+                    "        AND COMMENTS.PARENT_ID = ASSEMBLIES.OBJECT_ID " +
+                    "   ORDER BY DATE_OF_COMMENT";
             return jdbcTemplate.query(sql, new CommentRowMapper());
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);

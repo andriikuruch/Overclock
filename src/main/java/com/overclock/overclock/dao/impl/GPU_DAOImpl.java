@@ -20,7 +20,7 @@ public class GPU_DAOImpl implements GPU_DAO {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    private static final Logger LOGGER = Logger.getLogger(CommentDAOImpl.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(GPU_DAOImpl.class.getName());
 
     @Override
     public GPU getById(BigInteger id) {

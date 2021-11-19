@@ -10,4 +10,5 @@ public interface CommentDAO {
     List<Comment> getLimitedListOfCommentsByAssemblyId(BigInteger assemblyId, BigInteger limit);
     List<Comment> getAllCommentsByAssemblyId(BigInteger assemblyId);
     boolean delete(BigInteger id);
+    boolean deleteAllCommentsByAssemblyId(BigInteger assemblyId);
 }
