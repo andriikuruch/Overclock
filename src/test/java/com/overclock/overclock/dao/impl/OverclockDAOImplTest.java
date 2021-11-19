@@ -67,8 +67,20 @@ public class OverclockDAOImplTest {
 
     @Test
     @Transactional
+    public void saveOverclock_WrongAssemblyId() {
+        Assertions.assertFalse(overclockDAO.save(CreateUtilities.createOverclock(), BigInteger.valueOf(5)));
+    }
+
+    @Test
+    @Transactional
     public void updateOverclock_WithNewValidOverclock() {
         Assertions.assertTrue(overclockDAO.update(BigInteger.valueOf(11), CreateUtilities.createOverclock()));
+    }
+
+    @Test
+    @Transactional
+    public void updateOverclock_WithNewInvalidOverclock() {
+        Assertions.assertFalse(overclockDAO.update(BigInteger.valueOf(11), CreateUtilities.createBadOverclock()));
     }
 
     @Test
@@ -79,13 +91,19 @@ public class OverclockDAOImplTest {
 
     @Test
     @Transactional
+    public void updateOverclock_WrongId() {
+        Assertions.assertFalse(overclockDAO.update(BigInteger.valueOf(1), CreateUtilities.createOverclock()));
+    }
+
+    @Test
+    @Transactional
     public void deleteValidOverclock() {
         Assertions.assertTrue(overclockDAO.delete(BigInteger.valueOf(11)));
     }
 
     @Test
     @Transactional
-    public void deleteNotAnOverclock() {
+    public void deleteOverclock_WrongId() {
         Assertions.assertFalse(overclockDAO.delete(BigInteger.valueOf(1)));
     }
 

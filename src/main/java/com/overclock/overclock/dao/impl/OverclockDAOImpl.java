@@ -48,28 +48,34 @@ public class OverclockDAOImpl implements OverclockDAO {
                 LOGGER.log(Level.WARNING, "Overclock for this assembly is already exists: id = " + potentialOverclockId);
                 return false;
             } catch (DataAccessException dataAccessException) {
-                String overclockName = "overclock" + UUID.randomUUID();
-                jdbcTemplate.update("INSERT INTO OBJECTS (OBJECT_ID,PARENT_ID,OBJECT_TYPE_ID,NAME,DESCRIPTION) " +
-                        "VALUES (OBJECT_ID_SEQ.NEXTVAL," + assemblyId + ", 6, '" + overclockName + " ', NULL)");
-                jdbcTemplate.update("INSERT INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE) " +
-                        "VALUES(30, OBJECT_ID_SEQ.CURRVAL, '" + overclock.getCPUFrequency() + "')");
-                jdbcTemplate.update("INSERT INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE) " +
-                        "VALUES(31, OBJECT_ID_SEQ.CURRVAL, '" + overclock.getCPUVoltage() + "')");
-                jdbcTemplate.update("INSERT INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE) " +
-                        "VALUES(32, OBJECT_ID_SEQ.CURRVAL, '" + overclock.getGPUCoreFrequency() + "')");
-                jdbcTemplate.update("INSERT INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE) " +
-                        "VALUES(33, OBJECT_ID_SEQ.CURRVAL, '" + overclock.getGPUMemoryFrequency() + "')");
-                jdbcTemplate.update("INSERT INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE) " +
-                        "VALUES(34, OBJECT_ID_SEQ.CURRVAL, '" + overclock.getGPUVoltage() + "')");
-                jdbcTemplate.update("INSERT INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE) " +
-                        "VALUES(35, OBJECT_ID_SEQ.CURRVAL, '" + overclock.getRAMVoltage() + "')");
-                jdbcTemplate.update("INSERT INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE) " +
-                        "VALUES(36, OBJECT_ID_SEQ.CURRVAL, '" + overclock.getRAMTimings() + "')");
-                jdbcTemplate.update("INSERT INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE) " +
-                        "VALUES(37, OBJECT_ID_SEQ.CURRVAL, '" + overclock.getRAMFrequency() + "')");
-                jdbcTemplate.update("INSERT INTO OBJREFERENCE (ATTR_ID, OBJECT_ID, REFERENCE) " +
-                        "VALUES (2, OBJECT_ID_SEQ.CURRVAL, " + assemblyId + ")");
-                return true;
+                int objectTypeId = jdbcTemplate.queryForObject("SELECT OBJECT_TYPE_ID FROM OBJECTS WHERE OBJECT_ID = " + assemblyId, Integer.class);
+                if (objectTypeId == 1) {
+                    String overclockName = "overclock" + UUID.randomUUID();
+                    jdbcTemplate.update("INSERT INTO OBJECTS (OBJECT_ID,PARENT_ID,OBJECT_TYPE_ID,NAME,DESCRIPTION) " +
+                            "VALUES (OBJECT_ID_SEQ.NEXTVAL," + assemblyId + ", 6, '" + overclockName + " ', NULL)");
+                    jdbcTemplate.update("INSERT INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE) " +
+                            "VALUES(30, OBJECT_ID_SEQ.CURRVAL, '" + overclock.getCPUFrequency() + "')");
+                    jdbcTemplate.update("INSERT INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE) " +
+                            "VALUES(31, OBJECT_ID_SEQ.CURRVAL, '" + overclock.getCPUVoltage() + "')");
+                    jdbcTemplate.update("INSERT INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE) " +
+                            "VALUES(32, OBJECT_ID_SEQ.CURRVAL, '" + overclock.getGPUCoreFrequency() + "')");
+                    jdbcTemplate.update("INSERT INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE) " +
+                            "VALUES(33, OBJECT_ID_SEQ.CURRVAL, '" + overclock.getGPUMemoryFrequency() + "')");
+                    jdbcTemplate.update("INSERT INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE) " +
+                            "VALUES(34, OBJECT_ID_SEQ.CURRVAL, '" + overclock.getGPUVoltage() + "')");
+                    jdbcTemplate.update("INSERT INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE) " +
+                            "VALUES(35, OBJECT_ID_SEQ.CURRVAL, '" + overclock.getRAMVoltage() + "')");
+                    jdbcTemplate.update("INSERT INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE) " +
+                            "VALUES(36, OBJECT_ID_SEQ.CURRVAL, '" + overclock.getRAMTimings() + "')");
+                    jdbcTemplate.update("INSERT INTO ATTRIBUTES(ATTR_ID, OBJECT_ID, VALUE) " +
+                            "VALUES(37, OBJECT_ID_SEQ.CURRVAL, '" + overclock.getRAMFrequency() + "')");
+                    jdbcTemplate.update("INSERT INTO OBJREFERENCE (ATTR_ID, OBJECT_ID, REFERENCE) " +
+                            "VALUES (2, OBJECT_ID_SEQ.CURRVAL, " + assemblyId + ")");
+                    return true;
+                } else {
+                    LOGGER.log(Level.WARNING, "Identifier belongs not to a assembly");
+                    return false;
+                }
             }
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
@@ -82,7 +88,7 @@ public class OverclockDAOImpl implements OverclockDAO {
     @Transactional(rollbackFor = DataAccessException.class)
     public boolean delete(BigInteger id) {
         try {
-            int objectTypeId = jdbcTemplate.queryForObject("SELECT OBJECT_TYPE_ID FROM OBJECTS WHERE object_id = " + id, Integer.class);
+            int objectTypeId = jdbcTemplate.queryForObject("SELECT OBJECT_TYPE_ID FROM OBJECTS WHERE OBJECT_ID = " + id, Integer.class);
             if (objectTypeId == 6) {
                 jdbcTemplate.update("DELETE FROM ATTRIBUTES WHERE OBJECT_ID = "+ id);
                 jdbcTemplate.update("DELETE FROM OBJREFERENCE WHERE OBJECT_ID = "+ id +" OR REFERENCE = "+ id);
@@ -107,31 +113,37 @@ public class OverclockDAOImpl implements OverclockDAO {
             return false;
         }
         try {
-            jdbcTemplate.update("UPDATE ATTRIBUTES " +
-                    "SET VALUE = '" + newOverclock.getCPUFrequency() + "' " +
-                    "WHERE ATTR_ID = 30 AND OBJECT_ID = " + id);
-            jdbcTemplate.update("UPDATE ATTRIBUTES " +
-                    "SET VALUE = '" + newOverclock.getCPUVoltage() + "' " +
-                    "WHERE ATTR_ID = 31 AND OBJECT_ID = " + id);
-            jdbcTemplate.update("UPDATE ATTRIBUTES " +
-                    "SET VALUE = '" + newOverclock.getGPUCoreFrequency() + "' " +
-                    "WHERE ATTR_ID = 32 AND OBJECT_ID = " + id);
-            jdbcTemplate.update("UPDATE ATTRIBUTES " +
-                    "SET VALUE = '" + newOverclock.getGPUMemoryFrequency() + "' " +
-                    "WHERE ATTR_ID = 33 AND OBJECT_ID = " + id);
-            jdbcTemplate.update("UPDATE ATTRIBUTES " +
-                    "SET VALUE = '" + newOverclock.getGPUVoltage() + "' " +
-                    "WHERE ATTR_ID = 34 AND OBJECT_ID = " + id);
-            jdbcTemplate.update("UPDATE ATTRIBUTES " +
-                    "SET VALUE = '" + newOverclock.getRAMVoltage() + "' " +
-                    "WHERE ATTR_ID = 35 AND OBJECT_ID = " + id);
-            jdbcTemplate.update("UPDATE ATTRIBUTES " +
-                    "SET VALUE = '" + newOverclock.getRAMTimings() + "' " +
-                    "WHERE ATTR_ID = 36 AND OBJECT_ID = " + id);
-            jdbcTemplate.update("UPDATE ATTRIBUTES " +
-                    "SET VALUE = '" + newOverclock.getRAMFrequency() + "' " +
-                    "WHERE ATTR_ID = 37 AND OBJECT_ID = " + id);
-            return true;
+            int objectTypeId = jdbcTemplate.queryForObject("SELECT OBJECT_TYPE_ID FROM OBJECTS WHERE OBJECT_ID = " + id, Integer.class);
+            if (objectTypeId == 6) {
+                jdbcTemplate.update("UPDATE ATTRIBUTES " +
+                        "SET VALUE = '" + newOverclock.getCPUFrequency() + "' " +
+                        "WHERE ATTR_ID = 30 AND OBJECT_ID = " + id);
+                jdbcTemplate.update("UPDATE ATTRIBUTES " +
+                        "SET VALUE = '" + newOverclock.getCPUVoltage() + "' " +
+                        "WHERE ATTR_ID = 31 AND OBJECT_ID = " + id);
+                jdbcTemplate.update("UPDATE ATTRIBUTES " +
+                        "SET VALUE = '" + newOverclock.getGPUCoreFrequency() + "' " +
+                        "WHERE ATTR_ID = 32 AND OBJECT_ID = " + id);
+                jdbcTemplate.update("UPDATE ATTRIBUTES " +
+                        "SET VALUE = '" + newOverclock.getGPUMemoryFrequency() + "' " +
+                        "WHERE ATTR_ID = 33 AND OBJECT_ID = " + id);
+                jdbcTemplate.update("UPDATE ATTRIBUTES " +
+                        "SET VALUE = '" + newOverclock.getGPUVoltage() + "' " +
+                        "WHERE ATTR_ID = 34 AND OBJECT_ID = " + id);
+                jdbcTemplate.update("UPDATE ATTRIBUTES " +
+                        "SET VALUE = '" + newOverclock.getRAMVoltage() + "' " +
+                        "WHERE ATTR_ID = 35 AND OBJECT_ID = " + id);
+                jdbcTemplate.update("UPDATE ATTRIBUTES " +
+                        "SET VALUE = '" + newOverclock.getRAMTimings() + "' " +
+                        "WHERE ATTR_ID = 36 AND OBJECT_ID = " + id);
+                jdbcTemplate.update("UPDATE ATTRIBUTES " +
+                        "SET VALUE = '" + newOverclock.getRAMFrequency() + "' " +
+                        "WHERE ATTR_ID = 37 AND OBJECT_ID = " + id);
+                return true;
+            } else {
+                LOGGER.log(Level.WARNING, "Identifier belongs not to a overclock");
+                return false;
+            }
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
