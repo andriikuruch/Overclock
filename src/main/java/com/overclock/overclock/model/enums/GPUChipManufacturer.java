@@ -15,12 +15,9 @@ public enum GPUChipManufacturer {
     }
 
     public static GPUChipManufacturer fromInt(int id) {
-        if (Nvidia.toInt() == id)
-            return Nvidia;
-
         if (AMD.toInt() == id)
             return AMD;
 
-        return null;
+        return Nvidia;
     }
 }

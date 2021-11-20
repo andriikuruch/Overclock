@@ -15,12 +15,9 @@ public enum ChipsetManufacturer {
     }
 
     public static ChipsetManufacturer fromInt(int id) {
-        if (Intel.toInt() == id)
-            return Intel;
-
         if (AMD.toInt() == id)
             return AMD;
 
-        return null;
+        return Intel;
     }
 }

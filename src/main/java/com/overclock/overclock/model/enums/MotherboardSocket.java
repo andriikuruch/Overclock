@@ -16,15 +16,12 @@ public enum MotherboardSocket {
     }
 
     public static MotherboardSocket fromInt(int id) {
-        if (Soc1151.toInt() == id)
-            return Soc1151;
-
         if (Soc1200.toInt() == id)
             return Soc1200;
 
         if (AM4.toInt() == id)
             return AM4;
 
-        return null;
+        return Soc1151;
     }
 }

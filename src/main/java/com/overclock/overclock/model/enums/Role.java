@@ -1,8 +1,8 @@
 package com.overclock.overclock.model.enums;
 
 public enum Role {
-    ADMIN(90),
-    USER(89);
+    ADMIN(88),
+    USER(87);
 
     private int id;
 
@@ -15,12 +15,9 @@ public enum Role {
     }
 
     public static Role fromInt(int id) {
-        if (USER.toInt() == id)
-            return USER;
-
         if (ADMIN.toInt() == id)
             return ADMIN;
 
-        return null;
+        return USER;
     }
 }

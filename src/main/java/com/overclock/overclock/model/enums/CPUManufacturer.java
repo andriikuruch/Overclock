@@ -15,12 +15,9 @@ public enum CPUManufacturer {
     }
 
     public static CPUManufacturer fromInt(int id) {
-        if (Intel.toInt() == id)
-            return Intel;
-
         if (AMD.toInt() == id)
             return AMD;
 
-        return null;
+        return Intel;
     }
 }
