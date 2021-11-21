@@ -36,6 +36,12 @@ public class CreateUtilities {
                 .build();
     }
 
+    public static CPU createBadCPU() {
+        return new CPU.Builder(BigInteger.valueOf(5), "Bad CPU")
+                .setManufacturer(CPUManufacturer.Intel)
+                .build();
+    }
+
     public static GPU createGpu() {
         return new GPU.Builder(BigInteger.valueOf(7), "Asus ROG STRIX GTX1080 A8G GAMING")
                 .setChipManufacturer(GPUChipManufacturer.Nvidia)

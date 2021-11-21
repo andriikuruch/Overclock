@@ -5,7 +5,7 @@ import com.overclock.overclock.model.CPU;
 import java.math.BigInteger;
 import java.util.List;
 
-public interface CPU_DAO {
+public interface CpuDAO {
     CPU getById(BigInteger id);
     CPU getByAssemblyId(BigInteger assemblyId);
     List<CPU> getAll();

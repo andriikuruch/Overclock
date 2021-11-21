@@ -1,6 +1,6 @@
 package com.overclock.overclock.service.impl;
 
-import com.overclock.overclock.dao.CPU_DAO;
+import com.overclock.overclock.dao.CpuDAO;
 import com.overclock.overclock.model.CPU;
 import com.overclock.overclock.service.CPUService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +13,10 @@ import java.util.List;
 @Service
 @Scope("singleton")
 public class CPUServiceImpl implements CPUService {
-    private CPU_DAO cpuDAO;
+    private CpuDAO cpuDAO;
 
     @Autowired
-    public void setCpuDAO(CPU_DAO cpuDAO) {
+    public void setCpuDAO(CpuDAO cpuDAO) {
         this.cpuDAO = cpuDAO;
     }
 
