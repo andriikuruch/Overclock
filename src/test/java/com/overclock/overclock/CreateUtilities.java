@@ -2,11 +2,12 @@ package com.overclock.overclock;
 
 import com.overclock.overclock.model.*;
 import com.overclock.overclock.model.enums.*;
-import org.junit.jupiter.api.Assertions;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class CreateUtilities {
     public static Motherboard createMotherboard() {
@@ -59,6 +60,31 @@ public class CreateUtilities {
                 .setFrequency(BigInteger.valueOf(2666))
                 .setCapacity(BigInteger.valueOf(16))
                 .setVoltage(BigDecimal.valueOf(1.2))
+                .build();
+    }
+
+    public static Assembly createAssemblyWithFullInformation() {
+        List<Comment> comments = new ArrayList<>();
+        comments.add(new Comment.Builder()
+                .setId(BigInteger.valueOf(15))
+                .setAuthor("username1")
+                .setCommentMessage("OMG!")
+                .build());
+        comments.add(new Comment.Builder()
+                .setId(BigInteger.valueOf(14))
+                .setAuthor("username1")
+                .setCommentMessage("Good!")
+                .build());
+
+        return new Assembly.Builder(BigInteger.valueOf(1), "Assembly1")
+                .setRam(createRAM())
+                .setGpu(createGpu())
+                .setCpu(createCpu())
+                .setMotherboard(createMotherboard())
+                .setScore(BigInteger.valueOf(3500))
+                .setAuthor(BigInteger.valueOf(12))
+                .setOverclock(BigInteger.valueOf(11))
+                .setComments(comments)
                 .build();
     }
 

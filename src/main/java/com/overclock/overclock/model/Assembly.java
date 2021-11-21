@@ -165,20 +165,32 @@ public class Assembly {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Assembly assembly = (Assembly) o;
-        return Objects.equals(getId(), assembly.getId()) &&
-                Objects.equals(getName(), assembly.getName()) &&
-                Objects.equals(getMotherboard(), assembly.getMotherboard()) &&
-                Objects.equals(getCpu(), assembly.getCpu()) &&
-                Objects.equals(getGpu(), assembly.getGpu()) &&
-                Objects.equals(getRam(), assembly.getRam()) &&
-                Objects.equals(getAuthor(), assembly.getAuthor()) &&
-                Objects.equals(getComments(), assembly.getComments()) &&
-                Objects.equals(getOverclock(), assembly.getOverclock()) &&
-                Objects.equals(getScore(), assembly.getScore());
+        return id.equals(assembly.id) && name.equals(assembly.name)
+                && motherboard.equals(assembly.motherboard)
+                && cpu.equals(assembly.cpu) && gpu.equals(assembly.gpu)
+                && ram.equals(assembly.ram) && author.equals(assembly.author)
+                && Objects.equals(overclock, assembly.overclock)
+                && score.equals(assembly.score);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getName(), getMotherboard(), getCpu(), getGpu(), getRam(), getAuthor(), getComments(), getOverclock(), getScore());
+    }
+
+    @Override
+    public String toString() {
+        return "Assembly{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", motherboard=" + motherboard +
+                ", cpu=" + cpu +
+                ", gpu=" + gpu +
+                ", ram=" + ram +
+                ", author=" + author +
+                ", comments=" + comments +
+                ", overclock=" + overclock +
+                ", score=" + score +
+                '}';
     }
 }

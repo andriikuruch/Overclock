@@ -30,6 +30,8 @@ public class User {
 
     @NotNull
     private Role role;
+    @NotNull
+    private boolean isActive;
 
     public BigInteger getId() {
         return id;
@@ -79,6 +81,14 @@ public class User {
         this.role = role;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
     public static class Builder {
 
         private User user;
@@ -114,6 +124,11 @@ public class User {
 
         public Builder setRole(Role role) {
             user.role = role;
+            return this;
+        }
+
+        public Builder setIsActive(boolean isActive) {
+            user.isActive = isActive;
             return this;
         }
 
