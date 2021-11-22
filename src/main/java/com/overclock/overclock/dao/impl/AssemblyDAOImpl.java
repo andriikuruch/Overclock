@@ -34,7 +34,7 @@ public class AssemblyDAOImpl implements AssemblyDAO {
     private CpuDAO cpuDAO;
 
     @Autowired
-    private GPU_DAO gpuDao;
+    private GpuDAO gpuDao;
 
     @Autowired
     private MotherboardDAO motherboardDAO;

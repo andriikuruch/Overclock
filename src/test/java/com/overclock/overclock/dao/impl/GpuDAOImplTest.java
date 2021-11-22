@@ -1,6 +1,6 @@
 package com.overclock.overclock.dao.impl;
 
-import com.overclock.overclock.dao.GPU_DAO;
+import com.overclock.overclock.dao.GpuDAO;
 import com.overclock.overclock.model.GPU;
 import com.overclock.overclock.model.enums.GPUChip;
 import com.overclock.overclock.model.enums.GPUChipManufacturer;
@@ -18,10 +18,10 @@ import java.util.List;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class GPU_DAOImplTest {
+public class GpuDAOImplTest {
 
     @Autowired
-    GPU_DAO GPU_DAO;
+    GpuDAO GpuDAO;
     private GPU gpuTest = new GPU.Builder(BigInteger.valueOf(7), "Asus ROG STRIX GTX1080 A8G GAMING")
             .setChipManufacturer(GPUChipManufacturer.Nvidia)
             .setChip(GPUChip.GeForce_GTX_1080)
@@ -32,41 +32,41 @@ public class GPU_DAOImplTest {
             .build();
 
     @Test
-    public void getById_ValidID() {
-        Assertions.assertTrue(gpuTest.equals(GPU_DAO.getById(BigInteger.valueOf(7))));
-        Assertions.assertFalse(GPU_DAO.getById(BigInteger.valueOf(7)).equals(new GPU.Builder(BigInteger.valueOf(1), "").build()));
-        Assertions.assertEquals(gpuTest.hashCode(), GPU_DAO.getById(BigInteger.valueOf(7)).hashCode());
+    public void getByIdValidID() {
+        Assertions.assertTrue(gpuTest.equals(GpuDAO.getById(BigInteger.valueOf(7))));
+        Assertions.assertFalse(GpuDAO.getById(BigInteger.valueOf(7)).equals(new GPU.Builder(BigInteger.valueOf(1), "").build()));
+        Assertions.assertEquals(gpuTest.hashCode(), GpuDAO.getById(BigInteger.valueOf(7)).hashCode());
     }
 
     @Test
-    public void getById_InvalidID() {
-        Assertions.assertNull(GPU_DAO.getById(BigInteger.valueOf(-1)));
-        Assertions.assertNull(GPU_DAO.getById(BigInteger.valueOf(0)));
-        Assertions.assertNull(GPU_DAO.getById(BigInteger.valueOf(1)));
+    public void getByIdInvalidID() {
+        Assertions.assertNull(GpuDAO.getById(BigInteger.valueOf(-1)));
+        Assertions.assertNull(GpuDAO.getById(BigInteger.valueOf(0)));
+        Assertions.assertNull(GpuDAO.getById(BigInteger.valueOf(1)));
     }
 
     @Test
-    public void getByAssemblyId_ValidID() {
-        Assertions.assertTrue(gpuTest.equals(GPU_DAO.getByAssemblyId(BigInteger.valueOf(1))));
+    public void getByAssemblyIdValidID() {
+        Assertions.assertTrue(gpuTest.equals(GpuDAO.getByAssemblyId(BigInteger.valueOf(1))));
     }
 
     @Test
-    public void getByAssemblyId_InvalidID() {
-        Assertions.assertNull(GPU_DAO.getByAssemblyId(BigInteger.valueOf(-1)));
-        Assertions.assertNull(GPU_DAO.getByAssemblyId(BigInteger.valueOf(0)));
-        Assertions.assertNull(GPU_DAO.getByAssemblyId(BigInteger.valueOf(7)));
+    public void getByAssemblyIdInvalidID() {
+        Assertions.assertNull(GpuDAO.getByAssemblyId(BigInteger.valueOf(-1)));
+        Assertions.assertNull(GpuDAO.getByAssemblyId(BigInteger.valueOf(0)));
+        Assertions.assertNull(GpuDAO.getByAssemblyId(BigInteger.valueOf(7)));
     }
 
     @Test
     public void getAll() {
-        List<GPU> allGpu = GPU_DAO.getAll();
+        List<GPU> allGpu = GpuDAO.getAll();
         Assertions.assertNotNull(allGpu);
         Assertions.assertTrue(gpuTest.equals(allGpu.get(0)));
     }
 
     @Test
     @Transactional
-    public void save_ValidObject() {
+    public void saveValidObject() {
         GPU gpu = new GPU.Builder(BigInteger.valueOf(0), "test save - valid gpu")
                 .setChipManufacturer(GPUChipManufacturer.AMD)
                 .setChip(GPUChip.GeForce_GT_1030)
@@ -75,22 +75,22 @@ public class GPU_DAOImplTest {
                 .setMemoryFrequency(BigInteger.valueOf(1))
                 .setVoltage(BigDecimal.valueOf(1))
                 .build();
-        Assertions.assertTrue(GPU_DAO.save(gpu));
+        Assertions.assertTrue(GpuDAO.save(gpu));
     }
 
     @Test
     @Transactional
-    public void save_InvalidObject() {
+    public void saveInvalidObject() {
         GPU gpu_invalid = new GPU.Builder(BigInteger.valueOf(0), "test save - invalid gpu")
                 .setVoltage(BigDecimal.valueOf(1))
                 .build();
-        Assertions.assertFalse(GPU_DAO.save(null));
-        Assertions.assertFalse(GPU_DAO.save(gpu_invalid));
+        Assertions.assertFalse(GpuDAO.save(null));
+        Assertions.assertFalse(GpuDAO.save(gpu_invalid));
     }
 
     @Test
     @Transactional
-    public void update_Valid() {
+    public void updateValid() {
         GPU gpu = new GPU.Builder(BigInteger.valueOf(0), "test update - valid gpu")
                 .setChipManufacturer(GPUChipManufacturer.AMD)
                 .setChip(GPUChip.GeForce_GT_1030)
@@ -99,33 +99,33 @@ public class GPU_DAOImplTest {
                 .setMemoryFrequency(BigInteger.valueOf(1))
                 .setVoltage(BigDecimal.valueOf(1))
                 .build();
-        Assertions.assertTrue(GPU_DAO.update(BigInteger.valueOf(8), gpu));
+        Assertions.assertTrue(GpuDAO.update(BigInteger.valueOf(8), gpu));
     }
 
     @Test
     @Transactional
-    public void update_InvalidID() {
-        Assertions.assertFalse(GPU_DAO.update(BigInteger.valueOf(1), gpuTest));
+    public void updateInvalidID() {
+        Assertions.assertFalse(GpuDAO.update(BigInteger.valueOf(1), gpuTest));
     }
 
     @Test
     @Transactional
-    public void update_InvalidObject() {
+    public void updateInvalidObject() {
         GPU gpuInvalid = new GPU.Builder(BigInteger.valueOf(7), "test update - invalid gpu")
                 .setChipManufacturer(GPUChipManufacturer.AMD)
                 .build();
-        Assertions.assertFalse(GPU_DAO.update(BigInteger.valueOf(8), gpuInvalid));
+        Assertions.assertFalse(GpuDAO.update(BigInteger.valueOf(8), gpuInvalid));
     }
 
     @Test
     @Transactional
-    public void delete_ValidID() {
-        Assertions.assertTrue(GPU_DAO.delete(BigInteger.valueOf(8)));
+    public void deleteValidID() {
+        Assertions.assertTrue(GpuDAO.delete(BigInteger.valueOf(8)));
     }
 
     @Test
     @Transactional
-    public void delete_InvalidID() {
-        Assertions.assertFalse(GPU_DAO.delete(BigInteger.valueOf(1)));
+    public void deleteInvalidID() {
+        Assertions.assertFalse(GpuDAO.delete(BigInteger.valueOf(1)));
     }
 }

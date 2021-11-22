@@ -82,7 +82,7 @@ public class OverclockDAOImpl implements OverclockDAO, QueryConstants {
             int objectTypeId = jdbcTemplate.queryForObject(SQL_SELECT_OBJECT_TYPE_ID_BY_OBJECT_ID, Integer.class, id);
             if (objectTypeId == 6) { /* Overclock */
                 jdbcTemplate.update(SQL_DELETE_FROM_ATTRIBUTES, id);
-                jdbcTemplate.update(SQL_DELETE__FROM_OBJREFERENCE, id, id);
+                jdbcTemplate.update(SQL_DELETE_FROM_OBJREFERENCE, id, id);
                 jdbcTemplate.update(SQL_DELETE_FROM_OBJECTS, id);
                 return true;
             } else {

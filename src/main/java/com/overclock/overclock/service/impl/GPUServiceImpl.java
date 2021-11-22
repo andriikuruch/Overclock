@@ -1,6 +1,6 @@
 package com.overclock.overclock.service.impl;
 
-import com.overclock.overclock.dao.GPU_DAO;
+import com.overclock.overclock.dao.GpuDAO;
 import com.overclock.overclock.model.GPU;
 import com.overclock.overclock.service.GPUService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +13,10 @@ import java.util.List;
 @Service
 @Scope("singleton")
 public class GPUServiceImpl implements GPUService {
-    private GPU_DAO gpuDAO;
+    private GpuDAO gpuDAO;
 
     @Autowired
-    public void setGpuDAO(GPU_DAO gpuDAO) {
+    public void setGpuDAO(GpuDAO gpuDAO) {
         this.gpuDAO = gpuDAO;
     }
 
