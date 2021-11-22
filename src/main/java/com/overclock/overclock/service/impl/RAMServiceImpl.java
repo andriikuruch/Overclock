@@ -1,6 +1,6 @@
 package com.overclock.overclock.service.impl;
 
-import com.overclock.overclock.dao.RAM_DAO;
+import com.overclock.overclock.dao.RamDAO;
 import com.overclock.overclock.model.RAM;
 import com.overclock.overclock.service.RAMService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +13,10 @@ import java.util.List;
 @Service
 @Scope("singleton")
 public class RAMServiceImpl implements RAMService {
-    private RAM_DAO ramDAO;
+    private RamDAO ramDAO;
 
     @Autowired
-    public void setRamDAO(RAM_DAO ramDAO) {
+    public void setRamDAO(RamDAO ramDAO) {
         this.ramDAO = ramDAO;
     }
 

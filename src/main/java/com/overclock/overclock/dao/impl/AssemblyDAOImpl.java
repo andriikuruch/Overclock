@@ -40,7 +40,7 @@ public class AssemblyDAOImpl implements AssemblyDAO {
     private MotherboardDAO motherboardDAO;
 
     @Autowired
-    private RAM_DAO ramDao;
+    private RamDAO ramDao;
 
     @Override
     public Assembly getById(BigInteger id) {

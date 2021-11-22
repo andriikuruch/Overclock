@@ -25,6 +25,10 @@ public interface QueryConstants {
             "INSERT INTO OBJREFERENCE (ATTR_ID, OBJECT_ID, REFERENCE) " +
             "VALUES (?, OBJECT_ID_SEQ.CURRVAL, ?)";
 
+    final static String SQL_UPDATE_OBJECTS_NAME =
+            "UPDATE OBJECTS SET NAME = ? " +
+            "WHERE OBJECT_ID = ?";
+
     final static String SQL_UPDATE_ATTRIBUTES_VALUE =
             "UPDATE ATTRIBUTES SET VALUE = ? " +
             "WHERE ATTR_ID = ? AND OBJECT_ID = ?";

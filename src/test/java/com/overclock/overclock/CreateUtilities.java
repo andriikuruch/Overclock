@@ -63,6 +63,12 @@ public class CreateUtilities {
                 .build();
     }
 
+    public static RAM createBadRAM() {
+        return new RAM.Builder(BigInteger.valueOf(9), "Bad RAM")
+                .setVoltage(BigDecimal.valueOf(1.0))
+                .build();
+    }
+
     public static Assembly createAssemblyWithFullInformation() {
         List<Comment> comments = new ArrayList<>();
         comments.add(new Comment.Builder()

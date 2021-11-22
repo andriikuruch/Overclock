@@ -2,12 +2,14 @@ package com.overclock.overclock.dao.impl.mapper;
 
 import com.overclock.overclock.model.RAM;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class RAM_RowMapper implements RowMapper<RAM> {
+@Component
+public class RAMRowMapper implements RowMapper<RAM> {
     @Override
     public RAM mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new RAM.Builder(
