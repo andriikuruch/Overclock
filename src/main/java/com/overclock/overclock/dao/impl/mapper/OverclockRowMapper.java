@@ -2,11 +2,13 @@ package com.overclock.overclock.dao.impl.mapper;
 
 import com.overclock.overclock.model.Overclock;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Component
 public class OverclockRowMapper implements RowMapper<Overclock> {
     @Override
     public Overclock mapRow(ResultSet rs, int rowNum) throws SQLException {
