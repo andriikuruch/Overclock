@@ -12,7 +12,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -35,11 +34,11 @@ public class CommentDAOImplTest {
     }
 
     @Test
-    public void getAllCommentsByAssemblyId_EmptyResult() {
+    public void getAllCommentsByWrongAssemblyId() {
         List<Comment> comments = commentDAO.getAllCommentsByAssemblyId(BigInteger.valueOf(4));
 
         Assertions.assertNotNull(comments);
-        Assertions.assertEquals(new ArrayList<Comment>(), comments);
+        Assertions.assertTrue(comments.isEmpty());
     }
 
     @Test
@@ -58,30 +57,17 @@ public class CommentDAOImplTest {
     }
 
     @Test
-    public void getLimitedListOfCommentsByAssemblyId_WithNegativeLimit() {
+    public void getLimitedListOfCommentsByAssemblyIdWithNegativeLimit() {
         BigInteger limit = BigInteger.valueOf(-3);
         List<Comment> comments = commentDAO.getLimitedListOfCommentsByAssemblyId(BigInteger.valueOf(1), limit);
 
         Assertions.assertNotNull(comments);
-        Assertions.assertEquals(new ArrayList<Comment>(), comments);
+        Assertions.assertTrue(comments.isEmpty());
     }
     @Test
     @Transactional
     public void saveValidComment() {
         Assertions.assertTrue(commentDAO.save(CreateUtilities.createComment(), BigInteger.valueOf(2), BigInteger.valueOf(12)));
-    }
-
-    @Test
-    @Transactional
-    public void saveComment_Null() {
-       Assertions.assertFalse(commentDAO.save(null, BigInteger.valueOf(2), BigInteger.valueOf(12)));
-    }
-
-    @Test
-    @Transactional
-    public void saveComment_WrongAuthorIdAndAssemblyId() {
-        Assertions.assertFalse(commentDAO.save(CreateUtilities.createComment(), BigInteger.valueOf(10), BigInteger.valueOf(12)));
-        Assertions.assertFalse(commentDAO.save(CreateUtilities.createComment(), BigInteger.valueOf(2), BigInteger.valueOf(2)));
     }
 
     @Test
@@ -92,13 +78,31 @@ public class CommentDAOImplTest {
 
     @Test
     @Transactional
+    public void saveNull() {
+       Assertions.assertFalse(commentDAO.save(null, BigInteger.valueOf(2), BigInteger.valueOf(12)));
+    }
+
+    @Test
+    @Transactional
+    public void saveCommentWithWrongAuthorId() {
+        Assertions.assertFalse(commentDAO.save(CreateUtilities.createComment(), BigInteger.valueOf(2), BigInteger.valueOf(2)));
+    }
+
+    @Test
+    @Transactional
+    public void saveCommentWithWrongAssemblyId() {
+        Assertions.assertFalse(commentDAO.save(CreateUtilities.createComment(), BigInteger.valueOf(10), BigInteger.valueOf(12)));
+    }
+
+    @Test
+    @Transactional
     public void deleteComment() {
         Assertions.assertTrue(commentDAO.delete(BigInteger.valueOf(16)));
     }
 
     @Test
     @Transactional
-    public void deleteComment_WrongId() {
+    public void deleteNotAComment() {
         Assertions.assertFalse(commentDAO.delete(BigInteger.valueOf(1)));
     }
 
@@ -110,7 +114,7 @@ public class CommentDAOImplTest {
 
     @Test
     @Transactional
-    public void deleteAllCommentsByAssemblyId_WrongAssemblyId() {
+    public void deleteAllCommentsByAssemblyIdWithWrongAssemblyId() {
         Assertions.assertFalse(commentDAO.deleteAllCommentsByAssemblyId(BigInteger.valueOf(3)));
     }
 }
