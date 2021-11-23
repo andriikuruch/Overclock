@@ -31,6 +31,9 @@ public class AssemblyDAOImpl implements AssemblyDAO {
     private CommentDAO commentDAO;
 
     @Autowired
+    private OverclockDAO overclockDAO;
+
+    @Autowired
     private CpuDAO cpuDAO;
 
     @Autowired
@@ -112,10 +115,11 @@ public class AssemblyDAOImpl implements AssemblyDAO {
             int result = 0;
             result += jdbcTemplate.update(DELETE_SCORE, id);
             boolean successfulCommentDeletingResult = commentDAO.deleteAllCommentsByAssemblyId(id);
+            boolean successfulOverclockDeletingResult = overclockDAO.deleteByAssemblyId(id);
             result += jdbcTemplate.update(DELETE_REFERENCES, id);
             result += jdbcTemplate.update(DELETE_ASSEMBLY, id);
 
-            if (result != 7 && !successfulCommentDeletingResult) {
+            if (result != 7 && !successfulCommentDeletingResult && !successfulOverclockDeletingResult) {
                 LOGGER.warn("Can not delete assembly by id=" + id);
                 TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 return false;

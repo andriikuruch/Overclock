@@ -5,9 +5,9 @@ import com.overclock.overclock.model.enums.*;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class CreateUtilities {
     public static Motherboard createMotherboard() {
@@ -70,17 +70,29 @@ public class CreateUtilities {
     }
 
     public static Assembly createAssemblyWithFullInformation() {
-        List<Comment> comments = new ArrayList<>();
-        comments.add(new Comment.Builder()
-                .setId(BigInteger.valueOf(15))
-                .setAuthor("username1")
-                .setCommentMessage("OMG!")
-                .build());
-        comments.add(new Comment.Builder()
-                .setId(BigInteger.valueOf(14))
-                .setAuthor("username1")
-                .setCommentMessage("Good!")
-                .build());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+        Date dateOfComment = null;
+
+        try {
+            dateOfComment = dateFormat.parse("12/10/2021 17:34");
+        } catch (ParseException e) {
+
+        }
+
+        List<Comment> comments = Arrays.asList(
+                new Comment.Builder()
+                        .setId(BigInteger.valueOf(15))
+                        .setAuthor("user1")
+                        .setDateOfComment(dateOfComment)
+                        .setCommentMessage("OMG!")
+                        .build(),
+                new Comment.Builder()
+                        .setId(BigInteger.valueOf(14))
+                        .setAuthor("user1")
+                        .setDateOfComment(dateOfComment)
+                        .setCommentMessage("Good!")
+                        .build()
+        );
 
         return new Assembly.Builder(BigInteger.valueOf(1), "Assembly1")
                 .setRam(createRAM())

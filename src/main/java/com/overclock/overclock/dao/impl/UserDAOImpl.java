@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Repository
@@ -54,8 +55,10 @@ public class UserDAOImpl implements UserDAO {
     @Transactional
     public boolean save(String username, String password, String email, boolean isActive) {
         try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             String userIsActive = isActive ? "1" : "0";
-            jdbcTemplate.update(INSERT_USER, username, userIsActive, password, email, Role.USER.toInt());
+            jdbcTemplate.update(INSERT_USER, username, userIsActive, password, email,
+                    dateFormat.format(new Date()), Role.USER.toInt());
             return true;
         } catch (DataAccessException e) {
             LOGGER.error(e.getMessage(), e);

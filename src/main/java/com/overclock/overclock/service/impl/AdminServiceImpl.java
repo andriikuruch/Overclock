@@ -1,6 +1,6 @@
 package com.overclock.overclock.service.impl;
 
-import com.overclock.overclock.dao.AdminDAO;
+import com.overclock.overclock.dao.UserDAO;
 import com.overclock.overclock.model.User;
 import com.overclock.overclock.service.AdminService;
 import com.overclock.overclock.service.UserService;
@@ -13,17 +13,11 @@ import java.math.BigInteger;
 @Service
 @Scope("singleton")
 public class AdminServiceImpl implements AdminService {
-    private AdminDAO adminDAO;
-    private UserService userService;
+    private UserDAO userDAO;
 
     @Autowired
-    public void setAdminDAO(AdminDAO adminDAO) {
-        this.adminDAO = adminDAO;
-    }
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public void setAdminDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
     @Override
