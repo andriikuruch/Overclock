@@ -18,6 +18,7 @@ public class AssemblyListRowMapper implements RowMapper<Assembly> {
         BigInteger overclockId = overclockIdLong != 0 ? BigInteger.valueOf(overclockIdLong) : null;
 
         BigInteger authorId = BigInteger.valueOf(rs.getLong("AUTHOR_ID"));
+        BigInteger score = BigInteger.valueOf(rs.getLong("SCORE"));
 
         BigInteger motherboardId = BigInteger.valueOf(rs.getLong("MOTHERBOARD_ID"));
         Motherboard motherboard = new Motherboard.Builder(motherboardId,
@@ -42,6 +43,7 @@ public class AssemblyListRowMapper implements RowMapper<Assembly> {
                 .setCpu(cpu)
                 .setGpu(gpu)
                 .setRam(ram)
+                .setScore(score)
                 .build();
     }
 }

@@ -35,11 +35,11 @@ public interface AssemblyDAO {
                             "CPU.OBJECT_ID CPU_ID, CPU.NAME CPU_NAME, " +
                             "GPU.OBJECT_ID GPU_ID, GPU.NAME GPU_NAME, " +
                             "RAM.OBJECT_ID RAM_ID, RAM.NAME RAM_NAME, " +
-                            "AUTHOR_REF.OBJECT_ID AUTHOR_ID " +
+                            "AUTHOR_REF.OBJECT_ID AUTHOR_ID, SCORE.VALUE SCORE " +
                         "FROM OBJECTS ASSEMBLY, OBJECTS RAM, OBJECTS MOTHERBOARD, " +
                             "OBJECTS CPU, OBJECTS GPU, OBJREFERENCE AUTHOR_REF, " +
                             "OBJREFERENCE MOTHERBOARD_REF, OBJREFERENCE CPU_REF, " +
-                            "OBJREFERENCE GPU_REF, OBJREFERENCE RAM_REF " +
+                            "OBJREFERENCE GPU_REF, OBJREFERENCE RAM_REF, ATTRIBUTES SCORE " +
                         "WHERE ASSEMBLY.OBJECT_TYPE_ID = 1 " +
                             "AND MOTHERBOARD.OBJECT_TYPE_ID = 2 " +
                             "AND CPU.OBJECT_TYPE_ID = 3 " +
@@ -47,6 +47,8 @@ public interface AssemblyDAO {
                             "AND RAM.OBJECT_TYPE_ID = 5 " +
                             "AND AUTHOR_REF.ATTR_ID = 1 " +
                             "AND AUTHOR_REF.REFERENCE = ASSEMBLY.OBJECT_ID " +
+                            "AND SCORE.ATTR_ID = 8 /*SCORE*/ " +
+                            "AND SCORE.OBJECT_ID = ASSEMBLY.OBJECT_ID " +
                             "AND MOTHERBOARD_REF.OBJECT_ID = MOTHERBOARD.OBJECT_ID " +
                             "AND MOTHERBOARD_REF.REFERENCE = ASSEMBLY.OBJECT_ID  " +
                             "AND CPU_REF.OBJECT_ID = CPU.OBJECT_ID " +
@@ -60,7 +62,7 @@ public interface AssemblyDAO {
                             "ALL_ASSEMBLIES.CPU_ID, ALL_ASSEMBLIES.CPU_NAME, " +
                             "ALL_ASSEMBLIES.GPU_ID, ALL_ASSEMBLIES.GPU_NAME, " +
                             "ALL_ASSEMBLIES.RAM_ID, ALL_ASSEMBLIES.RAM_NAME, " +
-                            "ALL_ASSEMBLIES.AUTHOR_ID, ALL_OVERCLOCKS.OVERCLOCK_ID " +
+                            "ALL_ASSEMBLIES.AUTHOR_ID, ALL_OVERCLOCKS.OVERCLOCK_ID, ALL_ASSEMBLIES.SCORE " +
                     "FROM ALL_ASSEMBLIES LEFT JOIN ALL_OVERCLOCKS " +
                         "ON (ALL_ASSEMBLIES.ASSEMBLY_ID = ALL_OVERCLOCKS.PARENT_ID) " +
                     "ORDER BY ALL_ASSEMBLIES.ASSEMBLY_ID";
@@ -74,11 +76,11 @@ public interface AssemblyDAO {
                             "CPU.OBJECT_ID CPU_ID, CPU.NAME CPU_NAME, " +
                             "GPU.OBJECT_ID GPU_ID, GPU.NAME GPU_NAME, " +
                             "RAM.OBJECT_ID RAM_ID, RAM.NAME RAM_NAME, " +
-                            "AUTHOR_REF.OBJECT_ID AUTHOR_ID " +
+                            "AUTHOR_REF.OBJECT_ID AUTHOR_ID, SCORE.VALUE SCORE " +
                         "FROM OBJECTS ASSEMBLY, OBJECTS RAM, OBJECTS MOTHERBOARD, " +
                             "OBJECTS CPU, OBJECTS GPU, OBJREFERENCE AUTHOR_REF, " +
                             "OBJREFERENCE MOTHERBOARD_REF, OBJREFERENCE CPU_REF, " +
-                            "OBJREFERENCE GPU_REF, OBJREFERENCE RAM_REF " +
+                            "OBJREFERENCE GPU_REF, OBJREFERENCE RAM_REF, ATTRIBUTES SCORE " +
                         "WHERE ASSEMBLY.OBJECT_TYPE_ID = 1 " +
                             "AND MOTHERBOARD.OBJECT_TYPE_ID = 2 " +
                             "AND CPU.OBJECT_TYPE_ID = 3 " +
@@ -86,6 +88,8 @@ public interface AssemblyDAO {
                             "AND RAM.OBJECT_TYPE_ID = 5 " +
                             "AND AUTHOR_REF.ATTR_ID = 1 " +
                             "AND AUTHOR_REF.OBJECT_ID = ? " +
+                            "AND SCORE.ATTR_ID = 8 /*SCORE*/ " +
+                            "AND SCORE.OBJECT_ID = ASSEMBLY.OBJECT_ID " +
                             "AND MOTHERBOARD_REF.OBJECT_ID = MOTHERBOARD.OBJECT_ID " +
                             "AND MOTHERBOARD_REF.REFERENCE = ASSEMBLY.OBJECT_ID  " +
                             "AND CPU_REF.OBJECT_ID = CPU.OBJECT_ID " +
@@ -99,7 +103,7 @@ public interface AssemblyDAO {
                             "ALL_ASSEMBLIES.CPU_ID, ALL_ASSEMBLIES.CPU_NAME, " +
                             "ALL_ASSEMBLIES.GPU_ID, ALL_ASSEMBLIES.GPU_NAME, " +
                             "ALL_ASSEMBLIES.RAM_ID, ALL_ASSEMBLIES.RAM_NAME, " +
-                            "ALL_ASSEMBLIES.AUTHOR_ID, ALL_OVERCLOCKS.OVERCLOCK_ID " +
+                            "ALL_ASSEMBLIES.AUTHOR_ID, ALL_OVERCLOCKS.OVERCLOCK_ID, ALL_ASSEMBLIES.SCORE " +
                     "FROM ALL_ASSEMBLIES LEFT JOIN ALL_OVERCLOCKS " +
                         "ON (ALL_ASSEMBLIES.ASSEMBLY_ID = ALL_OVERCLOCKS.PARENT_ID) " +
                     "ORDER BY ALL_ASSEMBLIES.ASSEMBLY_ID";
