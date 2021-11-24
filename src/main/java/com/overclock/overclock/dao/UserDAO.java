@@ -43,7 +43,7 @@ public interface UserDAO {
             "INTO ATTRIBUTES (ATTR_ID, OBJECT_ID, VALUE) VALUES (39, OBJECT_ID_SEQ.CURRVAL, ?) /*PASSWORD*/ " +
             "INTO ATTRIBUTES (ATTR_ID, OBJECT_ID, VALUE) VALUES (40, OBJECT_ID_SEQ.CURRVAL, ?) /*EMAIL*/ " +
             "INTO ATTRIBUTES (ATTR_ID, OBJECT_ID, DATE_VALUE) " +
-                "VALUES (41, OBJECT_ID_SEQ.CURRVAL, TO_DATE(?, 'dd/mm/yyyy hh24:mi:ss')) /*REGISTRATION DATE*/ " +
+                "VALUES (41, OBJECT_ID_SEQ.CURRVAL, TO_DATE(?, 'dd/mm/yyyy hh24:mi')) /*REGISTRATION DATE*/ " +
             "INTO ATTRIBUTES (ATTR_ID, OBJECT_ID, LIST_VALUE_ID) " +
                 "VALUES (42, OBJECT_ID_SEQ.CURRVAL, ?) /*ROLE*/ " +
             "SELECT * FROM DUAL";
