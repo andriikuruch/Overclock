@@ -20,9 +20,8 @@ public class UserDAOImplTest {
 
     @Test
     public void getFullInformationById() {
-        User user = userDAO.getFullInformationById(BigInteger.valueOf(137));
+        User user = userDAO.getFullInformationById(BigInteger.valueOf(12));
 
-        System.out.println(user.getRegistrationDate());
         Assert.assertNotNull(user);
     }
 
