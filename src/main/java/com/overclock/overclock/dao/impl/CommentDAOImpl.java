@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.math.BigInteger;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -58,7 +57,7 @@ public class CommentDAOImpl implements CommentDAO, QueryConstants {
                 return false;
             }
             String commentName = "comment" + UUID.randomUUID();
-            String commentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(comment.getDateOfComment());
+            String commentDate = SIMPLE_DATE_FORMAT.format(comment.getDateOfComment());
 
             jdbcTemplate.update(SQL_INSERT_INTO_OBJECTS,assemblyId, 8, commentName, null);          /* Comment */
             jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_DATE_VALUE, 45, commentDate);            /* Date of comment */
