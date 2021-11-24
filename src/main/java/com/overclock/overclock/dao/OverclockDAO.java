@@ -35,9 +35,9 @@ public interface OverclockDAO {
                     "       AND RAM_TIMINGS.OBJECT_ID = OVERCLOCKS.OBJECT_ID " +
                     "       AND RAM_FREQUENCY.OBJECT_ID = OVERCLOCKS.OBJECT_ID";
 
-    Overclock getOverclockById(BigInteger id);
     boolean save(Overclock overclock, BigInteger assemblyId);
     boolean update(BigInteger id, Overclock newOverclock);
     boolean delete(BigInteger id);
     boolean deleteByAssemblyId(BigInteger assemblyId);
+    Overclock getOverclockById(BigInteger id);
 }
