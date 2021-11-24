@@ -3,7 +3,6 @@ package com.overclock.overclock.service.impl;
 import com.overclock.overclock.dao.CommentDAO;
 import com.overclock.overclock.model.Comment;
 import com.overclock.overclock.service.CommentService;
-import com.overclock.overclock.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -14,36 +13,31 @@ import java.util.List;
 @Service
 @Scope("singleton")
 public class CommentServiceImpl implements CommentService {
+    @Autowired
     private CommentDAO commentDAO;
-    private UserService userService;
-
-    @Autowired
-    public void setCommentDAO(CommentDAO commentDAO) {
-        this.commentDAO = commentDAO;
-    }
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
 
     @Override
-    public List<Comment> getLimitListOfComments(BigInteger assemblyId, int limit) {
-        return null;
-    }
-
-    @Override
-    public boolean save(Comment comment, BigInteger assemblyId) {
-        return false;
+    public boolean save(Comment comment, BigInteger assemblyId, BigInteger authorId) {
+        return commentDAO.save(comment, assemblyId, authorId);
     }
 
     @Override
     public boolean delete(BigInteger id) {
-        return false;
+        return commentDAO.delete(id);
     }
 
     @Override
-    public List<Comment> getCommentsByAssembly(BigInteger id) {
-        return null;
+    public boolean deleteAllCommentsByAssemblyId(BigInteger assemblyId) {
+        return commentDAO.deleteAllCommentsByAssemblyId(assemblyId);
+    }
+
+    @Override
+    public List<Comment> getLimitedListOfCommentsByAssemblyId(BigInteger assemblyId, BigInteger limit) {
+        return commentDAO.getLimitedListOfCommentsByAssemblyId(assemblyId, limit);
+    }
+
+    @Override
+    public List<Comment> getAllCommentsByAssemblyId(BigInteger assemblyId) {
+        return commentDAO.getAllCommentsByAssemblyId(assemblyId);
     }
 }

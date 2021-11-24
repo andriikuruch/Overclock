@@ -3,6 +3,7 @@ package com.overclock.overclock.dao;
 import com.overclock.overclock.model.Comment;
 
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public interface CommentDAO {
@@ -32,9 +33,11 @@ public interface CommentDAO {
     static final String SQL_SELECT_LIMITED_LIST_OF_COMMENTS_BY_ASSEMBLY_ID =
             "SELECT * FROM (" + SQL_SELECT_ALL_COMMENTS_BY_ASSEMBLY_ID + ") WHERE rownum <= ?";
 
+    final static SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
     boolean save(Comment comment, BigInteger assemblyId, BigInteger authorId);
-    List<Comment> getLimitedListOfCommentsByAssemblyId(BigInteger assemblyId, BigInteger limit);
-    List<Comment> getAllCommentsByAssemblyId(BigInteger assemblyId);
     boolean delete(BigInteger id);
     boolean deleteAllCommentsByAssemblyId(BigInteger assemblyId);
+    List<Comment> getLimitedListOfCommentsByAssemblyId(BigInteger assemblyId, BigInteger limit);
+    List<Comment> getAllCommentsByAssemblyId(BigInteger assemblyId);
 }

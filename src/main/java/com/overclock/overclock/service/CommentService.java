@@ -6,9 +6,10 @@ import java.math.BigInteger;
 import java.util.List;
 
 public interface CommentService {
-    List<Comment> getLimitListOfComments(BigInteger assemblyId, int limit);
-    boolean save(Comment comment, BigInteger assemblyId);
+    boolean save(Comment comment, BigInteger assemblyId, BigInteger authorId);
     boolean delete(BigInteger id);
-    List<Comment> getCommentsByAssembly(BigInteger id);
+    boolean deleteAllCommentsByAssemblyId(BigInteger assemblyId);
+    List<Comment> getLimitedListOfCommentsByAssemblyId(BigInteger assemblyId, BigInteger limit);
+    List<Comment> getAllCommentsByAssemblyId(BigInteger assemblyId);
 }
 
