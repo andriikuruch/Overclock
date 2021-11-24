@@ -82,7 +82,7 @@ public class AssemblyDAOImplTest {
     @Test
     public void getAll_CorrectResult() {
         List<Assembly> assemblies = assemblyDAO.getAll();
-        int expectedCount = 2;
+        int expectedCount = 4;
 
         Assert.assertFalse(assemblies.isEmpty());
         Assert.assertEquals(expectedCount, assemblies.size());
@@ -91,7 +91,7 @@ public class AssemblyDAOImplTest {
     @Test
     public void getAllByAuthor_CorrectResult() {
         List<Assembly> assemblies = assemblyDAO.getAllByAuthor(authorId);
-        int expectedCount = 2;
+        int expectedCount = 4;
 
         Assert.assertFalse(assemblies.isEmpty());
         Assert.assertEquals(expectedCount, assemblies.size());
