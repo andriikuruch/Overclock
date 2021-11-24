@@ -13,35 +13,31 @@ import java.util.List;
 @Service
 @Scope("singleton")
 public class MotherboardServiceImpl implements MotherboardService {
-    private MotherboardDAO motherboardDAO;
-
     @Autowired
-    public void setMotherboardDAO(MotherboardDAO motherboardDAO) {
-        this.motherboardDAO = motherboardDAO;
-    }
+    private MotherboardDAO motherboardDAO;
 
     @Override
     public Motherboard getById(BigInteger id) {
-        return null;
+        return motherboardDAO.getById(id);
     }
 
     @Override
     public List<Motherboard> getAll() {
-        return null;
+        return motherboardDAO.getAll();
     }
 
     @Override
     public boolean save(Motherboard motherboard) {
-        return false;
+        return motherboardDAO.save(motherboard);
     }
 
     @Override
     public boolean updateById(BigInteger id, Motherboard newMotherboard) {
-        return false;
+        return motherboardDAO.update(id, newMotherboard);
     }
 
     @Override
     public boolean delete(BigInteger id) {
-        return false;
+        return motherboardDAO.delete(id);
     }
 }
