@@ -1,6 +1,7 @@
 package com.overclock.overclock.dao.impl;
 
 import com.overclock.overclock.dao.*;
+import com.overclock.overclock.dao.constant.QueryConstants;
 import com.overclock.overclock.dao.impl.mapper.AssemblyListRowMapper;
 import com.overclock.overclock.model.*;
 import org.slf4j.Logger;
@@ -18,7 +19,7 @@ import java.util.List;
 
 
 @Repository
-public class AssemblyDAOImpl implements AssemblyDAO {
+public class AssemblyDAOImpl implements AssemblyDAO, QueryConstants {
     private static final Logger LOGGER = LoggerFactory.getLogger(AssemblyDAOImpl.class);
 
     @Autowired
@@ -126,6 +127,29 @@ public class AssemblyDAOImpl implements AssemblyDAO {
             }
 
             return true;
+        } catch (DataAccessException e) {
+            LOGGER.error(e.getMessage(), e);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return false;
+        }
+    }
+
+    @Override
+    @Transactional
+    public boolean updateScore(BigInteger id, BigInteger newScore) {
+        if (newScore.intValue() < 0) {
+            LOGGER.error("Invalid score");
+            return false;
+        }
+        try {
+            int assemblyObjectTypeId = jdbcTemplate.queryForObject(SQL_SELECT_OBJECT_TYPE_ID_BY_OBJECT_ID, Integer.class, id);
+            if (assemblyObjectTypeId == 1) { /* Assembly */
+                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newScore, 8, id); /* Score */
+                return true;
+            } else {
+                LOGGER.error("Identifier belongs not to a assembly");
+                return false;
+            }
         } catch (DataAccessException e) {
             LOGGER.error(e.getMessage(), e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();

@@ -106,4 +106,21 @@ public class AssemblyDAOImplTest {
         Assert.assertEquals(expectedCount, assemblies.size());
     }
 
+    @Test
+    @Transactional
+    public void updateScore() {
+        Assert.assertTrue(assemblyDAO.updateScore(BigInteger.valueOf(1), BigInteger.valueOf(3400)));
+    }
+
+    @Test
+    @Transactional
+    public void updateByInvalidScore() {
+        Assert.assertFalse(assemblyDAO.updateScore(BigInteger.valueOf(1), BigInteger.valueOf(-100)));
+    }
+
+    @Test
+    @Transactional
+    public void updateScoreByInvalidAssemblyId() {
+        Assert.assertFalse(assemblyDAO.updateScore(BigInteger.valueOf(5), BigInteger.valueOf(3400)));
+    }
 }

@@ -136,4 +136,5 @@ public interface AssemblyDAO {
     List<Assembly> getAllByAuthor(BigInteger author);
     boolean save(Assembly assembly);
     boolean delete(BigInteger id);
+    boolean updateScore(BigInteger id, BigInteger newScore);
 }
