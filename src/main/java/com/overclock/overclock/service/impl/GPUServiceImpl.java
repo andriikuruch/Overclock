@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 @Scope("singleton")
 public class GPUServiceImpl implements GPUService {
+
     private GpuDAO gpuDAO;
 
     @Autowired
@@ -22,26 +23,26 @@ public class GPUServiceImpl implements GPUService {
 
     @Override
     public GPU getById(BigInteger id) {
-        return null;
+        return gpuDAO.getById(id);
     }
 
     @Override
     public List<GPU> getAll() {
-        return null;
+        return gpuDAO.getAll();
     }
 
     @Override
     public boolean save(GPU gpu) {
-        return false;
+        return gpuDAO.save(gpu);
     }
 
     @Override
     public boolean updateById(BigInteger id, GPU newGpu) {
-        return false;
+        return gpuDAO.update(id, newGpu);
     }
 
     @Override
     public boolean delete(BigInteger id) {
-        return false;
+        return gpuDAO.delete(id);
     }
 }
