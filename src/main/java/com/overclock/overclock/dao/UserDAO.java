@@ -36,6 +36,12 @@ public interface UserDAO {
             "    AND USER_ROLE.ATTR_ID = 42 /*ROLE*/ " +
             "    AND USER_ROLE.OBJECT_ID =  USERS.OBJECT_ID";
 
+    String GET_BY_USERNAME = "SELECT USERS.OBJECT_ID USER_ID, " +
+            "    USERS.NAME USERNAME " +
+            "FROM OBJECTS USERS " +
+            "WHERE USERS.OBJECT_TYPE_ID = 7 " +
+            "    AND USERS.NAME = ?";
+
     String INSERT_USER = "INSERT ALL " +
             "INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION) " +
             "VALUES (OBJECT_ID_SEQ.NEXTVAL, NULL, 7, ?, NULL) /*CREATE USER WITH USERNAME*/ " +
@@ -46,21 +52,26 @@ public interface UserDAO {
                 "VALUES (41, OBJECT_ID_SEQ.CURRVAL, TO_DATE(?, 'dd/mm/yyyy hh24:mi')) /*REGISTRATION DATE*/ " +
             "INTO ATTRIBUTES (ATTR_ID, OBJECT_ID, LIST_VALUE_ID) " +
                 "VALUES (42, OBJECT_ID_SEQ.CURRVAL, ?) /*ROLE*/ " +
-            "SELECT * FROM DUAL";
+            "SELECT * FROM DUAL WHERE " +
+            "    NOT EXISTS (SELECT * FROM OBJECTS WHERE OBJECT_TYPE_ID = 7 AND NAME = ?) /*USERNAME*/" +
+            "    AND NOT EXISTS (SELECT * FROM ATTRIBUTES WHERE VALUE = ?) /*EMAIL*/";
 
-    String UPDATE_USERNAME = "UPDATE OBJECTS SET NAME = ? WHERE OBJECT_ID = ? /*USERNAME*/ ";
+    String UPDATE_USERNAME = "UPDATE OBJECTS SET NAME = ? WHERE OBJECT_ID = ? /*USERNAME*/ AND NOT EXISTS " +
+                    "(SELECT * FROM OBJECTS WHERE OBJECT_TYPE_ID = 7 AND NAME = ?) /*USERNAME*/ ";
+
     String UPDATE_PASSWORD = "UPDATE ATTRIBUTES SET VALUE = ? WHERE ATTR_ID = 39 " +
             "AND OBJECT_ID = ? /*PASSWORD*/";
+
     String UPDATE_EMAIL = "UPDATE ATTRIBUTES SET VALUE = ? WHERE ATTR_ID = 40 " +
-            "AND OBJECT_ID = ? /*EMAIL*/";
+            "AND OBJECT_ID = ? /*EMAIL*/ " +
+            "AND NOT EXISTS(SELECT * FROM ATTRIBUTES WHERE VALUE = ?) /*EMAIL*/";
 
     String UPDATE_USER_ACTIVE_STATUS = "UPDATE ATTRIBUTES SET VALUE = ? WHERE ATTR_ID = 38 " +
             "AND OBJECT_ID = ? /*IS_ACTIVE*/";
 
-
-
     User getFullInformationById(BigInteger id);
     User getWithMainInformation(BigInteger id);
+    User getUserByUsername(String username);
     boolean save(String username, String password, String email, boolean isActive);
     boolean updateUsername(BigInteger id, String username);
     boolean updatePassword(BigInteger id, String password);

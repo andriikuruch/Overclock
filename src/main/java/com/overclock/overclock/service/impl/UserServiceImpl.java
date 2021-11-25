@@ -3,15 +3,13 @@ package com.overclock.overclock.service.impl;
 import com.overclock.overclock.dao.UserDAO;
 import com.overclock.overclock.model.User;
 import com.overclock.overclock.service.UserService;
+import com.overclock.overclock.util.RequestUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
-import java.util.List;
 
 @Service
-@Scope("singleton")
 public class UserServiceImpl implements UserService {
     private UserDAO userDAO;
 
@@ -21,32 +19,42 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(BigInteger id) {
-        return null;
+    public User getFullInformationById(BigInteger id) {
+        return userDAO.getFullInformationById(id);
+    }
+
+    @Override
+    public User getWithMainInformation(BigInteger id) {
+        return userDAO.getWithMainInformation(id);
     }
 
     @Override
     public User getUserByUsername(String username) {
-        return null;
+        return userDAO.getUserByUsername(username);
     }
 
     @Override
-    public List<User> getAll() {
-        return null;
+    public boolean save(RequestUser user) {
+        return userDAO.save(user.getName(), user.getPassword(), user.getEmail(), true);
     }
 
     @Override
-    public boolean save(User user) {
-        return false;
+    public boolean updateUsername(BigInteger id, String username) {
+        return userDAO.updateUsername(id, username);
     }
 
     @Override
-    public boolean update(BigInteger id, User newUser) {
-        return false;
+    public boolean updatePassword(BigInteger id, String password) {
+        return userDAO.updatePassword(id, password);
     }
 
     @Override
-    public boolean delete(BigInteger id) {
-        return false;
+    public boolean updateEmail(BigInteger id, String email) {
+        return userDAO.updateEmail(id, email);
+    }
+
+    @Override
+    public boolean updateUserActiveStatus(BigInteger id, boolean isActive) {
+        return userDAO.updateUserActiveStatus(id, isActive);
     }
 }

@@ -11,11 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.math.BigInteger;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -52,14 +55,27 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public User getUserByUsername(String username) {
+        try {
+            return jdbcTemplate.queryForObject(GET_BY_USERNAME, (rs, rowNum) -> new User.Builder()
+                    .setId(BigInteger.valueOf(rs.getLong("USER_ID")))
+                    .setUserName(rs.getString("USERNAME"))
+                    .build(), username);
+        } catch (EmptyResultDataAccessException e) {
+            LOGGER.error(e.getMessage(), e);
+            return null;
+        }
+    }
+
+    @Override
     @Transactional
     public boolean save(String username, String password, String email, boolean isActive) {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
             String userIsActive = isActive ? "1" : "0";
-            jdbcTemplate.update(INSERT_USER, username, userIsActive, password, email,
-                    dateFormat.format(new Date()), Role.USER.toInt());
-            return true;
+            int result = jdbcTemplate.update(INSERT_USER, username, userIsActive, password, email,
+                    dateFormat.format(new Date()), Role.USER.toInt(), username, email);
+            return result == 6;
         } catch (DataAccessException e) {
             LOGGER.error(e.getMessage(), e);
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
@@ -70,8 +86,8 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public boolean updateUsername(BigInteger id, String username) {
         try {
-            jdbcTemplate.update(UPDATE_USERNAME, username, id);
-            return true;
+            int result = jdbcTemplate.update(UPDATE_USERNAME, username, id, username);
+            return result == 1;
         } catch (DataAccessException e) {
             LOGGER.error(e.getMessage(), e);
             return false;
@@ -92,8 +108,8 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public boolean updateEmail(BigInteger id, String email) {
         try {
-            jdbcTemplate.update(UPDATE_EMAIL, email, id);
-            return true;
+            int result = jdbcTemplate.update(UPDATE_EMAIL, email, id, email);
+            return result == 1;
         } catch (DataAccessException e) {
             LOGGER.error(e.getMessage(), e);
             return false;

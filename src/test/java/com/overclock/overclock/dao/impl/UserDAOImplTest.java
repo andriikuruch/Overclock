@@ -32,6 +32,25 @@ public class UserDAOImplTest {
     }
 
     @Test
+    public void getUserByUsername() {
+        String expectedUsername = "user1";
+
+        User user = userDAO.getUserByUsername(expectedUsername);
+
+        Assert.assertNotNull(user);
+        Assert.assertEquals(expectedUsername, user.getUserName());
+    }
+
+    @Test
+    public void getUserByUsername_BadResult() {
+        String expectedUsername = "user212312312";
+
+        User user = userDAO.getUserByUsername(expectedUsername);
+
+        Assert.assertNull(user);
+    }
+
+    @Test
     @Transactional
     public void save_CorrectResult() {
         boolean result = userDAO.save("u2","pfassdaf", "email@mail.com", true);
