@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 @Scope("singleton")
 public class RAMServiceImpl implements RAMService {
+    
     private RamDAO ramDAO;
 
     @Autowired
@@ -22,26 +23,26 @@ public class RAMServiceImpl implements RAMService {
 
     @Override
     public RAM getById(BigInteger id) {
-        return null;
+        return ramDAO.getById(id);
     }
 
     @Override
     public List<RAM> getAll() {
-        return null;
+        return ramDAO.getAll();
     }
 
     @Override
     public boolean save(RAM ram) {
-        return false;
+        return ramDAO.save(ram);
     }
 
     @Override
     public boolean updateById(BigInteger id, RAM newRam) {
-        return false;
+        return ramDAO.update(id, newRam);
     }
 
     @Override
     public boolean delete(BigInteger id) {
-        return false;
+        return ramDAO.delete(id);
     }
 }
