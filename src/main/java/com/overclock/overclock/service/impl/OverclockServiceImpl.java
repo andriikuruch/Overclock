@@ -1,8 +1,10 @@
 package com.overclock.overclock.service.impl;
 
-import com.overclock.overclock.dao.*;
-import com.overclock.overclock.model.*;
-import com.overclock.overclock.service.*;
+import com.overclock.overclock.dao.OverclockDAO;
+import com.overclock.overclock.model.Overclock;
+import com.overclock.overclock.model.Assembly;
+import com.overclock.overclock.service.AssemblyService;
+import com.overclock.overclock.service.OverclockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,7 @@ public class OverclockServiceImpl implements OverclockService {
 
     @Override
     public boolean save(Overclock overclock,  BigInteger assemblyId) {
-        if (validate(overclock)) {
+        if (isValidOverclock(overclock)) {
             return overclockDAO.save(overclock, assemblyId);
         }
         return false;
@@ -28,7 +30,7 @@ public class OverclockServiceImpl implements OverclockService {
 
     @Override
     public boolean update(BigInteger id, Overclock newOverclock) {
-        if (validate(newOverclock)) {
+        if (isValidOverclock(newOverclock)) {
             return overclockDAO.update(id, newOverclock);
         }
         return false;
@@ -65,7 +67,7 @@ public class OverclockServiceImpl implements OverclockService {
     }
 
     @Override
-    public boolean validate(Overclock overclock) {
+    public boolean isValidOverclock(Overclock overclock) {
         if (overclock == null) {
             return false;
         }

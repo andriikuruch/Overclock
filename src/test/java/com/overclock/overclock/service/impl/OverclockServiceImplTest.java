@@ -17,11 +17,11 @@ public class OverclockServiceImplTest {
 
     @Test
     public void validateValidOverclock() {
-        Assertions.assertTrue(overclockService.validate(CreateUtilities.createOverclock()));
+        Assertions.assertTrue(overclockService.isValidOverclock(CreateUtilities.createOverclock()));
     }
 
     @Test
     public void validateInvalidOverclock() {
-        Assertions.assertFalse(overclockService.validate(CreateUtilities.createOverclockWithWrongTimings()));
+        Assertions.assertFalse(overclockService.isValidOverclock(CreateUtilities.createOverclockWithWrongTimings()));
     }
 }
