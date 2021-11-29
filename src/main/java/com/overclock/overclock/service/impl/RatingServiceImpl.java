@@ -17,10 +17,11 @@ public class RatingServiceImpl implements RatingService {
     @Autowired
     private AssemblyService assemblyService;
     private static final AssemblyComparatorByScore comparatorByScore = new AssemblyComparatorByScore();
+    private List<Assembly> assemblies;
 
     @Override
     public List<Assembly> calculateTopWithoutOverclock() {
-        List<Assembly> assemblies = assemblyService.getAll();
+        assemblies = getAssemblies();
         assemblies.removeIf(assembly -> assembly.getOverclock() != null || assembly.getScore() == null);
         assemblies.sort(comparatorByScore);
         Collections.reverse(assemblies);
@@ -29,10 +30,17 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public List<Assembly> calculateTopWithOverclock() {
-        List<Assembly> assemblies = assemblyService.getAll();
+        assemblies = getAssemblies();
         assemblies.removeIf(assembly -> assembly.getOverclock() == null || assembly.getScore() == null);
         assemblies.sort(comparatorByScore);
         Collections.reverse(assemblies);
+        return assemblies;
+    }
+
+    private List<Assembly> getAssemblies() {
+        if (assemblies == null || assemblies.isEmpty()) {
+            return assemblyService.getAll();
+        }
         return assemblies;
     }
 }

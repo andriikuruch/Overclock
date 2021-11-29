@@ -14,36 +14,12 @@ import java.util.List;
 @Service
 @Scope("singleton")
 public class AssemblyServiceImpl implements AssemblyService {
+    @Autowired
     private AssemblyDAO assemblyDAO;
-    private ValidationService validationService;
+    private CompatibilityService compatibilityService;
     private CommentService commentService;
     private UserService userService;
     private TestService testService;
-
-    @Autowired
-    public void setAssemblyDAO(AssemblyDAO assemblyDAO) {
-        this.assemblyDAO = assemblyDAO;
-    }
-
-    @Autowired
-    public void setCompatibilityService(ValidationService validationService) {
-        this.validationService = validationService;
-    }
-
-    @Autowired
-    public void setCommentService(CommentService commentService) {
-        this.commentService = commentService;
-    }
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    @Autowired
-    public void setTestService(TestService testService) {
-        this.testService = testService;
-    }
 
     @Override
     public Assembly getAssemblyById(BigInteger id) {
@@ -67,7 +43,7 @@ public class AssemblyServiceImpl implements AssemblyService {
 
     @Override
     public List<Assembly> getAll() {
-        return null;
+        return assemblyDAO.getAll();
     }
 
     @Override
