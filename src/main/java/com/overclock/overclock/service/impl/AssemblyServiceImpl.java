@@ -15,7 +15,7 @@ import java.util.List;
 @Scope("singleton")
 public class AssemblyServiceImpl implements AssemblyService {
     private AssemblyDAO assemblyDAO;
-    private CompatibilityService compatibilityService;
+    private ValidationService validationService;
     private CommentService commentService;
     private UserService userService;
     private TestService testService;
@@ -26,8 +26,8 @@ public class AssemblyServiceImpl implements AssemblyService {
     }
 
     @Autowired
-    public void setCompatibilityService(CompatibilityService compatibilityService) {
-        this.compatibilityService = compatibilityService;
+    public void setCompatibilityService(ValidationService validationService) {
+        this.validationService = validationService;
     }
 
     @Autowired
