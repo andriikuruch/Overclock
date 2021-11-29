@@ -16,7 +16,7 @@ import java.util.List;
 public class AssemblyServiceImpl implements AssemblyService {
     @Autowired
     private AssemblyDAO assemblyDAO;
-    private CompatibilityService compatibilityService;
+    private ValidationServiceImpl compatibilityService;
     private CommentService commentService;
     private UserService userService;
     private TestService testService;
