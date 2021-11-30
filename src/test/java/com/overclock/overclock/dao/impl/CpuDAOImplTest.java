@@ -1,6 +1,5 @@
 package com.overclock.overclock.dao.impl;
 
-import com.overclock.overclock.CreateUtilities;
 import com.overclock.overclock.dao.CpuDAO;
 import com.overclock.overclock.model.CPU;
 import com.overclock.overclock.model.enums.CPUFamily;
@@ -25,13 +24,22 @@ public class CpuDAOImplTest {
 
     @Autowired
     CpuDAO CpuDAO;
-    private final CPU cpu = CreateUtilities.createCpu();
+    private CPU cpuTest = new CPU.Builder(BigInteger.valueOf(5), "Intel Core i7")
+            .setManufacturer(CPUManufacturer.Intel)
+            .setSocket(CPUSocket.Soc1200)
+            .setGeneration(CPUGeneration.TenGen)
+            .setFamily(CPUFamily.Core_i7)
+            .setVoltage(BigDecimal.valueOf(125))
+            .setFrequency(BigDecimal.valueOf(3800))
+            .setThreadsNumber(BigInteger.valueOf(16))
+            .setCoresNumber(BigInteger.valueOf(8))
+            .build();
 
     @Test
     public void getByIdValidId() {
-        Assertions.assertTrue(cpu.equals(CpuDAO.getById(BigInteger.valueOf(5))));
+        Assertions.assertTrue(cpuTest.equals(CpuDAO.getById(BigInteger.valueOf(5))));
         Assertions.assertFalse(CpuDAO.getById(BigInteger.valueOf(5)).equals(new CPU.Builder(BigInteger.valueOf(1), "").build()));
-        Assertions.assertEquals(cpu.hashCode(), CpuDAO.getById(BigInteger.valueOf(5)).hashCode());
+        Assertions.assertEquals(cpuTest.hashCode(), CpuDAO.getById(BigInteger.valueOf(5)).hashCode());
     }
 
     @Test
@@ -43,7 +51,7 @@ public class CpuDAOImplTest {
 
     @Test
     public void getByAssemblyIdValidId() {
-        Assertions.assertTrue(cpu.equals(CpuDAO.getByAssemblyId(BigInteger.valueOf(1))));
+        Assertions.assertTrue(cpuTest.equals(CpuDAO.getByAssemblyId(BigInteger.valueOf(1))));
     }
 
     @Test
@@ -57,19 +65,33 @@ public class CpuDAOImplTest {
     public void getAll() {
         List<CPU> allCpu = CpuDAO.getAll();
         Assertions.assertNotNull(allCpu);
-        Assertions.assertTrue(cpu.equals(allCpu.get(0)));
+        Assertions.assertTrue(cpuTest.equals(allCpu.get(0)));
     }
 
     @Test
     @Transactional
     public void saveValidObject() {
+        CPU cpu = new CPU.Builder(BigInteger.valueOf(0), "test save - valid cpu")
+                .setManufacturer(CPUManufacturer.AMD)
+                .setSocket(CPUSocket.AM4)
+                .setGeneration(CPUGeneration.Zen)
+                .setFamily(CPUFamily.Ryzen3)
+                .setVoltage(BigDecimal.valueOf(1))
+                .setFrequency(BigDecimal.valueOf(1))
+                .setThreadsNumber(BigInteger.valueOf(1))
+                .setCoresNumber(BigInteger.valueOf(1))
+                .build();
         Assertions.assertTrue(CpuDAO.save(cpu));
     }
 
     @Test
     @Transactional
     public void saveInvalidObject() {
-       Assertions.assertFalse(CpuDAO.save(CreateUtilities.createBadCPU()));
+        CPU cpu_invalid = new CPU.Builder(BigInteger.valueOf(0), "test save - invalid cpu")
+                .setVoltage(BigDecimal.valueOf(1))
+                .build();
+        Assertions.assertFalse(CpuDAO.save(null));
+        Assertions.assertFalse(CpuDAO.save(cpu_invalid));
    }
 
    @Test
@@ -81,15 +103,15 @@ public class CpuDAOImplTest {
     @Test
     @Transactional
     public void updateValidId() {
-        CPU testCPU = new CPU.Builder(BigInteger.valueOf(0), "Test Name")
-            .setManufacturer(CPUManufacturer.Intel)
-            .setSocket(CPUSocket.Soc1200)
-            .setGeneration(CPUGeneration.TenGen)
-            .setFamily(CPUFamily.Core_i7)
-            .setVoltage(BigDecimal.valueOf(125))
-            .setFrequency(BigDecimal.valueOf(3800))
-            .setThreadsNumber(BigInteger.valueOf(16))
-            .setCoresNumber(BigInteger.valueOf(8))
+        CPU testCPU = new CPU.Builder(BigInteger.valueOf(0), "test update - valid cpu")
+            .setManufacturer(CPUManufacturer.AMD)
+                .setSocket(CPUSocket.AM4)
+                .setGeneration(CPUGeneration.Zen)
+                .setFamily(CPUFamily.Ryzen3)
+                .setVoltage(BigDecimal.valueOf(1))
+                .setFrequency(BigDecimal.valueOf(1))
+                .setThreadsNumber(BigInteger.valueOf(1))
+                .setCoresNumber(BigInteger.valueOf(1))
             .build();
         Assertions.assertTrue(CpuDAO.update(BigInteger.valueOf(5), testCPU));
     }
@@ -97,7 +119,7 @@ public class CpuDAOImplTest {
     @Test
     @Transactional
     public void updateInvalidId() {
-        Assertions.assertFalse(CpuDAO.update(BigInteger.valueOf(1000), cpu));
+        Assertions.assertFalse(CpuDAO.update(BigInteger.valueOf(1000), cpuTest));
     }
 
     @Test
