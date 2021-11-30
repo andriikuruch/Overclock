@@ -2,67 +2,125 @@ package com.overclock.overclock.service.impl;
 
 import com.overclock.overclock.dao.AssemblyDAO;
 import com.overclock.overclock.model.Assembly;
+import com.overclock.overclock.model.Comment;
 import com.overclock.overclock.service.*;
-import com.overclock.overclock.util.RequestAssembly;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Service
 @Scope("singleton")
 public class AssemblyServiceImpl implements AssemblyService {
     @Autowired
     private AssemblyDAO assemblyDAO;
-    private ValidationServiceImpl compatibilityService;
-    private CommentService commentService;
+    @Autowired
+    private ValidationService validationService;
+    @Autowired
     private UserService userService;
-    private TestService testService;
+    @Autowired
+    private CommentService commentService;
+
+    private static final Logger LOGGER = Logger.getLogger(AssemblyServiceImpl.class.getName());
 
     @Override
     public Assembly getAssemblyById(BigInteger id) {
-        return null;
+        return assemblyDAO.getAssemblyById(id);
     }
 
     @Override
-    public Assembly getAssembliesByIdWithSomeComments(BigInteger id, int limit) {
-        return null;
+    public Assembly getAssemblyByIdWithSomeComments(BigInteger id, BigInteger limit) {
+        if (id == null){
+            LOGGER.log(Level.WARNING, "id of assembly is null");
+            return null;
+        }
+        List<Comment> commentList = commentService.getLimitedListOfCommentsByAssemblyId(id, limit);
+        Assembly assembly = assemblyDAO.getAssemblyById(id);
+        if (assembly == null){
+            LOGGER.log(Level.WARNING, "There are no assembly with such id");
+            return null;
+        }
+        else {
+            Assembly assemblyWithSomeComments = new Assembly.Builder(id, assembly.getName())
+                    .setMotherboard(assembly.getMotherboard())
+                    .setComments(commentList)
+                    .setCpu(assembly.getCpu())
+                    .setGpu(assembly.getGpu())
+                    .setRam(assembly.getRam())
+                    .setAuthor(assembly.getAuthor())
+                    .setOverclock(assembly.getOverclock())
+                    .setScore(assembly.getScore())
+                    .build();
+            return assemblyWithSomeComments;
+        }
     }
 
     @Override
-    public List<Assembly> getAssembliesByAuthor(String author) {
-        return null;
+    public List<Assembly> getAssembliesByAuthorName(String author) {
+        if (author==null){
+            LOGGER.log(Level.WARNING, "Name of autor is null");
+            return null;
+        }
+        return  assemblyDAO.getAssembliesByAuthorName(author);
     }
 
     @Override
     public List<Assembly> search(String searchParameter) {
-        return null;
+        if (searchParameter == null) {
+            LOGGER.log(Level.WARNING, "Invalid search parameter");
+            return null;
+        }
+        List<Assembly> assemblies = assemblyDAO.getAllAssemblies();
+        String searchParameterLC = searchParameter.toLowerCase();
+        assemblies.removeIf(assembly -> {
+            String username = userService.getWithMainInformation(assembly.getAuthor()).getUserName().toLowerCase();
+            String assemblyName = assembly.getName().toLowerCase();
+            return !username.contains(searchParameterLC) && !assemblyName.contains(searchParameterLC);
+        });
+        return assemblies;
     }
 
     @Override
-    public List<Assembly> getAll() {
-        return assemblyDAO.getAll();
+    public List<Assembly> getAllAssemblies() {
+        return assemblyDAO.getAllAssemblies();
     }
 
     @Override
-    public boolean save(RequestAssembly assembly) {
+    public boolean save(Assembly assembly) {
+        if (іsValidAssembly(assembly)) {
+            return assemblyDAO.save(assembly);
+        }
         return false;
     }
 
     @Override
     public boolean delete(BigInteger id) {
-        return false;
+        return assemblyDAO.delete(id);
     }
 
     @Override
-    public boolean updateScore(BigInteger id) {
-        return false;
+    public boolean updateScore(BigInteger id, BigInteger newScore) {
+        return assemblyDAO.updateScore(id, newScore);
     }
 
     @Override
-    public boolean validate(RequestAssembly assembly) {
-        return false;
+    public boolean іsValidAssembly(Assembly assembly) {
+        if (assembly == null){
+            LOGGER.log(Level.WARNING, "Assembly is null");
+            return false;
+        }
+        else {
+            boolean isValidMotherboard = validationService.isValidMotherboard(assembly.getMotherboard());
+            boolean isValidCPU = validationService.isValidCPU(assembly.getCpu());
+            boolean isValidGPU = validationService.isValidGPU(assembly.getGpu());
+            boolean checkCompatibility = validationService.checkCompatibility(assembly);
+            boolean isCompatibleMotherboardAndCPU = validationService.isCompatibleMotherboardAndCPU(assembly.getMotherboard(), assembly.getCpu());
+            return isValidMotherboard && isValidCPU && isValidGPU && checkCompatibility && isCompatibleMotherboardAndCPU;
+        }
     }
 }
+

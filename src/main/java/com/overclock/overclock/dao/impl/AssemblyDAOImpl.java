@@ -16,6 +16,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -47,7 +48,7 @@ public class AssemblyDAOImpl implements AssemblyDAO, QueryConstants {
     private RamDAO ramDao;
 
     @Override
-    public Assembly getById(BigInteger id) {
+    public Assembly getAssemblyById(BigInteger id) {
         try {
             return jdbcTemplate.queryForObject(QUERY_GET_BY_ID, (rs, rowNum) -> {
                 BigInteger assemblyId = BigInteger.valueOf(rs.getLong("ASSEMBLY_ID"));
@@ -57,7 +58,7 @@ public class AssemblyDAOImpl implements AssemblyDAO, QueryConstants {
                 BigInteger overclockId = overclockIdLong != 0 ? BigInteger.valueOf(overclockIdLong) : null;
                 BigInteger authorId = BigInteger.valueOf(rs.getLong("AUTHOR_ID"));
 
-                Motherboard motherboard = motherboardDAO.getByAssemblyId(id);
+                Motherboard motherboard = motherboardDAO.getMotherboardByAssemblyId(id);
                 CPU cpu = cpuDAO.getByAssemblyId(id);
                 GPU gpu = gpuDao.getByAssemblyId(id);
                 RAM ram = ramDao.getByAssemblyId(id);
@@ -81,13 +82,24 @@ public class AssemblyDAOImpl implements AssemblyDAO, QueryConstants {
     }
 
     @Override
-    public List<Assembly> getAll() {
+    public List<Assembly> getAllAssemblies() {
         return jdbcTemplate.query(QUERY_GET_ALL, assemblyListRowMapper);
     }
 
     @Override
-    public List<Assembly> getAllByAuthor(BigInteger author) {
+    public List<Assembly> getAssembliesByAuthorId(BigInteger author) {
         return jdbcTemplate.query(QUERY_GET_ALL_BY_AUTHOR_ID, assemblyListRowMapper, author);
+    }
+
+    @Override
+    public List<Assembly> getAssembliesByAuthorName(String author) {
+        try {
+        Integer id = jdbcTemplate.queryForObject(SQL_SELECT_USER_ID, Integer.class, author);
+        return getAssembliesByAuthorId(BigInteger.valueOf(id));
+        } catch (EmptyResultDataAccessException e) {
+            LOGGER.debug("No assemblies with such author name", e);
+            return null;
+        }
     }
 
     @Override

@@ -27,7 +27,7 @@ public class AssemblyDAOImplTest {
 
     @Test
     @Transactional
-    public void save_CorrectResult() {
+    public void saveCorrectResult() {
         boolean expected = true;
 
         boolean result = assemblyDAO.save(CreateUtilities.createAssemblyForSaving());
@@ -37,7 +37,7 @@ public class AssemblyDAOImplTest {
 
     @Test
     @Transactional
-    public void save_BadResult() {
+    public void saveBadResult() {
         boolean expected = false;
 
         boolean result = assemblyDAO.save(CreateUtilities.createBadAssemblyForSaving());
@@ -47,7 +47,7 @@ public class AssemblyDAOImplTest {
 
     @Test
     @Transactional
-    public void delete_CorrectResult() {
+    public void deleteCorrectResult() {
         boolean expected = true;
 
         boolean result = assemblyDAO.delete(BigInteger.valueOf(2));
@@ -57,7 +57,7 @@ public class AssemblyDAOImplTest {
 
     @Test
     @Transactional
-    public void delete_BadResult() {
+    public void deleteBadResult() {
         boolean expected = false;
 
         boolean result = assemblyDAO.delete(badAssemblyId);
@@ -66,22 +66,22 @@ public class AssemblyDAOImplTest {
     }
 
     @Test
-    public void getById_NullResult() {
-        Assembly assembly = assemblyDAO.getById(BigInteger.valueOf(0));
+    public void getByIdNullResult() {
+        Assembly assembly = assemblyDAO.getAssemblyById(BigInteger.valueOf(0));
         Assert.assertNull(assembly);
     }
 
     @Test
-    public void getById_CorrectResult() {
-        Assembly actualAssembly = assemblyDAO.getById(BigInteger.valueOf(1));
+    public void getByIdCorrectResult() {
+        Assembly actualAssembly = assemblyDAO.getAssemblyById(BigInteger.valueOf(1));
 
         Assert.assertNotNull(actualAssembly);
         Assert.assertEquals(expectedAssembly, actualAssembly);
     }
 
     @Test
-    public void getAll_CorrectResult() {
-        List<Assembly> assemblies = assemblyDAO.getAll();
+    public void getAllCorrectResult() {
+        List<Assembly> assemblies = assemblyDAO.getAllAssemblies();
         int expectedCount = 4;
 
         Assert.assertFalse(assemblies.isEmpty());
@@ -89,8 +89,8 @@ public class AssemblyDAOImplTest {
     }
 
     @Test
-    public void getAllByAuthor_CorrectResult() {
-        List<Assembly> assemblies = assemblyDAO.getAllByAuthor(authorId);
+    public void getAssembliesByAuthorIdCorrectResult() {
+        List<Assembly> assemblies = assemblyDAO.getAssembliesByAuthorId(authorId);
         int expectedCount = 4;
 
         Assert.assertFalse(assemblies.isEmpty());
@@ -98,12 +98,24 @@ public class AssemblyDAOImplTest {
     }
 
     @Test
-    public void getAllByAuthor_EmptyResult() {
-        List<Assembly> assemblies = assemblyDAO.getAllByAuthor(badAuthorId);
+    public void getAssembliesByAuthorIdEmptyResult() {
+        List<Assembly> assemblies = assemblyDAO.getAssembliesByAuthorId(badAuthorId);
         int expectedCount = 0;
 
         Assert.assertTrue(assemblies.isEmpty());
         Assert.assertEquals(expectedCount, assemblies.size());
+    }
+    @Test
+    public void getAssembliesByAuthorNameCorrectResult() {
+        List<Assembly> assemblies = assemblyDAO.getAssembliesByAuthorName("user1");
+        Assert.assertFalse(assemblies.isEmpty());
+        Assert.assertEquals(4, assemblies.size());
+    }
+
+    @Test
+    public void getAssembliesByAuthorNameIncorrectResult() {
+        List<Assembly> assemblies = assemblyDAO.getAssembliesByAuthorName("Wrong name");
+        Assert.assertNull(assemblies);
     }
 
     @Test

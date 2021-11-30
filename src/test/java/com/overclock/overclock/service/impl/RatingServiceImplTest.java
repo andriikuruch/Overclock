@@ -50,7 +50,7 @@ public class RatingServiceImplTest {
         expected.add(testAssemblies.get(5));
         expected.add(testAssemblies.get(4));
 
-        when(assemblyServiceMock.getAll()).thenReturn(testAssemblies);
+        when(assemblyServiceMock.getAllAssemblies()).thenReturn(testAssemblies);
 
         List<Assembly> actual = ratingService.calculateTopWithoutOverclock();
         Assertions.assertNotNull(actual);
@@ -64,7 +64,7 @@ public class RatingServiceImplTest {
         expected.add(testAssemblies.get(3));
         expected.add(testAssemblies.get(2));
 
-        when(assemblyServiceMock.getAll()).thenReturn(testAssemblies);
+        when(assemblyServiceMock.getAllAssemblies()).thenReturn(testAssemblies);
 
         List<Assembly> actual = ratingService.calculateTopWithOverclock();
         Assertions.assertNotNull(actual);

@@ -39,7 +39,7 @@ public class RatingServiceImpl implements RatingService {
 
     private List<Assembly> getAssemblies() {
         if (assemblies == null || assemblies.isEmpty()) {
-            return assemblyService.getAll();
+            return assemblyService.getAllAssemblies();
         }
         return assemblies;
     }

@@ -108,6 +108,10 @@ public interface AssemblyDAO {
                         "ON (ALL_ASSEMBLIES.ASSEMBLY_ID = ALL_OVERCLOCKS.PARENT_ID) " +
                     "ORDER BY ALL_ASSEMBLIES.ASSEMBLY_ID";
 
+    String SQL_SELECT_USER_ID = "SELECT OBJECTS.OBJECT_ID USER_ID\n" +
+            "FROM  OBJECTS\n" +
+            "WHERE OBJECTS.NAME = ? ";
+
     String INSERT_ASSEMBLY = "INSERT ALL " +
             "INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION) " +
             "   VALUES (OBJECT_ID_SEQ.NEXTVAL, NULL, 1, ?, NULL) /*CREATE ASSEMBLY*/ " +
@@ -131,9 +135,10 @@ public interface AssemblyDAO {
 
     String DELETE_ASSEMBLY = "DELETE FROM OBJECTS WHERE OBJECT_TYPE_ID = 1 AND OBJECT_ID = ?";
 
-    Assembly getById(BigInteger id);
-    List<Assembly> getAll();
-    List<Assembly> getAllByAuthor(BigInteger author);
+    Assembly getAssemblyById(BigInteger id);
+    List<Assembly> getAllAssemblies();
+    List<Assembly> getAssembliesByAuthorId(BigInteger author);
+    List<Assembly> getAssembliesByAuthorName(String author);
     boolean save(Assembly assembly);
     boolean delete(BigInteger id);
     boolean updateScore(BigInteger id, BigInteger newScore);

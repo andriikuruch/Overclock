@@ -8,12 +8,13 @@ import java.util.List;
 
 public interface AssemblyService {
     Assembly getAssemblyById(BigInteger id);
-    Assembly getAssembliesByIdWithSomeComments(BigInteger id, int limit);
-    List<Assembly> getAssembliesByAuthor(String author);
+    Assembly getAssemblyByIdWithSomeComments(BigInteger id, BigInteger limit);
+    List<Assembly> getAssembliesByAuthorName(String author);
     List<Assembly> search(String searchParameter);
-    List<Assembly> getAll();
-    boolean save(RequestAssembly assembly);
+    List<Assembly> getAllAssemblies();
+    boolean save(Assembly assembly);
     boolean delete(BigInteger id);
-    boolean updateScore(BigInteger id);
-    boolean validate(RequestAssembly assembly);
+    boolean updateScore(BigInteger id, BigInteger newScore);
+    boolean іsValidAssembly(Assembly assembly);
 }
+
