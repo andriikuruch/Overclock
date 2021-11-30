@@ -17,13 +17,13 @@ public class MotherboardServiceImpl implements MotherboardService {
     private MotherboardDAO motherboardDAO;
 
     @Override
-    public Motherboard getById(BigInteger id) {
-        return motherboardDAO.getById(id);
+    public Motherboard getMotherboardById(BigInteger id) {
+        return motherboardDAO.getMotherboardById(id);
     }
 
     @Override
-    public List<Motherboard> getAll() {
-        return motherboardDAO.getAll();
+    public List<Motherboard> getAllMotherboards() {
+        return motherboardDAO.getAllMotherboards();
     }
 
     @Override

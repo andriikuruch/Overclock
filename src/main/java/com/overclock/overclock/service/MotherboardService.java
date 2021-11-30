@@ -6,8 +6,8 @@ import java.math.BigInteger;
 import java.util.List;
 
 public interface MotherboardService {
-    Motherboard getById(BigInteger id);
-    List<Motherboard> getAll();
+    Motherboard getMotherboardById(BigInteger id);
+    List<Motherboard> getAllMotherboards();
     boolean save(Motherboard motherboard);
     boolean updateById(BigInteger id, Motherboard newMotherboard);
     boolean delete(BigInteger id);
