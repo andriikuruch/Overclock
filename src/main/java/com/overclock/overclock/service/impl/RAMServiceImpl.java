@@ -23,12 +23,12 @@ public class RAMServiceImpl implements RAMService {
 
     @Override
     public RAM getById(BigInteger id) {
-        return ramDAO.getById(id);
+        return ramDAO.getRamById(id);
     }
 
     @Override
     public List<RAM> getAll() {
-        return ramDAO.getAll();
+        return ramDAO.getAllRams();
     }
 
     @Override
