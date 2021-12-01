@@ -1,7 +1,15 @@
 package com.overclock.overclock.service.impl;
 
-import com.overclock.overclock.model.*;
-import com.overclock.overclock.model.enums.*;
+import com.overclock.overclock.model.Assembly;
+import com.overclock.overclock.model.CPU;
+import com.overclock.overclock.model.GPU;
+import com.overclock.overclock.model.Motherboard;
+import com.overclock.overclock.model.enums.CPUGeneration;
+import com.overclock.overclock.model.enums.CPUManufacturer;
+import com.overclock.overclock.model.enums.CPUSocket;
+import com.overclock.overclock.model.enums.ChipsetManufacturer;
+import com.overclock.overclock.model.enums.GPUChipManufacturer;
+import com.overclock.overclock.model.enums.MotherboardSocket;
 import com.overclock.overclock.service.ValidationService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -14,17 +22,17 @@ public class ValidationServiceImpl implements ValidationService {
     public boolean isCompatibleMotherboardAndCPU(Motherboard motherboard, CPU cpu) {
         if (motherboard.getChipsetManufacturer().name().equals(cpu.getManufacturer().name()) &&
                 motherboard.getSocket().name().equals(cpu.getSocket().name())) {
-            if (motherboard.getChipset().toInt() >= 3 && motherboard.getChipset().toInt() <= 5) {
-                return cpu.getGeneration().toInt() >= 36 && cpu.getGeneration().toInt() <= 37;
+            if (isValidComponent(motherboard.getChipset().toInt(), 3, 5)) {
+                return isValidComponent(cpu.getGeneration().toInt(), 36, 37);
             }
-            if (motherboard.getChipset().toInt() >= 6 && motherboard.getChipset().toInt() <= 8) {
-                return cpu.getGeneration() == CPUGeneration.TenGen;
+            if (isValidComponent(motherboard.getChipset().toInt(), 6, 8)) {
+                return isValidComponent(cpu.getGeneration().toInt(), CPUGeneration.TenGen.toInt(), CPUGeneration.TenGen.toInt());
             }
-            if (motherboard.getChipset().toInt() >= 9 && motherboard.getChipset().toInt() <= 11) {
-                return cpu.getGeneration().toInt() >= 38 && cpu.getGeneration().toInt() <= 39;
+            if (isValidComponent(motherboard.getChipset().toInt(), 9, 11)) {
+                return isValidComponent(cpu.getGeneration().toInt(), 38, 39);
             }
-            if (motherboard.getChipset().toInt() >= 12 && motherboard.getChipset().toInt() <= 19) {
-                return cpu.getGeneration().toInt() >= 40 && cpu.getGeneration().toInt() <= 43;
+            if (isValidComponent(motherboard.getChipset().toInt(), 12, 19)) {
+                return isValidComponent(cpu.getGeneration().toInt(), 40, 43);
             }
         }
         return false;
@@ -39,15 +47,15 @@ public class ValidationServiceImpl implements ValidationService {
     public boolean isValidMotherboard(Motherboard motherboard) {
         if (motherboard.getChipsetManufacturer() == ChipsetManufacturer.Intel) {
             if (motherboard.getSocket() == MotherboardSocket.Soc1151) {
-                return motherboard.getChipset().toInt() >= 3 && motherboard.getChipset().toInt() <= 5;
+                return isValidComponent(motherboard.getChipset().toInt(), 3, 5);
             }
             if (motherboard.getSocket() == MotherboardSocket.Soc1200) {
-                return motherboard.getChipset().toInt() >= 6 && motherboard.getChipset().toInt() <= 11;
+                return isValidComponent(motherboard.getChipset().toInt(), 6, 11);
             }
         }
         if (motherboard.getChipsetManufacturer() == ChipsetManufacturer.AMD) {
             return motherboard.getSocket() == MotherboardSocket.AM4 &&
-                    motherboard.getChipset().toInt() >= 12 && motherboard.getChipset().toInt() <= 19;
+                    isValidComponent(motherboard.getChipset().toInt(), 12, 19);
         }
         return false;
     }
@@ -55,18 +63,18 @@ public class ValidationServiceImpl implements ValidationService {
     @Override
     public boolean isValidCPU(CPU cpu) {
         if (cpu.getManufacturer() == CPUManufacturer.Intel &&
-                cpu.getFamily().toInt() >= 25 && cpu.getFamily().toInt() <= 28) {
+                isValidComponent(cpu.getFamily().toInt(), 25, 28)) {
             if (cpu.getSocket() == CPUSocket.Soc1151) {
-                return cpu.getGeneration().toInt() >= 36 && cpu.getGeneration().toInt() <= 37;
+                return isValidComponent(cpu.getGeneration().toInt(), 36, 37);
             }
             if (cpu.getSocket() == CPUSocket.Soc1200) {
-                return cpu.getGeneration().toInt() >= 38 && cpu.getGeneration().toInt() <= 39;
+                return isValidComponent(cpu.getGeneration().toInt(), 38, 39);
             }
         }
         if (cpu.getManufacturer() == CPUManufacturer.AMD &&
-                cpu.getFamily().toInt() >= 29 && cpu.getFamily().toInt() <= 32) {
+                isValidComponent(cpu.getFamily().toInt(), 29, 32)) {
             return cpu.getSocket() == CPUSocket.AM4 &&
-                    cpu.getGeneration().toInt() >= 40 && cpu.getGeneration().toInt() <= 43;
+                    isValidComponent(cpu.getGeneration().toInt(), 40, 43);
         }
         return false;
     }
@@ -74,11 +82,15 @@ public class ValidationServiceImpl implements ValidationService {
     @Override
     public boolean isValidGPU(GPU gpu) {
         if (gpu.getChipManufacturer() == GPUChipManufacturer.Nvidia) {
-            return gpu.getChip().toInt() >= 46 && gpu.getChip().toInt() <= 72;
+            return isValidComponent(gpu.getChip().toInt(), 46, 72);
         }
         if (gpu.getChipManufacturer() == GPUChipManufacturer.AMD) {
-            return gpu.getChip().toInt() >= 73 && gpu.getChip().toInt() <= 86;
+            return isValidComponent(gpu.getChip().toInt(), 73, 86);
         }
         return false;
+    }
+
+    private boolean isValidComponent(int value, int lower, int greater) {
+        return value >= lower && value <= greater;
     }
 }
