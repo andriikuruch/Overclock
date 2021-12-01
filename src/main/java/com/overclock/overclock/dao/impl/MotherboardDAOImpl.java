@@ -27,62 +27,6 @@ public class MotherboardDAOImpl implements MotherboardDAO {
     private JdbcTemplate jdbcTemplate;
     private static final Logger LOGGER = Logger.getLogger(MotherboardDAOImpl.class.getName());
 
-    private static final String SQL_SELECT_MOTHERBOARD_BY_ID = "SELECT MOTHERBOARDS.OBJECT_ID ID, MOTHERBOARDS.NAME NAME," +
-            " LISTS_CHIPSET_MANUFACTURERS.LIST_VALUE_ID CHIPSET_MANUFACTURER,\n" +
-            "LISTS_CHIPSETS.LIST_VALUE_ID CHIPSET, LISTS_SOCKETS.LIST_VALUE_ID SOCKET\n" +
-            "FROM OBJECTS MOTHERBOARDS, ATTRIBUTES CHIPSET_MANUFACTURERS, ATTRIBUTES CHIPSETS, ATTRIBUTES SOCKETS,\n" +
-            "LISTS LISTS_CHIPSET_MANUFACTURERS,LISTS LISTS_CHIPSETS, LISTS LISTS_SOCKETS\n" +
-            "WHERE  MOTHERBOARDS.OBJECT_ID =  ? " +
-            "\n" +
-            "AND MOTHERBOARDS.OBJECT_ID = CHIPSET_MANUFACTURERS.OBJECT_ID\n" +
-            "AND MOTHERBOARDS.OBJECT_ID = CHIPSETS.OBJECT_ID\n" +
-            "AND MOTHERBOARDS.OBJECT_ID = SOCKETS.OBJECT_ID\n" +
-            "\n" +
-            "AND LISTS_CHIPSET_MANUFACTURERS.LIST_VALUE_ID = CHIPSET_MANUFACTURERS.LIST_VALUE_ID\n" +
-            "AND LISTS_CHIPSETS.LIST_VALUE_ID = CHIPSETS.LIST_VALUE_ID\n" +
-            "AND LISTS_SOCKETS.LIST_VALUE_ID = SOCKETS.LIST_VALUE_ID\n" +
-            "\n" +
-            "AND CHIPSET_MANUFACTURERS.ATTR_ID = 9\n" +
-            "AND CHIPSETS.ATTR_ID = 10\n" +
-            "AND SOCKETS.ATTR_ID = 11";
-    private static final String SQL_SELECT_MOTHERBOARD_BY_ASSEMBLY_ID = "SELECT MOTHERBOARDS.OBJECT_ID ID, MOTHERBOARDS.NAME NAME, LISTS_CHIPSET_MANUFACTURERS.LIST_VALUE_ID CHIPSET_MANUFACTURER,\n" +
-            "LISTS_CHIPSETS.LIST_VALUE_ID CHIPSET, LISTS_SOCKETS.LIST_VALUE_ID SOCKET\n" +
-            "FROM OBJECTS MOTHERBOARDS, OBJECTS ASSEMBLY, OBJREFERENCE MOTHERBOARD_REF, ATTRIBUTES CHIPSET_MANUFACTURERS, ATTRIBUTES CHIPSETS, ATTRIBUTES SOCKETS,\n" +
-            "LISTS LISTS_CHIPSET_MANUFACTURERS,LISTS LISTS_CHIPSETS, LISTS LISTS_SOCKETS\n" +
-            "WHERE ASSEMBLY.OBJECT_ID = ? \n" +
-            "AND MOTHERBOARD_REF.REFERENCE = ASSEMBLY.OBJECT_ID\n" +
-            "AND MOTHERBOARD_REF.OBJECT_ID = MOTHERBOARDS.OBJECT_ID \n" +
-            "\n" +
-            "AND MOTHERBOARDS.OBJECT_ID = CHIPSET_MANUFACTURERS.OBJECT_ID\n" +
-            "AND MOTHERBOARDS.OBJECT_ID = CHIPSETS.OBJECT_ID\n" +
-            "AND MOTHERBOARDS.OBJECT_ID = SOCKETS.OBJECT_ID\n" +
-            "\n" +
-            "AND LISTS_CHIPSET_MANUFACTURERS.LIST_VALUE_ID = CHIPSET_MANUFACTURERS.LIST_VALUE_ID\n" +
-            "AND LISTS_CHIPSETS.LIST_VALUE_ID = CHIPSETS.LIST_VALUE_ID\n" +
-            "AND LISTS_SOCKETS.LIST_VALUE_ID = SOCKETS.LIST_VALUE_ID\n" +
-            "\n" +
-            "AND CHIPSET_MANUFACTURERS.ATTR_ID = 9\n" +
-            "AND CHIPSETS.ATTR_ID = 10\n" +
-            "AND SOCKETS.ATTR_ID = 11";
-    private static final String SQL_SELECT_ALL_MOTHERBOARDS = "SELECT MOTHERBOARDS.OBJECT_ID ID, MOTHERBOARDS.NAME NAME, " +
-            "LISTS_CHIPSET_MANUFACTURERS.LIST_VALUE_ID CHIPSET_MANUFACTURER,\n" +
-            "LISTS_CHIPSETS.LIST_VALUE_ID CHIPSET, LISTS_SOCKETS.LIST_VALUE_ID SOCKET\n" +
-            "    FROM OBJECTS MOTHERBOARDS, ATTRIBUTES CHIPSET_MANUFACTURERS, ATTRIBUTES CHIPSETS, ATTRIBUTES SOCKETS,\n" +
-            "    LISTS LISTS_CHIPSET_MANUFACTURERS,LISTS LISTS_CHIPSETS, LISTS LISTS_SOCKETS\n" +
-            "        WHERE MOTHERBOARDS.OBJECT_TYPE_ID = 2\n" +
-            "        \n" +
-            "        AND MOTHERBOARDS.OBJECT_ID = CHIPSET_MANUFACTURERS.OBJECT_ID\n" +
-            "        AND MOTHERBOARDS.OBJECT_ID = CHIPSETS.OBJECT_ID\n" +
-            "        AND MOTHERBOARDS.OBJECT_ID = SOCKETS.OBJECT_ID\n" +
-            "        \n" +
-            "        AND LISTS_CHIPSET_MANUFACTURERS.LIST_VALUE_ID = CHIPSET_MANUFACTURERS.LIST_VALUE_ID\n" +
-            "        AND LISTS_CHIPSETS.LIST_VALUE_ID = CHIPSETS.LIST_VALUE_ID\n" +
-            "        AND LISTS_SOCKETS.LIST_VALUE_ID = SOCKETS.LIST_VALUE_ID\n" +
-            "        \n" +
-            "        AND CHIPSET_MANUFACTURERS.ATTR_ID = 9\n" +
-            "        AND CHIPSETS.ATTR_ID = 10\n" +
-            "        AND SOCKETS.ATTR_ID = 11";
-
     private static boolean checkNotNull(Motherboard motherboard) {
         if (motherboard == null) {
             return false;
@@ -93,7 +37,7 @@ public class MotherboardDAOImpl implements MotherboardDAO {
     }
 
     @Override
-    public Motherboard getById(BigInteger id) {
+    public Motherboard getMotherboardById(BigInteger id) {
         try {
 
             return jdbcTemplate.queryForObject(SQL_SELECT_MOTHERBOARD_BY_ID, new MotherboardRowMapper(), new Object[]{id});
@@ -104,7 +48,7 @@ public class MotherboardDAOImpl implements MotherboardDAO {
     }
 
     @Override
-    public Motherboard getByAssemblyId(BigInteger assemblyId) {
+    public Motherboard getMotherboardByAssemblyId(BigInteger assemblyId) {
         try {
             return jdbcTemplate.queryForObject(SQL_SELECT_MOTHERBOARD_BY_ASSEMBLY_ID, new MotherboardRowMapper(), assemblyId);
         } catch (DataAccessException dataAccessException) {
@@ -114,7 +58,7 @@ public class MotherboardDAOImpl implements MotherboardDAO {
     }
 
     @Override
-    public List<Motherboard> getAll() {
+    public List<Motherboard> getAllMotherboards() {
         try {
             return jdbcTemplate.query(SQL_SELECT_ALL_MOTHERBOARDS, new MotherboardRowMapper());
         } catch (DataAccessException dataAccessException) {

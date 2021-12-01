@@ -25,59 +25,59 @@ public class MotherboardDAOImplTest {
     private final Motherboard motherboard =  CreateUtilities.createMotherboard();
 
     @Test
-    public void getById_Valid_Id(){
-        Assertions.assertTrue(motherboard.equals(motherboardDAO.getById(BigInteger.valueOf(3))));
-        Assertions.assertFalse(motherboardDAO.getById(BigInteger.valueOf(3)).equals(new Motherboard.Builder(BigInteger.valueOf(1), "").build()));
-        Assertions.assertEquals(motherboard.hashCode(), motherboardDAO.getById(BigInteger.valueOf(3)).hashCode());
+    public void getByIdValidId(){
+        Assertions.assertTrue(motherboard.equals(motherboardDAO.getMotherboardById(BigInteger.valueOf(3))));
+        Assertions.assertFalse(motherboardDAO.getMotherboardById(BigInteger.valueOf(3)).equals(new Motherboard.Builder(BigInteger.valueOf(1), "").build()));
+        Assertions.assertEquals(motherboard.hashCode(), motherboardDAO.getMotherboardById(BigInteger.valueOf(3)).hashCode());
     }
 
     @Test
-    public void getById_Invalid_Id(){
-        Assertions.assertNull(motherboardDAO.getById(BigInteger.valueOf(-1)));
-        Assertions.assertNull(motherboardDAO.getById(BigInteger.valueOf(0)));
-        Assertions.assertNull(motherboardDAO.getById(BigInteger.valueOf(1)));
+    public void getByIdInvalidId(){
+        Assertions.assertNull(motherboardDAO.getMotherboardById(BigInteger.valueOf(-1)));
+        Assertions.assertNull(motherboardDAO.getMotherboardById(BigInteger.valueOf(0)));
+        Assertions.assertNull(motherboardDAO.getMotherboardById(BigInteger.valueOf(1)));
     }
 
     @Test
-    public void getByAssemblyId_Valid_Id() {
-        Assertions.assertTrue(motherboard.equals(motherboardDAO.getByAssemblyId(BigInteger.valueOf(1))));
+    public void getByAssemblyIdValidId() {
+        Assertions.assertTrue(motherboard.equals(motherboardDAO.getMotherboardByAssemblyId(BigInteger.valueOf(1))));
     }
 
     @Test
-    public void getByAssemblyId_Invalid_Id() {
-        Assertions.assertNull(motherboardDAO.getByAssemblyId(BigInteger.valueOf(-1)));
-        Assertions.assertNull(motherboardDAO.getByAssemblyId(BigInteger.valueOf(0)));
-        Assertions.assertNull(motherboardDAO.getByAssemblyId(BigInteger.valueOf(1000)));
+    public void getByAssemblyIdInvalidId() {
+        Assertions.assertNull(motherboardDAO.getMotherboardByAssemblyId(BigInteger.valueOf(-1)));
+        Assertions.assertNull(motherboardDAO.getMotherboardByAssemblyId(BigInteger.valueOf(0)));
+        Assertions.assertNull(motherboardDAO.getMotherboardByAssemblyId(BigInteger.valueOf(1000)));
     }
 
     @Test
     public void getAll() {
-        List<Motherboard> allMotherboards = motherboardDAO.getAll();
+        List<Motherboard> allMotherboards = motherboardDAO.getAllMotherboards();
         Assertions.assertNotNull(allMotherboards);
         Assertions.assertTrue(motherboard.equals(allMotherboards.get(0)));
     }
 
     @Test
     @Transactional
-    public void save_ValidObject() {
+    public void saveValidObject() {
         Assertions.assertTrue(motherboardDAO.save(motherboard));
     }
 
    @Test
     @Transactional
-    public void save_InvalidObject() {
+    public void saveInvalidObject() {
        Assertions.assertFalse(motherboardDAO.save(CreateUtilities.createBadMotherboard()));
    }
 
     @Test
     @Transactional
-    public void save_Null_Object() {
+    public void saveNullObject() {
         Assertions.assertFalse(motherboardDAO.save(null));
     }
 
     @Test
     @Transactional
-    public void update_Valid() {
+    public void updateValid() {
         Motherboard testMotherboard = new Motherboard.Builder(BigInteger.valueOf(0), "Test Name")
             .setChipsetManufacturer(ChipsetManufacturer.Intel)
             .setChipset(Chipset.B560)
@@ -88,13 +88,13 @@ public class MotherboardDAOImplTest {
 
     @Test
     @Transactional
-    public void update_InvalidID() {
+    public void updateInvalidID() {
         Assertions.assertFalse(motherboardDAO.update(BigInteger.valueOf(1000), motherboard));
     }
 
     @Test
     @Transactional
-    public void update_InvalidObject() {
+    public void updateInvalidObject() {
         Motherboard testMotherboard = new Motherboard.Builder(BigInteger.valueOf(0), "Test Name Of Bad Motherboard")
                 .setChipsetManufacturer(ChipsetManufacturer.Intel)
                 .setSocket(MotherboardSocket.Soc1200)
@@ -104,13 +104,13 @@ public class MotherboardDAOImplTest {
 
     @Test
     @Transactional
-    public void delete_ValidID() {
+    public void deleteValidID() {
         Assertions.assertTrue(motherboardDAO.delete(BigInteger.valueOf(4)));
     }
 
     @Test
     @Transactional
-    public void delete_InvalidID() {
+    public void deleteInvalidID() {
         Assertions.assertFalse(motherboardDAO.delete(BigInteger.valueOf(33)));
     }
 

@@ -21,19 +21,9 @@ public class RamDAOImplTest {
     @Autowired
     RamDAO ramDao;
 
-    /*private final RAM good_ram = new RAM.Builder(BigInteger.valueOf(10), "DDR4 RAM 8GB AMD 2400 MHz Radeon R7 Performance")
-            .setCapacity(BigInteger.valueOf(8))
-            .setFrequency(BigInteger.valueOf(2400))
-            .setTimings("5-5-5-15")
-            .setVoltage(BigDecimal.valueOf(1.2))
-            .build();
-    private final RAM bad_ram = new RAM.Builder(BigInteger.valueOf(0), "bad ram")
-            .setVoltage(BigDecimal.valueOf(1))
-            .build();*/
-
     @Test
     public void getRAMById() {
-        RAM ram = ramDao.getById(BigInteger.valueOf(10));
+        RAM ram = ramDao.getRamById(BigInteger.valueOf(10));
 
         Assertions.assertNotNull(ram);
         Assertions.assertNotNull(ram.getName());
@@ -45,13 +35,13 @@ public class RamDAOImplTest {
 
     @Test
     public void getRAMByWrongId() {
-        Assertions.assertNull(ramDao.getById(BigInteger.valueOf(-5)));
-        Assertions.assertNull(ramDao.getById(BigInteger.valueOf(5)));
+        Assertions.assertNull(ramDao.getRamById(BigInteger.valueOf(-5)));
+        Assertions.assertNull(ramDao.getRamById(BigInteger.valueOf(5)));
     }
 
     @Test
     public void getByAssemblyId() {
-        RAM ram = ramDao.getByAssemblyId(BigInteger.valueOf(2));
+        RAM ram = ramDao.getRamByAssemblyId(BigInteger.valueOf(2));
 
         Assertions.assertNotNull(ram);
         Assertions.assertNotNull(ram.getName());
@@ -63,13 +53,13 @@ public class RamDAOImplTest {
 
     @Test
     public void getByAssemblyInvalidId() {
-        Assertions.assertNull(ramDao.getByAssemblyId(BigInteger.valueOf(-5)));
-        Assertions.assertNull(ramDao.getByAssemblyId(BigInteger.valueOf(5)));
+        Assertions.assertNull(ramDao.getRamByAssemblyId(BigInteger.valueOf(-5)));
+        Assertions.assertNull(ramDao.getRamByAssemblyId(BigInteger.valueOf(5)));
     }
 
     @Test
     public void getAll() {
-        List<RAM> rams = ramDao.getAll();
+        List<RAM> rams = ramDao.getAllRams();
         Assertions.assertNotNull(rams);
     }
 

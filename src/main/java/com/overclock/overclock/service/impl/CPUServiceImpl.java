@@ -22,26 +22,26 @@ public class CPUServiceImpl implements CPUService {
 
     @Override
     public CPU getById(BigInteger id) {
-        return null;
+        return cpuDAO.getById(id);
     }
 
     @Override
     public List<CPU> getAll() {
-        return null;
+        return cpuDAO.getAll();
     }
 
     @Override
     public boolean save(CPU cpu) {
-        return false;
+        return cpuDAO.save(cpu);
     }
 
     @Override
     public boolean updateById(BigInteger id, CPU newCpu) {
-        return false;
+        return cpuDAO.update(id, newCpu);
     }
 
     @Override
     public boolean delete(BigInteger id) {
-        return false;
+        return cpuDAO.delete(id);
     }
 }

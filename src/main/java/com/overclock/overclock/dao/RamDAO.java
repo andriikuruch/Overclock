@@ -6,6 +6,12 @@ import java.math.BigInteger;
 import java.util.List;
 
 public interface RamDAO {
+    RAM getRamById(BigInteger id);
+    RAM getRamByAssemblyId(BigInteger assemblyId);
+    List<RAM> getAllRams();
+    boolean save(RAM ram);
+    boolean delete(BigInteger id);
+    boolean update(BigInteger id, RAM newRam);
     static final String SQL_SELECT_RAM_BY_ID = "SELECT RAM.OBJECT_ID ID, RAM.NAME NAME, CAPACITY.VALUE CAPACITY, " +
             " FREQ.VALUE FREQUENCY, TIMINGS.VALUE TIMINGS, VOLTAGE.VALUE VOLTAGE " +
             " FROM OBJECTS RAM, ATTRIBUTES CAPACITY, ATTRIBUTES FREQ, ATTRIBUTES TIMINGS, ATTRIBUTES VOLTAGE " +
@@ -51,10 +57,4 @@ public interface RamDAO {
             "        AND TIMINGS.ATTR_ID = 28 " + /* Timings */
             "        AND VOLTAGE.ATTR_ID = 29"; /* Voltage */
 
-    RAM getById(BigInteger id);
-    RAM getByAssemblyId(BigInteger assemblyId);
-    List<RAM> getAll();
-    boolean save(RAM ram);
-    boolean delete(BigInteger id);
-    boolean update(BigInteger id, RAM newRam);
 }
