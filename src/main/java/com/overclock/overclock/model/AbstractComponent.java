@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 import java.math.BigInteger;
 import java.util.Objects;
 
-abstract class AbstractComponent {
+public abstract class AbstractComponent {
 
     @Positive
     protected BigInteger id;

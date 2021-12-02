@@ -1,10 +1,6 @@
 package com.overclock.overclock.service.impl;
 
-import com.overclock.overclock.model.Assembly;
-import com.overclock.overclock.model.CPU;
-import com.overclock.overclock.model.GPU;
-import com.overclock.overclock.model.Motherboard;
-import com.overclock.overclock.model.Overclock;
+import com.overclock.overclock.model.*;
 import com.overclock.overclock.model.enums.CPUGeneration;
 import com.overclock.overclock.model.enums.CPUManufacturer;
 import com.overclock.overclock.model.enums.CPUSocket;
@@ -13,7 +9,6 @@ import com.overclock.overclock.model.enums.GPUChipManufacturer;
 import com.overclock.overclock.model.enums.MotherboardSocket;
 import com.overclock.overclock.service.ValidationService;
 import com.overclock.overclock.util.exception.ValidationException;
-import javafx.util.Pair;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +30,7 @@ public class ValidationServiceImpl implements ValidationService {
                                 !isValidComponent(cpu.getGeneration().toInt(), CPUGeneration.TenGen.toInt(), CPUGeneration.TenGen.toInt())) &&
                         (!isValidComponent(motherboard.getChipset().toInt(), 9, 11) || !isValidComponent(cpu.getGeneration().toInt(), 38, 39)) &&
                         (!isValidComponent(motherboard.getChipset().toInt(), 12, 19) || !isValidComponent(cpu.getGeneration().toInt(), 40, 43)))) {
-            logAndThrowValidationException("Motherboard and CPU is not compatibility", new Pair<Motherboard, CPU>(motherboard, cpu));
+            logAndThrowValidationException("Motherboard and CPU is not compatibility", new AbstractComponent[]{motherboard, cpu});
         }
     }
 
