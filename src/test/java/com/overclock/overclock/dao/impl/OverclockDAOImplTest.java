@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,13 +16,15 @@ import java.math.BigInteger;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
+@Sql("sql/InsertionsForTesting.sql")
+@Transactional
 public class OverclockDAOImplTest {
     @Autowired
     OverclockDAO overclockDAO;
 
     @Test
     public void getOverclockById() {
-        Overclock overclock = overclockDAO.getOverclockById(BigInteger.valueOf(11));
+        Overclock overclock = overclockDAO.getOverclockById(BigInteger.valueOf(-5012));
 
         Assertions.assertNotNull(overclock);
         Assertions.assertNotNull(overclock.getCPUFrequency());
@@ -36,92 +39,78 @@ public class OverclockDAOImplTest {
 
     @Test
     public void getOverclockByWrongId() {
-        Overclock overclock = overclockDAO.getOverclockById(BigInteger.valueOf(1));
+        Overclock overclock = overclockDAO.getOverclockById(BigInteger.valueOf(0));
 
         Assertions.assertNull(overclock);
     }
 
     @Test
-    @Transactional
     public void saveValidOverclock() {
-        Assertions.assertTrue(overclockDAO.save(CreateUtilities.createOverclock(), BigInteger.valueOf(2)));
+        Assertions.assertTrue(overclockDAO.save(CreateUtilities.createOverclock(), BigInteger.valueOf(-5013)));
     }
 
     @Test
-    @Transactional
     public void saveInvalidOverclock() {
-        Assertions.assertFalse(overclockDAO.save(CreateUtilities.createBadOverclock(), BigInteger.valueOf(2)));
+        Assertions.assertFalse(overclockDAO.save(CreateUtilities.createBadOverclock(), BigInteger.valueOf(-5013)));
     }
 
     @Test
-    @Transactional
     public void saveNull() {
-        Assertions.assertFalse(overclockDAO.save(null, BigInteger.valueOf(2)));
+        Assertions.assertFalse(overclockDAO.save(null, BigInteger.valueOf(-5013)));
     }
 
     @Test
-    @Transactional
     public void saveWhenOverclockIsAlreadyExists() {
-        Assertions.assertFalse(overclockDAO.save(CreateUtilities.createOverclock(), BigInteger.valueOf(1)));
+        Assertions.assertFalse(overclockDAO.save(CreateUtilities.createOverclock(), BigInteger.valueOf(-5006)));
     }
 
     @Test
-    @Transactional
     public void saveOverclockByWrongAssemblyId() {
-        Assertions.assertFalse(overclockDAO.save(CreateUtilities.createOverclock(), BigInteger.valueOf(5)));
+        Assertions.assertFalse(overclockDAO.save(CreateUtilities.createOverclock(), BigInteger.valueOf(0)));
     }
 
     @Test
-    @Transactional
     public void updateByNewValidOverclock() {
-        Assertions.assertTrue(overclockDAO.update(BigInteger.valueOf(11), CreateUtilities.createOverclock()));
+        Assertions.assertTrue(overclockDAO.update(BigInteger.valueOf(-5012), CreateUtilities.createOverclock()));
     }
 
     @Test
-    @Transactional
     public void updateByNewInvalidOverclock() {
-        Assertions.assertFalse(overclockDAO.update(BigInteger.valueOf(11), CreateUtilities.createBadOverclock()));
+        Assertions.assertFalse(overclockDAO.update(BigInteger.valueOf(-5012), CreateUtilities.createBadOverclock()));
     }
 
     @Test
-    @Transactional
     public void updateOverclockByNull() {
-        Assertions.assertFalse(overclockDAO.update(BigInteger.valueOf(11), null));
+        Assertions.assertFalse(overclockDAO.update(BigInteger.valueOf(-5012), null));
     }
 
     @Test
-    @Transactional
     public void updateNotAOverclock() {
-        Assertions.assertFalse(overclockDAO.update(BigInteger.valueOf(1), CreateUtilities.createOverclock()));
+        Assertions.assertFalse(overclockDAO.update(BigInteger.valueOf(-5013), CreateUtilities.createOverclock()));
     }
 
     @Test
-    @Transactional
     public void deleteOverclock() {
-        Assertions.assertTrue(overclockDAO.delete(BigInteger.valueOf(11)));
+        Assertions.assertTrue(overclockDAO.delete(BigInteger.valueOf(-5012)));
     }
 
     @Test
-    @Transactional
     public void deleteNotAnOverclock() {
-        Assertions.assertFalse(overclockDAO.delete(BigInteger.valueOf(1)));
+        Assertions.assertFalse(overclockDAO.delete(BigInteger.valueOf(-5013)));
     }
 
     @Test
-    @Transactional
     public void deleteByAssemblyId() {
-        Assertions.assertTrue(overclockDAO.deleteByAssemblyId(BigInteger.valueOf(1)));
+        Assertions.assertTrue(overclockDAO.deleteByAssemblyId(BigInteger.valueOf(-5006)));
     }
 
     @Test
-    @Transactional
     public void deleteByWrongAssemblyId() {
-        Assertions.assertFalse(overclockDAO.deleteByAssemblyId(BigInteger.valueOf(5)));
+        Assertions.assertFalse(overclockDAO.deleteByAssemblyId(BigInteger.valueOf(0)));
     }
 
     @Test
-    @Transactional
     public void deleteByAssemblyIdWhenOverclockIsNotExists() {
-        Assertions.assertFalse(overclockDAO.deleteByAssemblyId(BigInteger.valueOf(2)));
+        Assertions.assertFalse(overclockDAO.deleteByAssemblyId(BigInteger.valueOf(-5013)));
     }
 }
