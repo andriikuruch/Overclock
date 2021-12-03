@@ -3,13 +3,11 @@ package com.overclock.overclock.service.impl;
 import com.overclock.overclock.dao.UserDAO;
 import com.overclock.overclock.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 
 @Service
-@Scope("singleton")
 public class AdminServiceImpl implements AdminService {
     private UserDAO userDAO;
 

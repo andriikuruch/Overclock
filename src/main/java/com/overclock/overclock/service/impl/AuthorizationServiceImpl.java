@@ -1,54 +1,51 @@
 package com.overclock.overclock.service.impl;
 
-import com.overclock.overclock.model.User;
+import com.overclock.overclock.security.UserDetailsImpl;
 import com.overclock.overclock.service.AdminService;
 import com.overclock.overclock.service.AuthorizationService;
-import com.overclock.overclock.service.JWTService;
 import com.overclock.overclock.service.UserService;
+import com.overclock.overclock.util.JwtTokenUtil;
 import com.overclock.overclock.util.RequestUser;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 @Service
-@Scope("singleton")
 public class AuthorizationServiceImpl implements AuthorizationService {
-    private UserService userService;
-    private JWTService jwtService;
-    private AdminService adminService;
+    private final UserService userService;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final AdminService adminService;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    public void setUserService(UserService userService) {
+    public AuthorizationServiceImpl(UserService userService, JwtTokenUtil jwtTokenUtil,
+                                    AdminService adminService, AuthenticationManager authenticationManager) {
         this.userService = userService;
-    }
-
-    @Autowired
-    public void setJWTService(JWTService jwtService) {
-        this.jwtService = jwtService;
-    }
-
-    @Autowired
-    public void setAdminService(AdminService adminService) {
+        this.jwtTokenUtil = jwtTokenUtil;
         this.adminService = adminService;
+        this.authenticationManager = authenticationManager;
+    }
+
+    public UserDetailsImpl authenticate(RequestUser user) throws BadCredentialsException {
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword()));
+        return (UserDetailsImpl) authentication.getPrincipal();
     }
 
     @Override
-    public User getAuthorization(String username) {
-        return null;
+    public String getAccessToken(UserDetailsImpl user) {
+        return jwtTokenUtil.generateAccessToken(user);
     }
 
-    @Override
-    public boolean authenticate(RequestUser user) {
-        return false;
-    }
+    public void validateRequestUser(RequestUser user) throws IllegalStateException {
+        if (StringUtils.isBlank(user.getName())) {
+            throw new IllegalStateException("Username is empty.");
+        }
 
-    @Override
-    public boolean resetPassword(String newPassword) {
-        return false;
-    }
-
-    @Override
-    public boolean sendForgotPasswordMail(String email) {
-        return false;
+        if (StringUtils.isBlank(user.getPassword())) {
+            throw new IllegalStateException("Password is empty");
+        }
     }
 }

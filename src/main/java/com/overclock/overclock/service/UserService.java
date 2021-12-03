@@ -2,13 +2,14 @@ package com.overclock.overclock.service;
 
 import com.overclock.overclock.model.User;
 import com.overclock.overclock.util.RequestUser;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.math.BigInteger;
-import java.util.List;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
     User getFullInformationById(BigInteger id);
     User getWithMainInformation(BigInteger id);
+    User getWithMainInformationByUsername(String username);
     User getUserByUsername(String username);
     boolean save(RequestUser user);
     boolean updateUsername(BigInteger id, String username);

@@ -7,7 +7,7 @@ import java.math.BigInteger;
 public interface UserDAO {
     String GET_WITH_MAIN_INFORMATION = "SELECT USERS.OBJECT_ID USER_ID, " +
             "    USERS.NAME USERNAME, EMAIL.VALUE EMAIL, " +
-            "    USER_ROLE.LIST_VALUE_ID USER_ROLE," +
+            "    USER_ROLE.LIST_VALUE_ID USER_ROLE, " +
             "    PASSWORD.VALUE PASSWORD " +
             "FROM OBJECTS USERS, ATTRIBUTES EMAIL, " +
             "    ATTRIBUTES PASSWORD, ATTRIBUTES USER_ROLE " +
@@ -42,6 +42,21 @@ public interface UserDAO {
             "WHERE USERS.OBJECT_TYPE_ID = 7 " +
             "    AND USERS.NAME = ?";
 
+    String GET_WITH_MAIN_INFORMATION_BY_USERNAME = "SELECT USERS.OBJECT_ID USER_ID, " +
+            "    USERS.NAME USERNAME, EMAIL.VALUE EMAIL, " +
+            "    USER_ROLE.LIST_VALUE_ID USER_ROLE, " +
+            "    PASSWORD.VALUE PASSWORD " +
+            "FROM OBJECTS USERS, ATTRIBUTES EMAIL, " +
+            "    ATTRIBUTES PASSWORD, ATTRIBUTES USER_ROLE " +
+            "WHERE USERS.OBJECT_TYPE_ID = 7 " +
+            "    AND USERS.NAME = ? " +
+            "    AND PASSWORD.ATTR_ID = 39 /*PASSWORD*/ " +
+            "    AND PASSWORD.OBJECT_ID = USERS.OBJECT_ID " +
+            "    AND EMAIL.ATTR_ID = 40 /*EMAIL*/ " +
+            "    AND EMAIL.OBJECT_ID =  USERS.OBJECT_ID " +
+            "    AND USER_ROLE.ATTR_ID = 42 /*ROLE*/ " +
+            "    AND USER_ROLE.OBJECT_ID =  USERS.OBJECT_ID";
+
     String INSERT_USER = "INSERT ALL " +
             "INTO OBJECTS (OBJECT_ID, PARENT_ID, OBJECT_TYPE_ID, NAME, DESCRIPTION) " +
             "VALUES (OBJECT_ID_SEQ.NEXTVAL, NULL, 7, ?, NULL) /*CREATE USER WITH USERNAME*/ " +
@@ -72,6 +87,7 @@ public interface UserDAO {
     User getFullInformationById(BigInteger id);
     User getWithMainInformation(BigInteger id);
     User getUserByUsername(String username);
+    User getWithMainInformationByUsername(String username);
     boolean save(String username, String password, String email, boolean isActive);
     boolean updateUsername(BigInteger id, String username);
     boolean updatePassword(BigInteger id, String password);

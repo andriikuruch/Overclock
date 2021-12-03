@@ -3,27 +3,30 @@ package com.overclock.overclock.service.impl;
 import com.overclock.overclock.service.RegistrationService;
 import com.overclock.overclock.service.UserService;
 import com.overclock.overclock.util.RequestUser;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@Scope("singleton")
 public class RegistrationServiceImpl implements RegistrationService {
-    private UserService userService;
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public void setUserService(UserService userService) {
+    public RegistrationServiceImpl(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public void register(RequestUser user) {
+    public boolean register(RequestUser user) {
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
 
+        return userService.save(user);
     }
 
     @Override
-    public boolean validate(RequestUser user) {
-        return false;
+    public boolean isValid(RequestUser user) {
+        return !StringUtils.isAllBlank(user.getName(), user.getPassword(), user.getEmail());
     }
 }

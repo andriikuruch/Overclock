@@ -1,11 +1,11 @@
 package com.overclock.overclock.service;
 
-import com.overclock.overclock.model.User;
+import com.overclock.overclock.security.UserDetailsImpl;
 import com.overclock.overclock.util.RequestUser;
+import org.springframework.security.authentication.BadCredentialsException;
 
 public interface AuthorizationService {
-    User getAuthorization(String username);
-    boolean authenticate(RequestUser user);
-    boolean resetPassword(String newPassword);
-    boolean sendForgotPasswordMail(String email);
+    UserDetailsImpl authenticate(RequestUser user) throws BadCredentialsException;
+    String getAccessToken(UserDetailsImpl user);
+    void validateRequestUser(RequestUser user) throws IllegalStateException;
 }

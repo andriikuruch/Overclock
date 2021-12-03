@@ -11,20 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.math.BigInteger;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserDAOImpl.class);
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -61,6 +59,16 @@ public class UserDAOImpl implements UserDAO {
                     .setId(BigInteger.valueOf(rs.getLong("USER_ID")))
                     .setUserName(rs.getString("USERNAME"))
                     .build(), username);
+        } catch (EmptyResultDataAccessException e) {
+            LOGGER.error(e.getMessage(), e);
+            return null;
+        }
+    }
+
+    @Override
+    public User getWithMainInformationByUsername(String username) {
+        try {
+            return jdbcTemplate.queryForObject(GET_WITH_MAIN_INFORMATION_BY_USERNAME, mainInformationRowMapper, username);
         } catch (EmptyResultDataAccessException e) {
             LOGGER.error(e.getMessage(), e);
             return null;

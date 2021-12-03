@@ -1,57 +1,32 @@
 package com.overclock.overclock.util;
 
+import org.springframework.lang.Nullable;
+
 import javax.validation.constraints.*;
 
 
 public class RequestUser {
-    @NotNull
-    @NotEmpty
     @Size(min = 4, max = 23)
-    protected String name;
+    protected String username;
 
-    @NotNull
-    @NotEmpty
     protected String password;
 
-    @NotNull
-    @NotEmpty
     @Email
+    @Nullable
     protected String email;
 
-    public static class Builder {
-
-        private RequestUser requestUser;
-
-        public Builder() {
-            this.requestUser = new RequestUser();
-        }
-
-        public Builder setUserName(String name) {
-            requestUser.name = name;
-            return this;
-        }
-
-        public Builder setPassword(String password) {
-            requestUser.password = password;
-            return this;
-        }
-
-        public Builder setEmail(String email) {
-            requestUser.email = email;
-            return this;
-        }
-
-        public RequestUser build() {
-            return requestUser;
-        }
+    public RequestUser(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
     }
 
     public String getName() {
-        return name;
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

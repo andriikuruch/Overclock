@@ -2,19 +2,20 @@ package com.overclock.overclock.service.impl;
 
 import com.overclock.overclock.dao.UserDAO;
 import com.overclock.overclock.model.User;
+import com.overclock.overclock.security.UserDetailsImpl;
 import com.overclock.overclock.service.UserService;
 import com.overclock.overclock.util.RequestUser;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private UserDAO userDAO;
+    private final UserDAO userDAO;
 
-    @Autowired
-    public void setUserDAO(UserDAO userDAO) {
+    public UserServiceImpl(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
 
@@ -26,6 +27,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getWithMainInformation(BigInteger id) {
         return userDAO.getWithMainInformation(id);
+    }
+
+    @Override
+    public User getWithMainInformationByUsername(String username) {
+        return userDAO.getWithMainInformationByUsername(username);
     }
 
     @Override
@@ -56,5 +62,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean updateUserActiveStatus(BigInteger id, boolean isActive) {
         return userDAO.updateUserActiveStatus(id, isActive);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = getWithMainInformationByUsername(username);
+
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found by username: " + username);
+        }
+
+        return UserDetailsImpl.fromUser(user);
     }
 }
