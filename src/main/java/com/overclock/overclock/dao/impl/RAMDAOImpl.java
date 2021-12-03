@@ -33,7 +33,7 @@ public class RAMDAOImpl implements RamDAO, QueryConstants {
     }
 
     @Override
-    public RAM getById(BigInteger id) {
+    public RAM getRamById(BigInteger id) {
         try {
             return jdbcTemplate.queryForObject(SQL_SELECT_RAM_BY_ID, ramRowMapper, id);
         } catch (DataAccessException dataAccessException) {
@@ -43,7 +43,7 @@ public class RAMDAOImpl implements RamDAO, QueryConstants {
     }
 
     @Override
-    public RAM getByAssemblyId(BigInteger assemblyId) {
+    public RAM getRamByAssemblyId(BigInteger assemblyId) {
         try {
             return jdbcTemplate.queryForObject(SQL_SELECT_RAM_BY_ASSEMBLY_ID, ramRowMapper, assemblyId);
         } catch (DataAccessException dataAccessException) {
@@ -53,7 +53,7 @@ public class RAMDAOImpl implements RamDAO, QueryConstants {
     }
 
     @Override
-    public List<RAM> getAll() {
+    public List<RAM> getAllRams() {
         try {
             return jdbcTemplate.query(SQL_SELECT_ALL_RAM, ramRowMapper);
         } catch (DataAccessException dataAccessException) {

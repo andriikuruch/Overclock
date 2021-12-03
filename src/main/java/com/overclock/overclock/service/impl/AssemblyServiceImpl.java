@@ -4,6 +4,7 @@ import com.overclock.overclock.dao.AssemblyDAO;
 import com.overclock.overclock.model.Assembly;
 import com.overclock.overclock.model.Comment;
 import com.overclock.overclock.service.*;
+import com.overclock.overclock.util.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -34,17 +35,16 @@ public class AssemblyServiceImpl implements AssemblyService {
 
     @Override
     public Assembly getAssemblyByIdWithSomeComments(BigInteger id, BigInteger limit) {
-        if (id == null){
+        if (id == null) {
             LOGGER.log(Level.WARNING, "id of assembly is null");
             return null;
         }
         List<Comment> commentList = commentService.getLimitedListOfCommentsByAssemblyId(id, limit);
         Assembly assembly = assemblyDAO.getAssemblyById(id);
-        if (assembly == null){
+        if (assembly == null) {
             LOGGER.log(Level.WARNING, "There are no assembly with such id");
             return null;
-        }
-        else {
+        } else {
             Assembly assemblyWithSomeComments = new Assembly.Builder(id, assembly.getName())
                     .setMotherboard(assembly.getMotherboard())
                     .setComments(commentList)
@@ -61,11 +61,11 @@ public class AssemblyServiceImpl implements AssemblyService {
 
     @Override
     public List<Assembly> getAssembliesByAuthorName(String author) {
-        if (author==null){
+        if (author == null) {
             LOGGER.log(Level.WARNING, "Name of autor is null");
             return null;
         }
-        return  assemblyDAO.getAssembliesByAuthorName(author);
+        return assemblyDAO.getAssembliesByAuthorName(author);
     }
 
     @Override
@@ -109,18 +109,26 @@ public class AssemblyServiceImpl implements AssemblyService {
 
     @Override
     public boolean іsValidAssembly(Assembly assembly) {
-        if (assembly == null){
+        if (assembly == null) {
             LOGGER.log(Level.WARNING, "Assembly is null");
             return false;
-        }
-        else {
-            boolean isValidMotherboard = validationService.isValidMotherboard(assembly.getMotherboard());
-            boolean isValidCPU = validationService.isValidCPU(assembly.getCpu());
-            boolean isValidGPU = validationService.isValidGPU(assembly.getGpu());
-            boolean checkCompatibility = validationService.checkCompatibility(assembly);
-            boolean isCompatibleMotherboardAndCPU = validationService.isCompatibleMotherboardAndCPU(assembly.getMotherboard(), assembly.getCpu());
-            return isValidMotherboard && isValidCPU && isValidGPU && checkCompatibility && isCompatibleMotherboardAndCPU;
+        } else {
+            //boolean isValidMotherboard = validationService.isValidMotherboard(assembly.getMotherboard());
+            //boolean isValidCPU = validationService.isValidCPU(assembly.getCpu());
+            //boolean isValidGPU = validationService.isValidGPU(assembly.getGpu());
+            //boolean checkCompatibility = validationService.checkCompatibility(assembly);
+            //boolean isCompatibleMotherboardAndCPU = validationService.isCompatibleMotherboardAndCPU(assembly.getMotherboard(), assembly.getCpu());
+            //return isValidMotherboard && isValidCPU && isValidGPU && checkCompatibility && isCompatibleMotherboardAndCPU;
+            try {
+                validationService.isValidMotherboard(assembly.getMotherboard());
+                validationService.isValidCPU(assembly.getCpu());
+                validationService.isValidGPU(assembly.getGpu());
+                validationService.checkCompatibility(assembly);
+                validationService.isCompatibleMotherboardAndCPU(assembly.getMotherboard(), assembly.getCpu());
+                return true;
+            } catch (ValidationException e) {
+                return false;
+            }
         }
     }
 }
-

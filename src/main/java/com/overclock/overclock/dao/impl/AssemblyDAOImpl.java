@@ -16,7 +16,6 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.math.BigInteger;
 import java.util.List;
-import java.util.Optional;
 
 
 @Repository
@@ -61,7 +60,7 @@ public class AssemblyDAOImpl implements AssemblyDAO, QueryConstants {
                 Motherboard motherboard = motherboardDAO.getMotherboardByAssemblyId(id);
                 CPU cpu = cpuDAO.getByAssemblyId(id);
                 GPU gpu = gpuDao.getByAssemblyId(id);
-                RAM ram = ramDao.getByAssemblyId(id);
+                RAM ram = ramDao.getRamByAssemblyId(id);
                 List<Comment> comments = commentDAO.getAllCommentsByAssemblyId(id);
 
                 return new Assembly.Builder(assemblyId, rs.getString("ASSEMBLY_NAME"))

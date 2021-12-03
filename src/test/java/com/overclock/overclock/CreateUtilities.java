@@ -11,7 +11,7 @@ import java.util.*;
 
 public class CreateUtilities {
     public static Motherboard createMotherboard() {
-        return new Motherboard.Builder(BigInteger.valueOf(3), "Asus Prime B560M-A")
+        return new Motherboard.Builder(BigInteger.valueOf(-5008), "testMB1")
                 .setChipsetManufacturer(ChipsetManufacturer.Intel)
                 .setChipset(Chipset.B560)
                 .setSocket(MotherboardSocket.Soc1200)
@@ -25,7 +25,7 @@ public class CreateUtilities {
     }
 
     public static CPU createCpu() {
-        return new CPU.Builder(BigInteger.valueOf(5), "Intel Core i7")
+        return new CPU.Builder(BigInteger.valueOf(-5009), "Intel Core i7")
                 .setManufacturer(CPUManufacturer.Intel)
                 .setSocket(CPUSocket.Soc1200)
                 .setGeneration(CPUGeneration.TenGen)
@@ -44,7 +44,7 @@ public class CreateUtilities {
     }
 
     public static GPU createGpu() {
-        return new GPU.Builder(BigInteger.valueOf(7), "Asus ROG STRIX GTX1080 A8G GAMING")
+        return new GPU.Builder(BigInteger.valueOf(-5010), "Asus ROG STRIX GTX1080 A8G GAMING")
                 .setChipManufacturer(GPUChipManufacturer.Nvidia)
                 .setChip(GPUChip.GeForce_GTX_1080)
                 .setCoreFrequency(BigInteger.valueOf(1695))
@@ -55,7 +55,7 @@ public class CreateUtilities {
     }
 
     public static RAM createRAM() {
-        return new RAM.Builder(BigInteger.valueOf(9), "HyperX DDR4-2666 16384MB PC4-21300")
+        return new RAM.Builder(BigInteger.valueOf(-5011), "HyperX DDR4-2666 16384MB PC4-21300")
                 .setTimings("77-7-21")
                 .setFrequency(BigInteger.valueOf(2666))
                 .setCapacity(BigInteger.valueOf(16))
@@ -124,7 +124,7 @@ public class CreateUtilities {
                 .setCpu(createCpu())
                 .setMotherboard(createMotherboard())
                 .setScore(BigInteger.valueOf(5600))
-                .setAuthor(BigInteger.valueOf(12))
+                .setAuthor(BigInteger.valueOf(-5007))
                 .build();
     }
 
@@ -135,7 +135,7 @@ public class CreateUtilities {
                 .setCpu(createCpu())
                 .setMotherboard(createMotherboard())
                 .setScore(BigInteger.valueOf(5600))
-                .setAuthor(BigInteger.valueOf(-1))
+                .setAuthor(BigInteger.valueOf(0))
                 .build();
     }
 

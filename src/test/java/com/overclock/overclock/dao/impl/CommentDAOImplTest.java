@@ -3,11 +3,13 @@ package com.overclock.overclock.dao.impl;
 import com.overclock.overclock.CreateUtilities;
 import com.overclock.overclock.dao.CommentDAO;
 import com.overclock.overclock.model.Comment;
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,15 +18,18 @@ import java.util.List;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
+@Sql("sql/InsertionsForTesting.sql")
+@Transactional
 public class CommentDAOImplTest {
     @Autowired
     CommentDAO commentDAO;
 
     @Test
     public void getAllCommentsByAssemblyId() {
-        List<Comment> comments = commentDAO.getAllCommentsByAssemblyId(BigInteger.valueOf(1));
+        List<Comment> comments = commentDAO.getAllCommentsByAssemblyId(BigInteger.valueOf(-5006));
 
         Assertions.assertNotNull(comments);
+        Assert.assertFalse(comments.isEmpty());
         for (Comment comment: comments) {
             Assertions.assertNotNull(comment.getId());
             Assertions.assertNotNull(comment.getCommentMessage());
@@ -35,7 +40,7 @@ public class CommentDAOImplTest {
 
     @Test
     public void getAllCommentsByWrongAssemblyId() {
-        List<Comment> comments = commentDAO.getAllCommentsByAssemblyId(BigInteger.valueOf(4));
+        List<Comment> comments = commentDAO.getAllCommentsByAssemblyId(BigInteger.valueOf(0));
 
         Assertions.assertNotNull(comments);
         Assertions.assertTrue(comments.isEmpty());
@@ -44,7 +49,7 @@ public class CommentDAOImplTest {
     @Test
     public void getLimitedListOfCommentsByAssemblyId() {
         BigInteger limit = BigInteger.valueOf(2);
-        List<Comment> comments = commentDAO.getLimitedListOfCommentsByAssemblyId(BigInteger.valueOf(1), limit);
+        List<Comment> comments = commentDAO.getLimitedListOfCommentsByAssemblyId(BigInteger.valueOf(-5006), limit);
 
         Assertions.assertNotNull(comments);
         Assertions.assertTrue(comments.size() <= limit.intValue());
@@ -59,62 +64,53 @@ public class CommentDAOImplTest {
     @Test
     public void getLimitedListOfCommentsByAssemblyIdWithNegativeLimit() {
         BigInteger limit = BigInteger.valueOf(-3);
-        List<Comment> comments = commentDAO.getLimitedListOfCommentsByAssemblyId(BigInteger.valueOf(1), limit);
+        List<Comment> comments = commentDAO.getLimitedListOfCommentsByAssemblyId(BigInteger.valueOf(-5006), limit);
 
         Assertions.assertNotNull(comments);
         Assertions.assertTrue(comments.isEmpty());
     }
     @Test
-    @Transactional
     public void saveValidComment() {
-        Assertions.assertTrue(commentDAO.save(CreateUtilities.createComment(), BigInteger.valueOf(2), BigInteger.valueOf(12)));
+        Assertions.assertTrue(commentDAO.save(CreateUtilities.createComment(), BigInteger.valueOf(-5006), BigInteger.valueOf(-5007)));
     }
 
     @Test
-    @Transactional
     public void saveInvalidComment() {
-        Assertions.assertFalse(commentDAO.save(CreateUtilities.createBadComment(), BigInteger.valueOf(2), BigInteger.valueOf(12)));
+        Assertions.assertFalse(commentDAO.save(CreateUtilities.createBadComment(), BigInteger.valueOf(-5006), BigInteger.valueOf(-5007)));
     }
 
     @Test
-    @Transactional
     public void saveNull() {
-       Assertions.assertFalse(commentDAO.save(null, BigInteger.valueOf(2), BigInteger.valueOf(12)));
+       Assertions.assertFalse(commentDAO.save(null, BigInteger.valueOf(-5006), BigInteger.valueOf(-5007)));
     }
 
     @Test
-    @Transactional
     public void saveCommentWithWrongAuthorId() {
-        Assertions.assertFalse(commentDAO.save(CreateUtilities.createComment(), BigInteger.valueOf(2), BigInteger.valueOf(2)));
+        Assertions.assertFalse(commentDAO.save(CreateUtilities.createComment(), BigInteger.valueOf(-5006), BigInteger.valueOf(0)));
     }
 
     @Test
-    @Transactional
     public void saveCommentWithWrongAssemblyId() {
-        Assertions.assertFalse(commentDAO.save(CreateUtilities.createComment(), BigInteger.valueOf(10), BigInteger.valueOf(12)));
+        Assertions.assertFalse(commentDAO.save(CreateUtilities.createComment(), BigInteger.valueOf(0), BigInteger.valueOf(-5007)));
     }
 
     @Test
-    @Transactional
     public void deleteComment() {
-        Assertions.assertTrue(commentDAO.delete(BigInteger.valueOf(16)));
+        Assertions.assertTrue(commentDAO.delete(BigInteger.valueOf(-5001)));
     }
 
     @Test
-    @Transactional
     public void deleteNotAComment() {
-        Assertions.assertFalse(commentDAO.delete(BigInteger.valueOf(1)));
+        Assertions.assertFalse(commentDAO.delete(BigInteger.valueOf(0)));
     }
 
     @Test
-    @Transactional
     public void deleteAllCommentsByAssemblyId() {
-        Assertions.assertTrue(commentDAO.deleteAllCommentsByAssemblyId(BigInteger.valueOf(1)));
+        Assertions.assertTrue(commentDAO.deleteAllCommentsByAssemblyId(BigInteger.valueOf(-5006)));
     }
 
     @Test
-    @Transactional
     public void deleteAllCommentsByAssemblyIdWithWrongAssemblyId() {
-        Assertions.assertFalse(commentDAO.deleteAllCommentsByAssemblyId(BigInteger.valueOf(3)));
+        Assertions.assertFalse(commentDAO.deleteAllCommentsByAssemblyId(BigInteger.valueOf(0)));
     }
 }
