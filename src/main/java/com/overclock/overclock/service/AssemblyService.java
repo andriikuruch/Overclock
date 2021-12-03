@@ -15,6 +15,6 @@ public interface AssemblyService {
     boolean save(Assembly assembly);
     boolean delete(BigInteger id);
     boolean updateScore(BigInteger id, BigInteger newScore);
-    boolean іsValidAssembly(Assembly assembly);
+    void checkAssemblyValidation(Assembly assembly);
 }
 
