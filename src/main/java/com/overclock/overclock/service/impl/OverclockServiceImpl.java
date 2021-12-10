@@ -52,8 +52,7 @@ public class OverclockServiceImpl implements OverclockService {
     @Override
     public Overclock getDefaultOverclockValues(BigInteger assemblyId) {
         Assembly assembly = assemblyService.getAssemblyById(assemblyId);
-
-        return new Overclock.Builder()
+        Overclock defaultOverclock = new Overclock.Builder()
                 .setCPUFrequency(assembly.getCpu().getFrequency())
                 .setCPUVoltage(assembly.getCpu().getVoltage())
                 .setGPUCoreFrequency(assembly.getGpu().getCoreFrequency())
@@ -62,5 +61,7 @@ public class OverclockServiceImpl implements OverclockService {
                 .setRAMFrequency(assembly.getRam().getFrequency())
                 .setRAMTimings(assembly.getRam().getTimings())
                 .setRAMVoltage(assembly.getRam().getVoltage()).build();
+        validationService.checkOverclockValidity(defaultOverclock);
+        return defaultOverclock;
     }
 }
