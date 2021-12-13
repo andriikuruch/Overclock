@@ -1,22 +1,23 @@
 package com.overclock.overclock.controller;
 
+import com.overclock.overclock.controller.request.RequestUser;
 import com.overclock.overclock.service.RegistrationService;
-import com.overclock.overclock.util.RequestUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 
 @Validated
 @RestController
 @RequestMapping(value = "/api/registration")
 public class RegistrationController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationController.class);
     private RegistrationService registrationService;
 
     @Autowired
@@ -26,17 +27,26 @@ public class RegistrationController {
 
     @PostMapping
     public ResponseEntity<?> signUp(@Valid @RequestBody RequestUser requestUser) {
-        if (!registrationService.isValid(requestUser))
+        try {
+            registrationService.isValidRequestUser(requestUser);
+            registrationService.register(requestUser);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (IllegalStateException e) {
+            LOGGER.error(e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Not valid username, password or email.");
+                    .body(e.getMessage());
+        }
+    }
 
-        boolean result = registrationService.register(requestUser);
-
-        if (!result)
+    @GetMapping("/activate-account")
+    public ResponseEntity<?> finishRegistration(@NotBlank @RequestParam("token") String activatePasswordToken) {
+        try {
+            registrationService.finishRegistration(activatePasswordToken);
+            return ResponseEntity.ok().build();
+        } catch (IllegalStateException e) {
+            LOGGER.error(e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Sign up is failed. User with these username or email already exist.");
-
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Successful sign up.");
+                    .body(e.getMessage());
+        }
     }
 }

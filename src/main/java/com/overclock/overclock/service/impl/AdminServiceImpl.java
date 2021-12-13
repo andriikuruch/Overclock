@@ -17,12 +17,20 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public boolean blockUser(BigInteger id) {
-        return userDAO.updateUserActiveStatus(id, false);
+    public void blockUser(BigInteger id) throws IllegalStateException {
+        boolean status = userDAO.updateUserActiveStatus(id, false);
+
+        if (!status) {
+            throw new IllegalStateException("Can not block user with id: " + id);
+        }
     }
 
     @Override
-    public boolean unblockUser(BigInteger id) {
-        return userDAO.updateUserActiveStatus(id, true);
+    public void unblockUser(BigInteger id) throws IllegalStateException {
+        boolean status = userDAO.updateUserActiveStatus(id, true);
+
+        if (!status) {
+            throw new IllegalStateException("Can not unblock user with id: " + id);
+        }
     }
 }

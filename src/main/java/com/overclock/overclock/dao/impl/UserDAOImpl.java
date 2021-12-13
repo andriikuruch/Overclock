@@ -7,7 +7,6 @@ import com.overclock.overclock.model.User;
 import com.overclock.overclock.model.enums.Role;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,15 +21,15 @@ import java.util.Date;
 @Repository
 public class UserDAOImpl implements UserDAO {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserDAOImpl.class);
+    private final JdbcTemplate jdbcTemplate;
+    private final UserFullInformationRowMapper fullInformationRowMapper;
+    private final UserMainInformationRowMapper mainInformationRowMapper;
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    @Autowired
-    private UserFullInformationRowMapper fullInformationRowMapper;
-
-    @Autowired
-    private UserMainInformationRowMapper mainInformationRowMapper;
+    public UserDAOImpl(JdbcTemplate jdbcTemplate, UserFullInformationRowMapper fullInformationRowMapper, UserMainInformationRowMapper mainInformationRowMapper) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.fullInformationRowMapper = fullInformationRowMapper;
+        this.mainInformationRowMapper = mainInformationRowMapper;
+    }
 
     @Override
     public User getFullInformationById(BigInteger id) {
@@ -68,7 +67,21 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User getWithMainInformationByUsername(String username) {
         try {
-            return jdbcTemplate.queryForObject(GET_WITH_MAIN_INFORMATION_BY_USERNAME, mainInformationRowMapper, username);
+            return jdbcTemplate.queryForObject(GET_WITH_FULL_INFORMATION_BY_USERNAME, fullInformationRowMapper, username);
+        } catch (EmptyResultDataAccessException e) {
+            LOGGER.error(e.getMessage(), e);
+            return null;
+        }
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        try {
+            return jdbcTemplate.queryForObject(GET_BY_EMAIL, (rs, rowNum) -> new User.Builder()
+                    .setId(BigInteger.valueOf(rs.getLong("USER_ID")))
+                    .setUserName(rs.getString("USERNAME"))
+                    .setEmail(rs.getString("EMAIL"))
+                    .build(), email);
         } catch (EmptyResultDataAccessException e) {
             LOGGER.error(e.getMessage(), e);
             return null;

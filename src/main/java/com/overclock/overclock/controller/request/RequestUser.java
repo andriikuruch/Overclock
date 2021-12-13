@@ -1,4 +1,4 @@
-package com.overclock.overclock.util;
+package com.overclock.overclock.controller.request;
 
 import org.springframework.lang.Nullable;
 

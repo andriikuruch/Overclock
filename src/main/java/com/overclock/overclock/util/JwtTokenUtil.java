@@ -16,6 +16,7 @@ public class JwtTokenUtil {
     private final String jwtIssuer;
     private final long jwtAccessTokenExpirationTime;
     private final long jwtRefreshTokenExpirationTime;
+    private final long resetPasswordTokenExpirationTime;
 
     public JwtTokenUtil(@Value("jwt.secret") String jwtSecret,
                         @Value("jwt.issuer") String jwtIssuer) {
@@ -23,6 +24,36 @@ public class JwtTokenUtil {
         this.jwtIssuer = jwtIssuer;
         this.jwtAccessTokenExpirationTime = 10800000000L;
         this.jwtRefreshTokenExpirationTime = 259200000000L;
+        this.resetPasswordTokenExpirationTime = 86400000L;
+    }
+
+
+    public String generateActivateAccountToken(String email) {
+        return Jwts.builder()
+                .setSubject(email)
+                .setIssuer(jwtIssuer)
+                .setIssuedAt(new Date())
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .compact();
+    }
+
+    public String generateResetPasswordToken(String email) {
+        return Jwts.builder()
+                .setSubject(email)
+                .setIssuer(jwtIssuer)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + resetPasswordTokenExpirationTime))
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .compact();
+    }
+
+    public String getEmailByToken(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.getSubject();
     }
 
     public String generateAccessToken(UserDetailsImpl user) {
@@ -31,6 +62,19 @@ public class JwtTokenUtil {
                         user.getId(),
                         user.getUsername(),
                         user.getAuthorities()))
+                .setIssuer(jwtIssuer)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + jwtAccessTokenExpirationTime))
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .compact();
+    }
+
+    public String generateAccessTokenByRefreshToken(String refreshToken) {
+        return Jwts.builder()
+                .setSubject(String.format("%s,%s,%s",
+                        getUserId(refreshToken),
+                        getUsername(refreshToken),
+                        getAuthorities(refreshToken)))
                 .setIssuer(jwtIssuer)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtAccessTokenExpirationTime))
@@ -69,7 +113,7 @@ public class JwtTokenUtil {
         return claims.getSubject().split(",")[1];
     }
 
-    public String getRole(String token) {
+    public String getAuthorities(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)

@@ -2,7 +2,7 @@ package com.overclock.overclock.controller;
 
 import com.overclock.overclock.model.Assembly;
 import com.overclock.overclock.service.AssemblyService;
-import com.overclock.overclock.util.RequestAssembly;
+import com.overclock.overclock.controller.request.RequestAssembly;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;

@@ -7,13 +7,10 @@ import java.math.BigInteger;
 public interface UserDAO {
     String GET_WITH_MAIN_INFORMATION = "SELECT USERS.OBJECT_ID USER_ID, " +
             "    USERS.NAME USERNAME, EMAIL.VALUE EMAIL, " +
-            "    USER_ROLE.LIST_VALUE_ID USER_ROLE, " +
-            "    PASSWORD.VALUE PASSWORD " +
+            "    USER_ROLE.LIST_VALUE_ID USER_ROLE " +
             "FROM OBJECTS USERS, ATTRIBUTES EMAIL, " +
-            "    ATTRIBUTES PASSWORD, ATTRIBUTES USER_ROLE " +
+            "    ATTRIBUTES USER_ROLE " +
             "WHERE USERS.OBJECT_ID = ? " +
-            "    AND PASSWORD.ATTR_ID = 39 /*PASSWORD*/ " +
-            "    AND PASSWORD.OBJECT_ID = USERS.OBJECT_ID " +
             "    AND EMAIL.ATTR_ID = 40 /*EMAIL*/ " +
             "    AND EMAIL.OBJECT_ID =  USERS.OBJECT_ID " +
             "    AND USER_ROLE.ATTR_ID = 42 /*ROLE*/ " +
@@ -23,12 +20,16 @@ public interface UserDAO {
             "    USERS.NAME USERNAME, EMAIL.VALUE EMAIL, " +
             "    REGISTRATION_DATE.DATE_VALUE REGISTRATION_DATE, " +
             "    BLOCKED.VALUE IS_ACTIVE, " +
-            "    USER_ROLE.LIST_VALUE_ID USER_ROLE " +
+            "    USER_ROLE.LIST_VALUE_ID USER_ROLE, " +
+            "    PASSWORD.VALUE PASSWORD " +
             "FROM OBJECTS USERS, ATTRIBUTES EMAIL, ATTRIBUTES BLOCKED, " +
-            "    ATTRIBUTES REGISTRATION_DATE, ATTRIBUTES USER_ROLE " +
+            "    ATTRIBUTES REGISTRATION_DATE, ATTRIBUTES PASSWORD, " +
+            "    ATTRIBUTES USER_ROLE " +
             "WHERE USERS.OBJECT_ID = ? " +
             "    AND BLOCKED.ATTR_ID = 38 /*IS_ACTIVE*/ " +
             "    AND BLOCKED.OBJECT_ID = USERS.OBJECT_ID " +
+            "    AND PASSWORD.ATTR_ID = 39 /*PASSWORD*/ " +
+            "    AND PASSWORD.OBJECT_ID = USERS.OBJECT_ID " +
             "    AND EMAIL.ATTR_ID = 40 /*EMAIL*/ " +
             "    AND EMAIL.OBJECT_ID =  USERS.OBJECT_ID " +
             "    AND REGISTRATION_DATE.ATTR_ID = 41 /*REGISTRATION_DATE*/ " +
@@ -42,18 +43,33 @@ public interface UserDAO {
             "WHERE USERS.OBJECT_TYPE_ID = 7 " +
             "    AND USERS.NAME = ?";
 
-    String GET_WITH_MAIN_INFORMATION_BY_USERNAME = "SELECT USERS.OBJECT_ID USER_ID, " +
+    String GET_BY_EMAIL = "SELECT USERS.OBJECT_ID USER_ID, " +
+            "    USERS.NAME USERNAME, EMAIL.VALUE EMAIL " +
+            "FROM OBJECTS USERS, ATTRIBUTES EMAIL " +
+            "WHERE USERS.OBJECT_TYPE_ID = 7 " +
+            "    AND EMAIL.ATTR_ID = 40 /*EMAIL*/ " +
+            "    AND EMAIL.OBJECT_ID = USERS.OBJECT_ID " +
+            "    AND EMAIL.VALUE = ?";
+
+    String GET_WITH_FULL_INFORMATION_BY_USERNAME = "SELECT USERS.OBJECT_ID USER_ID, " +
             "    USERS.NAME USERNAME, EMAIL.VALUE EMAIL, " +
+            "    REGISTRATION_DATE.DATE_VALUE REGISTRATION_DATE, " +
+            "    BLOCKED.VALUE IS_ACTIVE, " +
             "    USER_ROLE.LIST_VALUE_ID USER_ROLE, " +
             "    PASSWORD.VALUE PASSWORD " +
-            "FROM OBJECTS USERS, ATTRIBUTES EMAIL, " +
-            "    ATTRIBUTES PASSWORD, ATTRIBUTES USER_ROLE " +
+            "FROM OBJECTS USERS, ATTRIBUTES EMAIL, ATTRIBUTES BLOCKED, " +
+            "    ATTRIBUTES REGISTRATION_DATE, ATTRIBUTES PASSWORD, " +
+            "    ATTRIBUTES USER_ROLE " +
             "WHERE USERS.OBJECT_TYPE_ID = 7 " +
-            "    AND USERS.NAME = ? " +
+            "    AND USERS.NAME = ? /*USERNAME*/ " +
+            "    AND BLOCKED.ATTR_ID = 38 /*IS_ACTIVE*/ " +
+            "    AND BLOCKED.OBJECT_ID = USERS.OBJECT_ID " +
             "    AND PASSWORD.ATTR_ID = 39 /*PASSWORD*/ " +
             "    AND PASSWORD.OBJECT_ID = USERS.OBJECT_ID " +
             "    AND EMAIL.ATTR_ID = 40 /*EMAIL*/ " +
             "    AND EMAIL.OBJECT_ID =  USERS.OBJECT_ID " +
+            "    AND REGISTRATION_DATE.ATTR_ID = 41 /*REGISTRATION_DATE*/ " +
+            "    AND REGISTRATION_DATE.OBJECT_ID =  USERS.OBJECT_ID " +
             "    AND USER_ROLE.ATTR_ID = 42 /*ROLE*/ " +
             "    AND USER_ROLE.OBJECT_ID =  USERS.OBJECT_ID";
 
@@ -93,4 +109,5 @@ public interface UserDAO {
     boolean updatePassword(BigInteger id, String password);
     boolean updateEmail(BigInteger id, String email);
     boolean updateUserActiveStatus(BigInteger id, boolean isActive);
+    User getUserByEmail(String email);
 }

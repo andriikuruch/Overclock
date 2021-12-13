@@ -17,7 +17,6 @@ public class UserMainInformationRowMapper implements RowMapper<User> {
                 .setId(BigInteger.valueOf(rs.getLong("USER_ID")))
                 .setUserName(rs.getString("USERNAME"))
                 .setEmail(rs.getString("EMAIL"))
-                .setPassword(rs.getString("PASSWORD"))
                 .setRole(Role.fromInt(rs.getInt("USER_ROLE")))
                 .build();
     }

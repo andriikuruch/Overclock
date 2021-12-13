@@ -31,6 +31,7 @@ public class UserFullInformationRowMapper implements RowMapper<User> {
                 .setUserName(rs.getString("USERNAME"))
                 .setEmail(rs.getString("EMAIL"))
                 .setRegistrationDate(date)
+                .setPassword(rs.getString("PASSWORD"))
                 .setRole(Role.fromInt(rs.getInt("USER_ROLE")))
                 .setIsActive(rs.getBoolean("IS_ACTIVE"))
                 .build();

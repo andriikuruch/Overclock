@@ -2,6 +2,7 @@ package com.overclock.overclock.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -23,10 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-
-        prePostEnabled = true
-)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ServerSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final JwtTokenFilter jwtTokenFilter;
@@ -53,7 +51,10 @@ public class ServerSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
+        corsConfiguration.addAllowedMethod(HttpMethod.PUT);
+        corsConfiguration.addAllowedMethod(HttpMethod.DELETE);
+        source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
     }
 
@@ -97,9 +98,12 @@ public class ServerSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 // public endpoints
-                .antMatchers("/api/authorization/sign_in").permitAll()
-                .antMatchers("/api/registration").permitAll()
-                .antMatchers("/api/authorization/hello").authenticated()
+                .antMatchers(HttpMethod.POST, "/api/authorization/refresh-token").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/authorization/forgot-password").permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/authorization/reset-password").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/authorization").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/registration").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/registration/activate-account").permitAll()
                 // private endpoints
                 .anyRequest().authenticated();
 

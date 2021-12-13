@@ -4,18 +4,22 @@ import com.overclock.overclock.dao.UserDAO;
 import com.overclock.overclock.model.User;
 import com.overclock.overclock.security.UserDetailsImpl;
 import com.overclock.overclock.service.UserService;
-import com.overclock.overclock.util.RequestUser;
+import com.overclock.overclock.controller.request.RequestUser;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private final PasswordEncoder passwordEncoder;
     private final UserDAO userDAO;
 
-    public UserServiceImpl(UserDAO userDAO) {
+    public UserServiceImpl(@Lazy PasswordEncoder passwordEncoder, UserDAO userDAO) {
+        this.passwordEncoder = passwordEncoder;
         this.userDAO = userDAO;
     }
 
@@ -41,7 +45,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean save(RequestUser user) {
-        return userDAO.save(user.getName(), user.getPassword(), user.getEmail(), true);
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+
+        return userDAO.save(user.getName(), encodedPassword, user.getEmail(), false);
     }
 
     @Override
@@ -51,7 +58,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updatePassword(BigInteger id, String password) {
-        return userDAO.updatePassword(id, password);
+        String encodedPassword = passwordEncoder.encode(password);
+        return userDAO.updatePassword(id, encodedPassword);
     }
 
     @Override
@@ -62,6 +70,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean updateUserActiveStatus(BigInteger id, boolean isActive) {
         return userDAO.updateUserActiveStatus(id, isActive);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userDAO.getUserByEmail(email);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.overclock.overclock.service;
 
 import com.overclock.overclock.model.Assembly;
-import com.overclock.overclock.util.RequestAssembly;
 
 import java.math.BigInteger;
 import java.util.List;
