@@ -11,6 +11,4 @@ public interface OverclockService {
     boolean deleteByAssemblyId(BigInteger assemblyId);
     Overclock getOverclockById(BigInteger id);
     Overclock getDefaultOverclockValues(BigInteger assemblyId);
-    boolean isValidOverclock(Overclock overclock);
-
 }

@@ -1,13 +1,21 @@
 package com.overclock.overclock;
 
-import com.overclock.overclock.model.*;
+import com.overclock.overclock.model.Assembly;
+import com.overclock.overclock.model.CPU;
+import com.overclock.overclock.model.Comment;
+import com.overclock.overclock.model.GPU;
+import com.overclock.overclock.model.Motherboard;
+import com.overclock.overclock.model.Overclock;
+import com.overclock.overclock.model.RAM;
 import com.overclock.overclock.model.enums.*;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 public class CreateUtilities {
     public static Motherboard createMotherboard() {
@@ -31,7 +39,7 @@ public class CreateUtilities {
                 .setGeneration(CPUGeneration.TenGen)
                 .setFamily(CPUFamily.Core_i7)
                 .setVoltage(BigDecimal.valueOf(125))
-                .setFrequency(BigDecimal.valueOf(3800))
+                .setFrequency(BigDecimal.valueOf(3.8))
                 .setThreadsNumber(BigInteger.valueOf(16))
                 .setCoresNumber(BigInteger.valueOf(8))
                 .build();
@@ -56,7 +64,7 @@ public class CreateUtilities {
 
     public static RAM createRAM() {
         return new RAM.Builder(BigInteger.valueOf(-5011), "HyperX DDR4-2666 16384MB PC4-21300")
-                .setTimings("77-7-21")
+                .setTimings("19-26-26-48")
                 .setFrequency(BigInteger.valueOf(2666))
                 .setCapacity(BigInteger.valueOf(16))
                 .setVoltage(BigDecimal.valueOf(1.2))

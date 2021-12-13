@@ -44,8 +44,9 @@ public class AssemblyServiceImpl implements AssemblyService {
         if (assembly == null) {
             LOGGER.log(Level.WARNING, "There are no assembly with such id");
             return null;
-        } else {
-            Assembly assemblyWithSomeComments = new Assembly.Builder(id, assembly.getName())
+        }
+        else {
+            return new Assembly.Builder(id, assembly.getName())
                     .setMotherboard(assembly.getMotherboard())
                     .setComments(commentList)
                     .setCpu(assembly.getCpu())
@@ -55,7 +56,6 @@ public class AssemblyServiceImpl implements AssemblyService {
                     .setOverclock(assembly.getOverclock())
                     .setScore(assembly.getScore())
                     .build();
-            return assemblyWithSomeComments;
         }
     }
 
@@ -91,10 +91,8 @@ public class AssemblyServiceImpl implements AssemblyService {
 
     @Override
     public boolean save(Assembly assembly) {
-        if (іsValidAssembly(assembly)) {
-            return assemblyDAO.save(assembly);
-        }
-        return false;
+        checkAssemblyValidation(assembly);
+        return assemblyDAO.save(assembly);
     }
 
     @Override
@@ -108,27 +106,14 @@ public class AssemblyServiceImpl implements AssemblyService {
     }
 
     @Override
-    public boolean іsValidAssembly(Assembly assembly) {
-        if (assembly == null) {
+    public void checkAssemblyValidation(Assembly assembly) {
+        if (assembly == null){
             LOGGER.log(Level.WARNING, "Assembly is null");
-            return false;
-        } else {
-            //boolean isValidMotherboard = validationService.isValidMotherboard(assembly.getMotherboard());
-            //boolean isValidCPU = validationService.isValidCPU(assembly.getCpu());
-            //boolean isValidGPU = validationService.isValidGPU(assembly.getGpu());
-            //boolean checkCompatibility = validationService.checkCompatibility(assembly);
-            //boolean isCompatibleMotherboardAndCPU = validationService.isCompatibleMotherboardAndCPU(assembly.getMotherboard(), assembly.getCpu());
-            //return isValidMotherboard && isValidCPU && isValidGPU && checkCompatibility && isCompatibleMotherboardAndCPU;
-            try {
-                validationService.isValidMotherboard(assembly.getMotherboard());
-                validationService.isValidCPU(assembly.getCpu());
-                validationService.isValidGPU(assembly.getGpu());
-                validationService.checkCompatibility(assembly);
-                validationService.isCompatibleMotherboardAndCPU(assembly.getMotherboard(), assembly.getCpu());
-                return true;
-            } catch (ValidationException e) {
-                return false;
-            }
+            throw new ValidationException("Assembly is null");
         }
+        validationService.isValidMotherboard(assembly.getMotherboard());
+        validationService.isValidCPU(assembly.getCpu());
+        validationService.isValidGPU(assembly.getGpu());
+        validationService.checkCompatibility(assembly);
     }
 }
