@@ -1,29 +1,27 @@
 package com.overclock.overclock.controller;
 
+import com.overclock.overclock.model.Assembly;
 import com.overclock.overclock.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/rating")
 public class RatingController {
+    @Autowired
     private RatingService ratingService;
 
-    @Autowired
-    public void setRatingService(RatingService ratingService) {
-        this.ratingService = ratingService;
-    }
-
     @GetMapping("/default")
-    public String viewTopByDefault() {
-        return null;
+    public List<Assembly> viewTopByDefault() {
+        return ratingService.calculateTopWithoutOverclock();
     }
 
     @GetMapping
-    public String viewTopByOverclock() {
-        return null;
+    public List<Assembly> viewTopByOverclock() {
+        return ratingService.calculateTopWithOverclock();
     }
 }
