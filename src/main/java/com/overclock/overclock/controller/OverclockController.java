@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigInteger;
 
 @RestController
-@RequestMapping("/api/v1/assembly")
+@RequestMapping("/api/assembly")
 public class OverclockController {
     @Autowired
     private OverclockService overclockService;

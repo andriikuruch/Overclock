@@ -19,7 +19,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/assembly/{assembly_id}/comment")
+@RequestMapping("/api/assembly/{assembly_id}/comment")
 public class CommentController {
     @Autowired
     private CommentService commentService;
