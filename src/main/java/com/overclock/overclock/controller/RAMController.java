@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class RAMController {
     private RAMService RAMService;
 
     @PostMapping
-    public ResponseEntity<?> addRAM(@RequestBody RAM RAM) {
+    public ResponseEntity<?> addRAM(@Valid @RequestBody RAM RAM) {
         RAMService.save(RAM);
         return ResponseEntity.ok(HttpStatus.OK);
     }
@@ -34,7 +35,7 @@ public class RAMController {
     }
 
     @PutMapping("/{ram_id}")
-    public ResponseEntity<?> updateRAM(@RequestBody RAM RAM, @PathVariable("ram_id") BigInteger id) {
+    public ResponseEntity<?> updateRAM(@Valid @RequestBody RAM RAM, @PathVariable("ram_id") BigInteger id) {
         RAMService.updateById(id, RAM);
         return ResponseEntity.ok(HttpStatus.OK);
     }
