@@ -14,7 +14,7 @@ public abstract class AbstractComponent {
 
     @NotNull
     @NotEmpty
-    @Size(min = 4, max = 23)
+    @Size(min = 4, max = 100)
     protected String name;
 
     public BigInteger getId() {
