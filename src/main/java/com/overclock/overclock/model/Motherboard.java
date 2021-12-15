@@ -1,5 +1,7 @@
 package com.overclock.overclock.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.overclock.overclock.model.enums.Chipset;
 import com.overclock.overclock.model.enums.ChipsetManufacturer;
 import com.overclock.overclock.model.enums.MotherboardSocket;
@@ -8,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 import java.util.Objects;
 
+@JsonDeserialize(builder = Motherboard.Builder.class)
 public class Motherboard extends AbstractComponent {
 
     @NotNull
@@ -27,6 +30,7 @@ public class Motherboard extends AbstractComponent {
         this.socket = builder.socket;
     }
 
+    @JsonPOJOBuilder(withPrefix = "set")
     public static class Builder {
 
         private final BigInteger id;
