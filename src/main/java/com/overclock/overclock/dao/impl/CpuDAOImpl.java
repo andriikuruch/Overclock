@@ -150,9 +150,9 @@ public class CpuDAOImpl implements CpuDAO {
             countOfQueries += jdbcTemplate.update(QueryConstants.SQL_INSERT_INTO_ATTRIBUTES_VALUE,
                     17, cpu.getThreadsNumber());
             countOfQueries += jdbcTemplate.update(QueryConstants.SQL_INSERT_INTO_ATTRIBUTES_VALUE,
-                    18, cpu.getFrequency());
+                    18, cpu.getFrequency().toString());
             countOfQueries += jdbcTemplate.update(QueryConstants.SQL_INSERT_INTO_ATTRIBUTES_VALUE,
-                    19, cpu.getVoltage());
+                    19, cpu.getVoltage().toString());
             if (countOfQueries >= 9) {
                 return true;
             }
@@ -212,9 +212,9 @@ public class CpuDAOImpl implements CpuDAO {
             countOfQueries += jdbcTemplate.update(QueryConstants.SQL_UPDATE_ATTRIBUTES_VALUE,
                     newCpu.getThreadsNumber(), 17, id);
             countOfQueries += jdbcTemplate.update(QueryConstants.SQL_UPDATE_ATTRIBUTES_VALUE,
-                    newCpu.getFrequency(), 18, id);
+                    newCpu.getFrequency().toString(), 18, id);
             countOfQueries += jdbcTemplate.update(QueryConstants.SQL_UPDATE_ATTRIBUTES_VALUE,
-                    newCpu.getVoltage(), 19, id);
+                    newCpu.getVoltage().toString(), 19, id);
             return countOfQueries >= 9;
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);

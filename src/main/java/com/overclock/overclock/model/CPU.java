@@ -1,5 +1,7 @@
 package com.overclock.overclock.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.overclock.overclock.model.enums.CPUFamily;
 import com.overclock.overclock.model.enums.CPUGeneration;
 import com.overclock.overclock.model.enums.CPUManufacturer;
@@ -10,6 +12,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Objects;
 
+@JsonDeserialize(builder = CPU.Builder.class)
 public class CPU extends AbstractComponent {
 
     @NotNull
@@ -59,6 +62,7 @@ public class CPU extends AbstractComponent {
         this.socket = builder.socket;
     }
 
+    @JsonPOJOBuilder(withPrefix = "set")
     public static class Builder {
         private final BigInteger id;
         private String name;

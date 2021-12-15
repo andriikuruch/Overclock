@@ -2,12 +2,14 @@ package com.overclock.overclock.service.impl;
 
 import com.overclock.overclock.dao.CpuDAO;
 import com.overclock.overclock.model.CPU;
+import com.overclock.overclock.model.enums.*;
 import com.overclock.overclock.service.CPUService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,5 +45,126 @@ public class CPUServiceImpl implements CPUService {
     @Override
     public boolean delete(BigInteger id) {
         return cpuDAO.delete(id);
+    }
+
+    @Override
+    public List<CPUSocket> getCPUSocketsByManufacturer(CPUManufacturer manufacturer) {
+        List<CPUSocket> cpuSockets = new ArrayList<>();
+        switch (manufacturer) {
+            case Intel:
+                for (int i = 33; i <= 34; i++) {
+                    cpuSockets.add(CPUSocket.fromInt(i));
+                }
+                break;
+            case AMD:
+                for (int i = 35; i <= 35; i++) {
+                    cpuSockets.add(CPUSocket.fromInt(i));
+                }
+                break;
+        }
+        return cpuSockets;
+    }
+
+    @Override
+    public List<CPUGeneration> getCPUGenerationsBySocket(CPUSocket socket) {
+        List<CPUGeneration> cpuGenerations = new ArrayList<>();
+        switch (socket) {
+            case Soc1151:
+                for (int i = 36; i <= 37; i++) {
+                    cpuGenerations.add(CPUGeneration.fromInt(i));
+                }
+                break;
+            case Soc1200:
+                for (int i = 38; i <= 39; i++) {
+                    cpuGenerations.add(CPUGeneration.fromInt(i));
+                }
+                break;
+            case AM4:
+                for (int i = 40; i <= 43; i++) {
+                    cpuGenerations.add(CPUGeneration.fromInt(i));
+                }
+                break;
+        }
+        return cpuGenerations;
+    }
+
+    @Override
+    public List<CPUFamily> getCPUFamiliesByGeneration(CPUGeneration generation) {
+        List<CPUFamily> cpuFamilies = new ArrayList<>();
+        switch (generation) {
+            case EightGen:
+            case TenGen:
+            case NineGen:
+                for (int i = 25; i <= 28; i++) {
+                    cpuFamilies.add(CPUFamily.fromInt(i));
+                }
+                break;
+            case ElevenGen:
+                for (int i = 26; i <= 28; i++) {
+                    cpuFamilies.add(CPUFamily.fromInt(i));
+                }
+                break;
+            case Zen:
+            case ZenPlus:
+                for (int i = 29; i <= 31; i++) {
+                    cpuFamilies.add(CPUFamily.fromInt(i));
+                }
+                break;
+            case ZenTwo:
+                for (int i = 29; i <= 32; i++) {
+                    cpuFamilies.add(CPUFamily.fromInt(i));
+                }
+                break;
+            case ZenThree:
+                for (int i = 30; i <= 32; i++) {
+                    cpuFamilies.add(CPUFamily.fromInt(i));
+                }
+                break;
+        }
+        return cpuFamilies;
+    }
+
+    @Override
+    public List<CPU> getCPUsByManufacturer(CPUManufacturer manufacturer) {
+        List<CPU> cpuByManufacturer = new ArrayList<>();
+        for (CPU cpu : cpuDAO.getAll()) {
+            if (cpu.getManufacturer() == manufacturer) {
+                cpuByManufacturer.add(cpu);
+            }
+        }
+        return cpuByManufacturer;
+    }
+
+    @Override
+    public List<CPU> getCPUsBySocket(CPUSocket socket) {
+        List<CPU> cpuBySocket = new ArrayList<>();
+        for (CPU cpu : cpuDAO.getAll()) {
+            if (cpu.getSocket() == socket) {
+                cpuBySocket.add(cpu);
+            }
+        }
+        return cpuBySocket;
+    }
+
+    @Override
+    public List<CPU> getCPUsByGeneration(CPUGeneration generation) {
+        List<CPU> cpuByGeneration = new ArrayList<>();
+        for (CPU cpu : cpuDAO.getAll()) {
+            if (cpu.getGeneration() == generation) {
+                cpuByGeneration.add(cpu);
+            }
+        }
+        return cpuByGeneration;
+    }
+
+    @Override
+    public List<CPU> getCPUsByFamily(CPUFamily family) {
+        List<CPU> cpuByFamily = new ArrayList<>();
+        for (CPU cpu : cpuDAO.getAll()) {
+            if (cpu.getFamily() == family) {
+                cpuByFamily.add(cpu);
+            }
+        }
+        return cpuByFamily;
     }
 }
