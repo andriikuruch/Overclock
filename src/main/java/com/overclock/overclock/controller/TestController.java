@@ -1,54 +1,59 @@
 package com.overclock.overclock.controller;
 
+import com.overclock.overclock.model.Assembly;
+import com.overclock.overclock.model.Overclock;
 import com.overclock.overclock.model.enums.Program;
+import com.overclock.overclock.service.AssemblyService;
+import com.overclock.overclock.service.OverclockService;
 import com.overclock.overclock.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 @RestController
-@RequestMapping(value = "/api/v1/test")
+@RequestMapping(value = "/api/test")
 public class TestController {
-    private TestService testService;
-
     @Autowired
-    public void setTestService(TestService testService) {
-        this.testService = testService;
-    }
-
-    @GetMapping("/overclock/{overclock_id}")
-    public String testOverclock(@PathVariable("assembly_id") BigInteger id) {
-        return null;
-    }
+    private TestService testService;
+    @Autowired
+    private AssemblyService assemblyService;
+    @Autowired
+    private OverclockService overclockService;
 
     @GetMapping("/assembly/{assembly_id}")
-    public String testAssembly(@PathVariable("assembly_id") BigInteger id) {
-        return null;
+    public BigDecimal testAssembly(@PathVariable("assembly_id") BigInteger assemblyId) {
+        return testService.testAssembly(assemblyService.getAssemblyById(assemblyId));
     }
 
     @GetMapping(("/assembly/{assembly_id}/{program}"))
-    public String testAssemblyOnProgram(@PathVariable("assembly_id") BigInteger id, @PathVariable("program") Program program) {
-        return null;
+    public BigDecimal testAssemblyOnProgram(@PathVariable("assembly_id") BigInteger assemblyId,
+                                                   @PathVariable("program") Program program) {
+        return testService.testAssemblyOnProgram(assemblyService.getAssemblyById(assemblyId), program);
     }
 
-    @GetMapping("/overclock/{overclock_id}/{program}")
-    public String testOverclockOnProgram(@PathVariable("assembly_id") BigInteger id, @PathVariable("program") Program program) {
-        return null;
+    @GetMapping("/assembly/{assembly_id}/cpu")
+    public BigDecimal testCPU(@PathVariable("assembly_id") BigInteger assemblyId) {
+        Assembly assembly = assemblyService.getAssemblyById(assemblyId);
+        Overclock overclock = overclockService.getOverclockById(assembly.getOverclock());
+        return testService.testCPU(assembly.getCpu(), overclock);
     }
 
-    @GetMapping("/{cpu_id}")
-    public BigInteger testCPU(@PathVariable("cpu_id") BigInteger id) {
-        return null;
+    @GetMapping("/assembly/{assembly_id}/gpu")
+    public BigDecimal testGPU(@PathVariable("assembly_id") BigInteger assemblyId) {
+        Assembly assembly = assemblyService.getAssemblyById(assemblyId);
+        Overclock overclock = overclockService.getOverclockById(assembly.getOverclock());
+        return  testService.testGPU(assembly.getGpu(), overclock);
     }
 
-    @GetMapping("/{gpu_id}")
-    public BigInteger testGPU(@PathVariable("gpu_id") BigInteger id) {
-        return null;
-    }
-
-    @GetMapping("/{ram_id}")
-    public BigInteger testRAM(@PathVariable("ram_id") BigInteger id) {
-        return null;
+    @GetMapping("/assembly/{assembly_id}/ram")
+    public BigDecimal testRAM(@PathVariable("assembly_id") BigInteger assemblyId) {
+        Assembly assembly = assemblyService.getAssemblyById(assemblyId);
+        Overclock overclock = overclockService.getOverclockById(assembly.getOverclock());
+        return testService.testRAM(assembly.getRam(), overclock);
     }
 }
