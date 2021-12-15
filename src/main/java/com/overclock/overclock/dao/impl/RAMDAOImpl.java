@@ -70,11 +70,11 @@ public class RAMDAOImpl implements RamDAO, QueryConstants {
             return false;
         }
         try {
-            jdbcTemplate.update(SQL_INSERT_INTO_OBJECTS, null, 5, ram.getName(), null);     /* RAM Name */
-            jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 26, ram.getCapacity());   /* RAM Capacity */
-            jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 27, ram.getFrequency());  /* RAM Frequency */
-            jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 28, ram.getTimings());    /* RAM Timings */
-            jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 29, ram.getVoltage());    /* RAM Voltage */
+            jdbcTemplate.update(SQL_INSERT_INTO_OBJECTS, null, 5, ram.getName(), null);                /* RAM Name */
+            jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 26, ram.getCapacity());              /* RAM Capacity */
+            jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 27, ram.getFrequency());             /* RAM Frequency */
+            jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 28, ram.getTimings());               /* RAM Timings */
+            jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 29, ram.getVoltage().toString());    /* RAM Voltage */
             return true;
         } catch (DataAccessException dataAccessException) {
             LOGGER.log(Level.WARNING, dataAccessException.getMessage(), dataAccessException);
@@ -114,11 +114,11 @@ public class RAMDAOImpl implements RamDAO, QueryConstants {
         try {
             int objectTypeId = jdbcTemplate.queryForObject(SQL_SELECT_OBJECT_TYPE_ID_BY_OBJECT_ID, Integer.class, id);
             if (objectTypeId == 5) { /* RAM */
-                jdbcTemplate.update(SQL_UPDATE_OBJECTS_NAME, newRam.getName(), id);                       /* RAM Name */
-                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newRam.getCapacity(), 26, id);    /* RAM Capacity */
-                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newRam.getFrequency(), 27, id);   /* RAM Frequency */
-                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newRam.getTimings(), 28, id);     /* RAM Timings */
-                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newRam.getVoltage(), 29, id);     /* RAM Voltage */
+                jdbcTemplate.update(SQL_UPDATE_OBJECTS_NAME, newRam.getName(), id);                              /* RAM Name */
+                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newRam.getCapacity(), 26, id);           /* RAM Capacity */
+                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newRam.getFrequency(), 27, id);          /* RAM Frequency */
+                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newRam.getTimings(), 28, id);            /* RAM Timings */
+                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newRam.getVoltage().toString(), 29, id); /* RAM Voltage */
                 return true;
             } else {
                 LOGGER.log(Level.WARNING, "No RAM with given identifier");

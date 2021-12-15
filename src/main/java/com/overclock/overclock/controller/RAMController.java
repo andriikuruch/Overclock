@@ -3,36 +3,45 @@ package com.overclock.overclock.controller;
 import com.overclock.overclock.model.RAM;
 import com.overclock.overclock.service.RAMService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.math.BigInteger;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1/ram")
+@RequestMapping(value = "/api/ram")
 public class RAMController {
-    private RAMService RAMService;
 
     @Autowired
-    public void setRAMService(RAMService RAMService) {
-        this.RAMService = RAMService;
-    }
+    private RAMService RAMService;
 
     @PostMapping
-    public Boolean addRAM(@Valid @RequestBody RAM RAM, Authentication authentication) {
-        return null;
+    public ResponseEntity<?> addRAM(@RequestBody RAM RAM) {
+        RAMService.save(RAM);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @GetMapping
+    public List<RAM> getAllRAMs() {
+        return RAMService.getAll();
+    }
+
+    @GetMapping("/{ram_id}")
+    public RAM getRAM(@PathVariable("ram_id") BigInteger id) {
+        return RAMService.getById(id);
     }
 
     @PutMapping("/{ram_id}")
-    public Boolean updateRAM(@Valid @RequestBody RAM RAM, @PathVariable("ram_id") BigInteger id, Authentication authentication) {
-        return null;
+    public ResponseEntity<?> updateRAM(@RequestBody RAM RAM, @PathVariable("ram_id") BigInteger id) {
+        RAMService.updateById(id, RAM);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @DeleteMapping("/{ram_id}")
-    public Boolean deleteRAM(@PathVariable("ram_id") BigInteger id, Authentication authentication) {
-        return null;
+    public boolean deleteRAM(@PathVariable("ram_id") BigInteger id) {
+        return RAMService.delete(id);
     }
 }
 

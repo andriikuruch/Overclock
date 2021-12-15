@@ -1,10 +1,14 @@
 package com.overclock.overclock.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Objects;
 
+@JsonDeserialize(builder = RAM.Builder.class)
 public class RAM extends AbstractComponent {
 
     @NotNull
@@ -37,7 +41,9 @@ public class RAM extends AbstractComponent {
         this.voltage = builder.voltage;
     }
 
+    @JsonPOJOBuilder(withPrefix="set")
     public static class Builder {
+
         private final BigInteger id;
         private final String name;
         private BigInteger capacity;
