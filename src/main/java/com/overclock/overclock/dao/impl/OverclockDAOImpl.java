@@ -52,16 +52,16 @@ public class OverclockDAOImpl implements OverclockDAO, QueryConstants {
                 int assemblyObjectTypeId = jdbcTemplate.queryForObject(SQL_SELECT_OBJECT_TYPE_ID_BY_OBJECT_ID, Integer.class, assemblyId);
                 if (assemblyObjectTypeId == 1) { /* Assembly */
                     String overclockName = "overclock" + UUID.randomUUID();
-                    jdbcTemplate.update(SQL_INSERT_INTO_OBJECTS, assemblyId, 6, overclockName, null);             /* Overclock */
-                    jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 30, overclock.getCPUFrequency());       /* CPU Frequency */
-                    jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 31, overclock.getCPUVoltage());         /* CPU Voltage */
-                    jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 32, overclock.getGPUCoreFrequency());   /* GPU Core Frequency */
-                    jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 33, overclock.getGPUMemoryFrequency()); /* GPU Memory Frequency */
-                    jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 34, overclock.getGPUVoltage());         /* GPU Voltage */
-                    jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 35, overclock.getRAMVoltage());         /* RAM Voltage */
-                    jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 36, overclock.getRAMTimings());         /* RAM Timings */
-                    jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 37, overclock.getRAMFrequency());       /* RAM Frequency */
-                    jdbcTemplate.update(SQL_INSERT_INTO_OBJREFERENCE_REFERENCE, 2, assemblyId);                   /* Overclock id */
+                    jdbcTemplate.update(SQL_INSERT_INTO_OBJECTS, assemblyId, 6, overclockName, null);                  /* Overclock */
+                    jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 30, overclock.getCPUFrequency().toString()); /* CPU Frequency */
+                    jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 31, overclock.getCPUVoltage().toString());   /* CPU Voltage */
+                    jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 32, overclock.getGPUCoreFrequency());        /* GPU Core Frequency */
+                    jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 33, overclock.getGPUMemoryFrequency());      /* GPU Memory Frequency */
+                    jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 34, overclock.getGPUVoltage().toString());   /* GPU Voltage */
+                    jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 35, overclock.getRAMVoltage().toString());   /* RAM Voltage */
+                    jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 36, overclock.getRAMTimings());              /* RAM Timings */
+                    jdbcTemplate.update(SQL_INSERT_INTO_ATTRIBUTES_VALUE, 37, overclock.getRAMFrequency());            /* RAM Frequency */
+                    jdbcTemplate.update(SQL_INSERT_INTO_OBJREFERENCE_REFERENCE, 2, assemblyId);                        /* Overclock id */
                     return true;
                 } else {
                     LOGGER.log(Level.WARNING, "Identifier belongs not to a assembly");
@@ -119,14 +119,14 @@ public class OverclockDAOImpl implements OverclockDAO, QueryConstants {
         try {
             int objectTypeId = jdbcTemplate.queryForObject(SQL_SELECT_OBJECT_TYPE_ID_BY_OBJECT_ID, Integer.class, id);
             if (objectTypeId == 6) { /* Overclock */
-                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newOverclock.getCPUFrequency(), 30, id);       /* CPU Frequency */
-                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newOverclock.getCPUVoltage(), 31, id);         /* CPU Voltage */
-                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newOverclock.getGPUCoreFrequency(), 32, id);   /* GPU Core Frequency */
-                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newOverclock.getGPUMemoryFrequency(), 33, id); /* GPU Memory Frequency */
-                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newOverclock.getGPUVoltage(), 34, id);         /* GPU Voltage */
-                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newOverclock.getRAMVoltage(), 35, id);         /* RAM Voltage */
-                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newOverclock.getRAMTimings(), 36, id);         /* RAM Timings */
-                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newOverclock.getRAMFrequency(), 37, id);       /* RAM Frequency */
+                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newOverclock.getCPUFrequency().toString(), 30, id); /* CPU Frequency */
+                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newOverclock.getCPUVoltage().toString(), 31, id);   /* CPU Voltage */
+                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newOverclock.getGPUCoreFrequency(), 32, id);        /* GPU Core Frequency */
+                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newOverclock.getGPUMemoryFrequency(), 33, id);      /* GPU Memory Frequency */
+                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newOverclock.getGPUVoltage().toString(), 34, id);   /* GPU Voltage */
+                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newOverclock.getRAMVoltage().toString(), 35, id);   /* RAM Voltage */
+                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newOverclock.getRAMTimings(), 36, id);              /* RAM Timings */
+                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newOverclock.getRAMFrequency(), 37, id);            /* RAM Frequency */
                 return true;
             } else {
                 LOGGER.log(Level.WARNING, "Identifier belongs not to a overclock");
