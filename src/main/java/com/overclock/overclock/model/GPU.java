@@ -1,5 +1,7 @@
 package com.overclock.overclock.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.overclock.overclock.model.enums.GPUChip;
 import com.overclock.overclock.model.enums.GPUChipManufacturer;
 
@@ -8,6 +10,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Objects;
 
+@JsonDeserialize(builder = GPU.Builder.class)
 public class GPU extends AbstractComponent {
 
     @NotNull
@@ -48,6 +51,7 @@ public class GPU extends AbstractComponent {
         this.voltage = builder.voltage;
     }
 
+    @JsonPOJOBuilder(withPrefix = "set")
     public static class Builder {
         private final BigInteger id;
         private final String name;

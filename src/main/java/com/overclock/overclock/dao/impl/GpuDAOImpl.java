@@ -119,7 +119,7 @@ public class GpuDAOImpl implements GpuDAO {
             countOfQueries += jdbcTemplate.update(QueryConstants.SQL_INSERT_INTO_ATTRIBUTES_VALUE, 22, gpu.getMemoryCapacity());
             countOfQueries += jdbcTemplate.update(QueryConstants.SQL_INSERT_INTO_ATTRIBUTES_VALUE, 23, gpu.getCoreFrequency());
             countOfQueries += jdbcTemplate.update(QueryConstants.SQL_INSERT_INTO_ATTRIBUTES_VALUE, 24, gpu.getMemoryFrequency());
-            countOfQueries += jdbcTemplate.update(QueryConstants.SQL_INSERT_INTO_ATTRIBUTES_VALUE, 25, gpu.getVoltage());
+            countOfQueries += jdbcTemplate.update(QueryConstants.SQL_INSERT_INTO_ATTRIBUTES_VALUE, 25, gpu.getVoltage().toString());
             if (countOfQueries >= 7) {
                 return true;
             }
