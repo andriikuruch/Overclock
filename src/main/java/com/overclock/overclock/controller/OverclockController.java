@@ -26,7 +26,7 @@ public class OverclockController {
         return overclockService.getDefaultOverclockValues(assemblyId);
     }
 
-    @GetMapping("/{assembly_id}/overclock/{overclock_id}")
+    @GetMapping("/overclock/{overclock_id}")
     public Overclock getOverclock(@PathVariable("overclock_id") BigInteger id) {
         return overclockService.getOverclockById(id);
     }
@@ -37,7 +37,7 @@ public class OverclockController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @PutMapping("/{assembly_id}/overclock/{overclock_id}")
+    @PutMapping("/overclock/{overclock_id}")
     public ResponseEntity<?> updateOverclock(@RequestBody Overclock newOverclock, @PathVariable("overclock_id") BigInteger id) {
         overclockService.update(id, newOverclock);
         return ResponseEntity.ok(HttpStatus.OK);
