@@ -2,9 +2,9 @@ package com.overclock.overclock.controller;
 
 import com.overclock.overclock.model.Assembly;
 import com.overclock.overclock.service.AssemblyService;
-import com.overclock.overclock.controller.request.RequestAssembly;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -12,7 +12,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1/assembly")
+@RequestMapping(value = "/api/assembly")
 public class AssemblyController {
     private AssemblyService assemblyService;
 
@@ -22,27 +22,28 @@ public class AssemblyController {
     }
 
     @PostMapping
-    public String buildAssembly(@Valid @RequestBody RequestAssembly requestAssembly, Authentication authentication) {
-        return null;
+    public ResponseEntity<?> buildAssembly(@Valid @RequestBody Assembly assembly) {
+        assemblyService.save(assembly);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @GetMapping("{assembly_id}")
+    @GetMapping("/{assembly_id}")
     public Assembly showAssembly(@PathVariable("assembly_id") BigInteger id) {
-        return null;
+        return assemblyService.getAssemblyById(id);
     }
 
-    @GetMapping("/search")
-    public List<Assembly> search(@PathVariable("search") String search) {
-        return null;
+    @GetMapping("/search/{search_parameter}")
+    public List<Assembly> search(@PathVariable("search_parameter") String search) {
+        return assemblyService.search(search);
     }
 
     @GetMapping("/all")
     public List<Assembly> getAll() {
-        return null;
+        return assemblyService.getAllAssemblies();
     }
 
-    @GetMapping
-    public List<Assembly> getAllAssembliesByUser(Authentication authentication) {
-        return null;
+    @GetMapping("/user_assemblies/{user_id}")
+    public List<Assembly> getAllAssembliesByUser(@PathVariable("user_id") BigInteger userId) {
+        return assemblyService.getAssembliesByAuthorId(userId);
     }
 }

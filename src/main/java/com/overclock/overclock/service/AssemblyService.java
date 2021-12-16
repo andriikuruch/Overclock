@@ -8,6 +8,7 @@ import java.util.List;
 public interface AssemblyService {
     Assembly getAssemblyById(BigInteger id);
     Assembly getAssemblyByIdWithSomeComments(BigInteger id, BigInteger limit);
+    List<Assembly> getAssembliesByAuthorId(BigInteger id);
     List<Assembly> getAssembliesByAuthorName(String author);
     List<Assembly> search(String searchParameter);
     List<Assembly> getAllAssemblies();

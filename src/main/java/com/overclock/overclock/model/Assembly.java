@@ -1,5 +1,8 @@
 package com.overclock.overclock.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -9,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@JsonDeserialize(builder = Assembly.Builder.class)
 public class Assembly {
 
     @Positive
@@ -57,6 +61,7 @@ public class Assembly {
         this.score = builder.score;
     }
 
+    @JsonPOJOBuilder(withPrefix = "set")
     public static class Builder {
         private final BigInteger id;
         private final String name;

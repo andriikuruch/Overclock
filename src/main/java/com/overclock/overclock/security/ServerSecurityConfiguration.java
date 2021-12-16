@@ -106,7 +106,10 @@ public class ServerSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/registration/activate-account").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/rating").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/rating/default").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/assembly/{assembly_id:[\\d+]}/comment").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/assembly/{[\\d+]}/comment").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/assembly/all").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/assembly/user_assemblies/{[\\d+]}").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/assembly/search/{[\\w+]}").permitAll()
                 // private endpoints
                 .anyRequest().authenticated();
 

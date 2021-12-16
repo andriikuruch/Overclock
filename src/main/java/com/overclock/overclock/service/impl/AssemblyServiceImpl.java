@@ -44,8 +44,7 @@ public class AssemblyServiceImpl implements AssemblyService {
         if (assembly == null) {
             LOGGER.log(Level.WARNING, "There are no assembly with such id");
             return null;
-        }
-        else {
+        } else {
             return new Assembly.Builder(id, assembly.getName())
                     .setMotherboard(assembly.getMotherboard())
                     .setComments(commentList)
@@ -57,6 +56,15 @@ public class AssemblyServiceImpl implements AssemblyService {
                     .setScore(assembly.getScore())
                     .build();
         }
+    }
+
+    @Override
+    public List<Assembly> getAssembliesByAuthorId(BigInteger id) {
+        if (id == null) {
+            LOGGER.log(Level.WARNING, "Author id is null");
+            return null;
+        }
+        return assemblyDAO.getAssembliesByAuthorId(id);
     }
 
     @Override
@@ -107,7 +115,7 @@ public class AssemblyServiceImpl implements AssemblyService {
 
     @Override
     public void checkAssemblyValidation(Assembly assembly) {
-        if (assembly == null){
+        if (assembly == null) {
             LOGGER.log(Level.WARNING, "Assembly is null");
             throw new ValidationException("Assembly is null");
         }
