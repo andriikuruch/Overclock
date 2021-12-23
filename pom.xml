@@ -101,7 +101,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<executable>npm</executable>
+					<executable>npm.exe</executable>
 					<arguments>
 						<argument>run</argument>
 						<argument>ng</argument>
