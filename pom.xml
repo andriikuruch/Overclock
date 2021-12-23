@@ -99,7 +99,7 @@
 							<goal>exec</goal>
 						</goals>
 						<configuration>
-							<executable>npm</executable>
+							<executable>npm.exe</executable>
 							<arguments>
 								<argument>run</argument>
 								<argument>ng</argument>
