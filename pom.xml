@@ -101,11 +101,13 @@
 					</execution>
 				</executions>
 				<configuration>
-					<executable>ng</executable>
-					<workingDirectory>src/main/resources/frontend/angular</workingDirectory>
+					<executable>npm</executable>
 					<arguments>
+						<argument>run</argument>
+						<argument>ng</argument>
 						<argument>build</argument>
 					</arguments>
+					<workingDirectory>src/main/resources/frontend/angular</workingDirectory>
 				</configuration>
 			</plugin>
 			<plugin>
