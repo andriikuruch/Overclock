@@ -98,17 +98,17 @@
 						<goals>
 							<goal>exec</goal>
 						</goals>
+						<configuration>
+							<executable>npm</executable>
+							<arguments>
+								<argument>run</argument>
+								<argument>ng</argument>
+								<argument>build</argument>
+							</arguments>
+							<workingDirectory>src/main/resources/frontend/angular</workingDirectory>
+						</configuration>
 					</execution>
 				</executions>
-				<configuration>
-					<executable>npm.exe</executable>
-					<arguments>
-						<argument>run</argument>
-						<argument>ng</argument>
-						<argument>build</argument>
-					</arguments>
-					<workingDirectory>src/main/resources/frontend/angular</workingDirectory>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
