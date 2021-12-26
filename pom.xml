@@ -100,26 +100,14 @@
    		<version>1.6.0</version> 
    		<executions> 
        			<execution> 
-           			<id>exec-npm-install</id> 
-           			<phase>generate-sources</phase> 
-           			<configuration> 
-                			<workingDirectory>src/main/resources/frontend/angular</workingDirectory>
-               				<executable>npm</executable> 
-              				<arguments> 
-                   				<argument>install</argument> 
-               				</arguments>	
-           			</configuration> 
-           			<goals> 
-               				<goal>exec</goal> 
-           			</goals> 
-       			</execution> 
-       			<execution> 
            			<id>exec-npm-ng-build</id> 
            			<phase>generate-sources</phase> 
            			<configuration> 
                				<workingDirectory>src/main/resources/frontend/angular</workingDirectory> 
-               				<executable>ng</executable> 
+               				<executable>npm</executable> 
                				<arguments> 
+						<argument>run</argument>
+						<argument>ng</argument>
                    				<argument>build</argument> 
                				</arguments> 
            			</configuration> 
