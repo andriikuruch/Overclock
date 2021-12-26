@@ -1,0 +1,5 @@
+{
+    "scripts": {
+   	"heroku-prebuild": "cd src/main/resources/frontend/angular && npm install && npm run build"
+    }
+} 
