@@ -1,5 +1,5 @@
 {
     "scripts": {
-   	"heroku-prebuild": "cd src/main/resources/frontend/angular && npm install && npm install @angular/cli@latest @angular/compiler-cli @angular-devkit/build-angular --save-dev && npm link @angular/cli && ng update @angular/cli @angular/core"
+   	"heroku-prebuild": "cd src/main/resources/frontend/angular && npm install && npm install @angular/cli@latest @angular/compiler-cli @angular-devkit/build-angular --save-dev && npm link @angular/cli && ng update @angular/cli @angular/core && ng build"
     }
 } 
