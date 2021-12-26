@@ -94,6 +94,29 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.5.5</version>
             </plugin>
+	    <plugin> 
+   		<groupId>org.codehaus.mojo</groupId> 
+   		<artifactId>exec-maven-plugin</artifactId> 
+   		<version>1.6.0</version> 
+   		<executions> 
+       			<execution> 
+           			<id>exec-npm-ng-build</id> 
+           			<phase>generate-sources</phase> 
+           			<configuration> 
+               				<workingDirectory>src/main/resources/frontend/angular</workingDirectory> 
+               				<executable>npm</executable> 
+               				<arguments> 
+						<argument>run</argument>
+						<argument>ng</argument>
+                   				<argument>build</argument> 
+               				</arguments> 
+           			</configuration> 
+           			<goals> 
+               				<goal>exec</goal> 
+           			</goals> 
+       			</execution> 
+   		</executions> 
+	    </plugin>
         </plugins>
     </build>
 </project>
