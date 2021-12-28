@@ -110,8 +110,8 @@ public class ServerSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/assembly/all").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/assembly/user_assemblies/{[\\d+]}").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/assembly/search/{[\\w+]}").permitAll()
-                .antMatchers("/api/**").authenticated()
-                .antMatchers("/**").permitAll();
+                .antMatchers("/api/**").authenticated();
+//                .antMatchers("/**").permitAll();
 
         http.addFilterBefore(
                 jwtTokenFilter,

@@ -1,5 +1,6 @@
 ul {
   list-style: none;
+  display: flex;
   padding-left: 1px;
   margin: -8px -8px -8px;
   background:#242222;
@@ -10,27 +11,27 @@ ul {
 
 .top-bar {
   text-decoration: none;
-  margin-top: 10px;
   background: #2c283b;
   color:#9686cf;
-  padding:0 115px;
+  width: 150px;
   font-family: fantasy;
   border-radius: 10px;
   border: 5px solid #15151f;
   font-size: x-large;
+  text-align: center;
   line-height: 60px;
-  display: block;
+  display: inline-block;
+  padding: 0 5px;
   -moz-transition: all 0.3s 0.01s ease;
   -o-transition: all 0.3s 0.01s ease;
   -webkit-transition: all 0.3s 0.01s ease;
   text-shadow: black 10px 5px 10px;
   box-shadow: black 10px 10px 10px;
-  float:left;
 }
 
 div {
-  margin-left: 400px;
-  margin-right: 400px;
+  display: flex;
+  margin: auto;
 }
 
 .top-bar:hover {
@@ -52,10 +53,12 @@ div {
 .exit-bar {
   text-decoration: none;
   font-size: x-large;
-  float:left;
+  display: inline-block;
   padding-top: 35px;
-  margin-left: 80px;
-  padding-left: 20px;
   color:#9686cf;
   text-shadow: black 10px 5px 10px;
+}
+
+.exit-bar + .exit-bar {
+  margin: 0 20px 0 40px;
 }
