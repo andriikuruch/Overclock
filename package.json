@@ -1,5 +1,5 @@
 {
   "scripts": {
-    "heroku-prebuild": "cd src/main/resources/frontend/angular && npm i --only=dev && ng build"
+    "heroku-prebuild": "cd src/main/resources/frontend/angular && npm i --only=dev && npm run ng build"
   }
 }
