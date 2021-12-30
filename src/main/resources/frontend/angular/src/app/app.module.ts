@@ -7,7 +7,7 @@ import { TopBarComponent } from './top-bar/top-bar.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import { AssemblyComponent } from './assembly/assembly.component';
 import { RatingTableComponent } from './rating-table/rating-table.component';
-//import { CreatingAssemblyComponent } from './creating-assembly/creating-assembly.component';
+import { CreatingAssemblyComponent } from './creating-assembly/creating-assembly.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,7 @@ import { RatingTableComponent } from './rating-table/rating-table.component';
     TopBarComponent,
     AssemblyComponent,
     RatingTableComponent,
-    //CreatingAssemblyComponent,
+    CreatingAssemblyComponent,
   ],
   imports: [
     BrowserModule,

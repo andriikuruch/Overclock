@@ -1,0 +1,58 @@
+.bg {
+  z-index: -1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #111111;
+  opacity: 0.8;
+}
+
+* {
+  color: #9686cf;
+  font-family: "Lucida Console";
+  font-size: large;
+}
+
+#right {
+  float: left;
+  position: relative;
+  box-shadow: 0 0 0 3px #2e0e4f;
+  border-top: 20px solid #7f13f2;
+  color: #9686cf;
+}
+
+#left {
+  float: left;
+  position: relative;
+  box-shadow: 0 0 0 3px #2e0e4f;
+  border-top: 20px solid #7f13f2;
+  color: #9686cf;
+  margin-top: 1%;
+  width: 45%;
+  margin-left:  1%;
+  margin-right: 1%;
+}
+
+#right {
+  margin-top: 1%;
+  width: 45%;
+  margin-left: 7%;
+  margin-right: 1%;
+}
+
+#text {
+  padding: 2%;
+}
+
+.info {
+  float: left;
+  position: relative;
+  margin-top: 1%;
+  margin-left: 2%;
+}
+
+img {
+  width: 400px;
+  margin-left: 15%;
+  margin-top: 3%;
+}

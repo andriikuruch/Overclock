@@ -1,0 +1,27 @@
+<div id="container">
+  <div id="left">
+    <div class="bg"></div>
+    <div id="text">
+    Название сборки: <input id="name"> <br>
+    Выбрать материнскую плату: <br> <select id="mb"><option id="{{mb.id}}" *ngFor="let mb of mbs">{{mb.name}}</option></select><br>
+    Выбрать процессор: <br> <select id="cpu"><option id="{{cpu.id}}" *ngFor="let cpu of cpus">{{cpu.name}}</option></select><br>
+    Выбрать видеокарту: <br> <select id="gpu"><option id="{{gpu.id}}" *ngFor="let gpu of gpus">{{gpu.name}}</option></select><br>
+    Выбрать оперативную память: <br> <select id="ram"><option id="{{ram.id}}" *ngFor="let ram of rams">{{ram.name}}</option></select><br>
+    <br>
+    <button (click)="createAssembly()" type="button">Сохранить</button>
+      <button [routerLink]="['my_assemblies/testing']" type="button">Тест</button>
+      <button [routerLink]="['my_assemblies/overclocking']" type="button">Разгон</button>
+    </div>
+  </div>
+  <div id="right">
+    <div class="bg"></div>
+    <div id="info">
+      <div class="info"><h1>Информация о доп факторах:</h1>
+                        Охлаждение: <br>
+                        Блок питания:<br>
+                        Окружающая среда:<br>
+      </div>
+      <div class="info"><img src="https://www.meme-arsenal.com/memes/3f1d3541731be846b5e01ae17f149637.jpg"></div>
+    </div>
+  </div>
+</div>
