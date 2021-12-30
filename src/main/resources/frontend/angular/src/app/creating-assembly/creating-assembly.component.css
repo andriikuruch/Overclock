@@ -47,12 +47,11 @@
 .info {
   float: left;
   position: relative;
+  width: 400px;
   margin-top: 1%;
   margin-left: 2%;
 }
 
 img {
   width: 400px;
-  margin-left: 15%;
-  margin-top: 3%;
 }

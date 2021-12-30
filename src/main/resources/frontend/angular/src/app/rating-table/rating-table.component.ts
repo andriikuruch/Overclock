@@ -14,7 +14,6 @@ export class RatingTableComponent implements OnInit {
 
   public assemblies: Assembly[] = [];
   public users: User[] = [];
-  public users_map: Map<number, User> = new Map();
 
   constructor(private ratingService: RatingService, private userService: UserService) { }
 
@@ -28,8 +27,8 @@ export class RatingTableComponent implements OnInit {
         alert(error.message);
       }
     );
-    var buttonOverclock = <HTMLButtonElement>document.getElementById("overclockTop");
-    var buttonDefault = <HTMLButtonElement>document.getElementById("defaultTop");
+    let buttonOverclock = <HTMLButtonElement>document.getElementById("overclockTop");
+    let buttonDefault = <HTMLButtonElement>document.getElementById("defaultTop");
     buttonOverclock.disabled = true;
     buttonDefault.disabled = false;
     buttonOverclock.style.background = "#111111";
@@ -46,8 +45,8 @@ export class RatingTableComponent implements OnInit {
         alert(error.message);
       }
     );
-    var buttonOverclock = <HTMLButtonElement>document.getElementById("overclockTop");
-    var buttonDefault = <HTMLButtonElement>document.getElementById("defaultTop");
+    let buttonOverclock = <HTMLButtonElement>document.getElementById("overclockTop");
+    let buttonDefault = <HTMLButtonElement>document.getElementById("defaultTop");
     buttonOverclock.disabled = false;
     buttonDefault.disabled = true;
     buttonOverclock.style.background = "#2c283b";

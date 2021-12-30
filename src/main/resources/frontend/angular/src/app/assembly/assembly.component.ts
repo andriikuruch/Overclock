@@ -37,10 +37,10 @@ export class AssemblyComponent implements OnInit {
 
   public onAddComment(assemblyId: number): void {
     const inputValue = (<HTMLInputElement>document.getElementById('commentMessage')).value;
-    var date = new Date();
-    var dd = String(date.getDate()).padStart(2, '0');
-    var mm = String(date.getMonth() + 1).padStart(2, '0');
-    var yyyy = date.getFullYear();
+    let date = new Date();
+    let dd = String(date.getDate()).padStart(2, '0');
+    let mm = String(date.getMonth() + 1).padStart(2, '0');
+    let yyyy = date.getFullYear();
     const today =  yyyy+ '-' + mm + '-' + dd;
     if (inputValue == null || inputValue == '') {
       alert("Message can't be blank");
