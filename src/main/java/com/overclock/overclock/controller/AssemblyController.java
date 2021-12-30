@@ -1,10 +1,12 @@
 package com.overclock.overclock.controller;
 
 import com.overclock.overclock.model.Assembly;
+import com.overclock.overclock.security.UserDetailsImpl;
 import com.overclock.overclock.service.AssemblyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,6 +25,8 @@ public class AssemblyController {
 
     @PostMapping
     public ResponseEntity<?> buildAssembly(@Valid @RequestBody Assembly assembly) {
+        UserDetailsImpl user = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        assembly.setAuthor(user.getId());
         assemblyService.save(assembly);
         return ResponseEntity.ok(HttpStatus.OK);
     }

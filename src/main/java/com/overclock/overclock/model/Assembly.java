@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import java.util.Objects;
 @JsonDeserialize(builder = Assembly.Builder.class)
 public class Assembly {
 
-    @Positive
     private BigInteger id;
 
     @NotNull
@@ -24,28 +22,26 @@ public class Assembly {
     private String name;
 
     @NotNull
-    private final Motherboard motherboard;
+    private Motherboard motherboard;
 
     @NotNull
-    private final CPU cpu;
+    private CPU cpu;
 
     @NotNull
-    private final GPU gpu;
+    private GPU gpu;
 
     @NotNull
-    private final RAM ram;
+    private RAM ram;
 
     @NotNull
-    private final BigInteger author;
+    private BigInteger author;
 
     @NotNull
-    private final List<Comment> comments;
+    private List<Comment> comments;
 
     @NotNull
-    private final BigInteger overclock;
+    private BigInteger overclock;
 
-    @NotNull
-    @Positive
     private BigInteger score;
 
     private Assembly(Builder builder) {
@@ -163,6 +159,38 @@ public class Assembly {
 
     public BigInteger getScore() {
         return score;
+    }
+
+    public void setMotherboard(Motherboard motherboard) {
+        this.motherboard = motherboard;
+    }
+
+    public void setCpu(CPU cpu) {
+        this.cpu = cpu;
+    }
+
+    public void setGpu(GPU gpu) {
+        this.gpu = gpu;
+    }
+
+    public void setRam(RAM ram) {
+        this.ram = ram;
+    }
+
+    public void setAuthor(BigInteger authorId) {
+        this.author = authorId;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public void setOverclock(BigInteger overclockId) {
+        this.overclock = overclockId;
+    }
+
+    public void setScore(BigInteger score) {
+        this.score = score;
     }
 
     @Override

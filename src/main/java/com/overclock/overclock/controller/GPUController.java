@@ -34,6 +34,11 @@ public class GPUController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @GetMapping
+    public List<GPU> getAllGPUs() {
+        return gpuService.getAll();
+    }
+
     @PutMapping("/{gpu_id}")
     public ResponseEntity<?> updateGPU(@Valid @RequestBody GPU gpu, @PathVariable("gpu_id") BigInteger id) {
         gpuService.updateById(id, gpu);

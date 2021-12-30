@@ -1,19 +1,21 @@
 package com.overclock.overclock.controller;
 
 import com.overclock.overclock.model.Motherboard;
-import com.overclock.overclock.model.enums.Chipset;
-import com.overclock.overclock.model.enums.ChipsetManufacturer;
-import com.overclock.overclock.model.enums.MotherboardSocket;
 import com.overclock.overclock.service.MotherboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -30,6 +32,16 @@ public class MotherboardController {
     public ResponseEntity<?> deleteMotherboard(@PathVariable("motherboard_id") BigInteger id) {
         motherboardService.delete(id);
         return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @GetMapping
+    public List<Motherboard> getAllMotherboards() {
+        return motherboardService.getAllMotherboards();
+    }
+
+    @GetMapping("/{motherboard_id}")
+    public Motherboard getMotherboardById(@PathVariable("motherboard_id") BigInteger id) {
+        return motherboardService.getMotherboardById(id);
     }
 
     @PutMapping("/{motherboard_id}")

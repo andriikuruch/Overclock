@@ -1,0 +1,40 @@
+<br>
+<div id="assemblyLeftSide">
+  <div class = "bg"></div>
+  <div class="text">
+    <h2><b>Название сборки: </b></h2>{{assembly.name}}<br><br>
+    <h2><b>Процессор</b></h2><br>{{assembly.cpu.name}}<br><br>
+    <h2><b>Материнская плата:</b></h2><br>{{assembly.motherboard.name}}<br><br>
+    <h2><b>Видеокарта:</b></h2><br>{{assembly.gpu.name}}<br><br>
+    <h2><b>Оперативная память:</b></h2><br>{{assembly.ram.name}}<br><br>
+    <h2><b>Автор:</b></h2> {{user.userName}} <br>
+    <h2><b>Балл:</b></h2> {{assembly.score}}
+  </div>
+</div>
+
+<div id="assemblyRightSide">
+  <div class = "bg" id="inf"></div>
+  <div class="text">
+    <div class="info">
+      <h1>Информация о доп факторах:</h1>
+      Охлаждение: <br>
+      Блок питания:<br>
+      Окружающая среда:<br>
+    </div>
+    <div class="info">
+      <img src="https://hyperpc.ru/images/product/enthusiast/beast/pc/black-rgb/hyperpc-beast-black-rgb.jpg">
+    </div>
+  </div>
+</div>
+
+<div id="comments">
+  <div class = "bg"></div>
+  <div class="text">Комментарии:<br><br>
+    <div class="text" *ngFor="let comment of assembly.comments">
+      {{comment.author}} <br>
+      {{comment.commentMessage}} <span id="date">{{comment.dateOfComment.substring(0, 10)}}</span><br><br>
+    </div>
+    <textarea id="commentMessage"></textarea> <br>
+    <button type="button" (click)="onAddComment(assembly.id)">Оставить комментарий</button>
+  </div>
+</div>

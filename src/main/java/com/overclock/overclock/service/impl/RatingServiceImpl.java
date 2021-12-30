@@ -22,7 +22,7 @@ public class RatingServiceImpl implements RatingService {
     @Override
     public List<Assembly> calculateTopWithoutOverclock() {
         assemblies = getAssemblies();
-        assemblies.removeIf(assembly -> assembly.getOverclock() != null || assembly.getScore() == null);
+        assemblies.removeIf(assembly -> assembly.getOverclock() != null || assembly.getScore() == null || assembly.getScore().intValue() == 0);
         assemblies.sort(comparatorByScore);
         Collections.reverse(assemblies);
         return assemblies;
@@ -31,7 +31,7 @@ public class RatingServiceImpl implements RatingService {
     @Override
     public List<Assembly> calculateTopWithOverclock() {
         assemblies = getAssemblies();
-        assemblies.removeIf(assembly -> assembly.getOverclock() == null || assembly.getScore() == null);
+        assemblies.removeIf(assembly -> assembly.getOverclock() == null || assembly.getScore() == null || assembly.getScore().intValue() == 0);
         assemblies.sort(comparatorByScore);
         Collections.reverse(assemblies);
         return assemblies;

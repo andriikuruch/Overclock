@@ -35,7 +35,7 @@ public class CommentDAOImpl implements CommentDAO, QueryConstants {
         if (comment == null) {
             return true;
         }
-        return comment.getDateOfComment() == null || comment.getCommentMessage() == null || comment.getAuthor() == null;
+        return comment.getDateOfComment() == null || comment.getCommentMessage().isEmpty() || comment.getCommentMessage() == null;
     }
 
     @Override
