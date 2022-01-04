@@ -1,0 +1,17 @@
+footer{
+  font-size: 1.8em;
+  color: #DFDFDF;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+
+}
+#contacts{
+  position: absolute;
+  bottom: 0;
+  padding-left: 3vw;
+}
+#title{
+  text-align: right;
+  padding-right: 4vw;
+}

@@ -1,0 +1,58 @@
+#site_description{
+  padding-left: 10%;
+  padding-right: 3%;
+  color: #DFDFDF;
+}
+
+button{
+  background-color: #02123E;
+  color: #DFDFDF;
+  border-radius: 1.2em;
+  border: 0.12em solid grey;
+  font-family: "Segoe UI", serif;
+  font-size: 1vw;
+  text-align: center;
+  line-height: 1.6vw;
+  padding: 0.4em;
+}
+
+button:hover{
+  background-color: #2c283b;
+  color: white;
+  border-color: #DFDFDF;
+}
+
+#site_description h1{
+  font-size: 3vw;
+  padding-left: 0.5vw;
+}
+
+li{
+  font-size: 1.5vw;
+  padding-bottom: 0.5em;
+}
+
+#site_description button{
+  margin-left: 10vw;
+}
+
+img{
+  border-radius: 2em;
+  opacity: 0.95;
+}
+
+.col-1-2 {
+  width: 40%;
+  float: left;
+}
+
+.row{
+  margin-top: 10vh;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
