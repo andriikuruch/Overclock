@@ -3,14 +3,17 @@ package com.overclock.overclock.service.impl;
 import com.overclock.overclock.dao.AssemblyDAO;
 import com.overclock.overclock.model.Assembly;
 import com.overclock.overclock.model.Comment;
+import com.overclock.overclock.security.UserDetailsImpl;
 import com.overclock.overclock.service.*;
 import com.overclock.overclock.util.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -105,7 +108,12 @@ public class AssemblyServiceImpl implements AssemblyService {
 
     @Override
     public boolean delete(BigInteger id) {
-        return assemblyDAO.delete(id);
+        UserDetailsImpl user = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (Objects.equals(user.getId(), getAssemblyById(id).getAuthor())) {
+            return assemblyDAO.delete(id);
+        }
+        LOGGER.log(Level.WARNING, "Non-user assembly");
+        return false;
     }
 
     @Override

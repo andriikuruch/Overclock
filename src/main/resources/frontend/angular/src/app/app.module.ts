@@ -8,22 +8,24 @@ import { AssemblyComponent } from './assembly/assembly.component';
 import { RatingTableComponent } from './rating-table/rating-table.component';
 import { CreatingAssemblyComponent } from './creating-assembly/creating-assembly.component';
 import { HomePageComponent } from './home-page/home-page.component';
-import { AuthorizationComponent } from "./authorization/authorization.component";
-import { RegistrationComponent } from "./registration/registration.component";
+//import { AuthorizationComponent } from "./authorization/authorization.component";
+//import { RegistrationComponent } from "./registration/registration.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { FooterComponent } from './footer/footer.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import {MyAssembliesComponent} from "./my-assemblies/my-assemblies.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     TopBarComponent,
     AssemblyComponent,
+    MyAssembliesComponent,
     RatingTableComponent,
     CreatingAssemblyComponent,
     HomePageComponent,
-    AuthorizationComponent,
-    RegistrationComponent,
+    //AuthorizationComponent,
+    //RegistrationComponent,
     NotFoundComponent,
     FooterComponent
   ],

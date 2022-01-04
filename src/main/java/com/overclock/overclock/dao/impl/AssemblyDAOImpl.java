@@ -124,10 +124,19 @@ public class AssemblyDAOImpl implements AssemblyDAO, QueryConstants {
     @Transactional
     public boolean delete(BigInteger id) {
         try {
+            Assembly assembly = getAssemblyById(id);
+
             int result = 0;
             result += jdbcTemplate.update(DELETE_SCORE, id);
             boolean successfulCommentDeletingResult = commentDAO.deleteAllCommentsByAssemblyId(id);
-            boolean successfulOverclockDeletingResult = overclockDAO.deleteByAssemblyId(id);
+
+            boolean successfulOverclockDeletingResult;
+            if (assembly.getOverclock() != null) {
+                successfulOverclockDeletingResult = overclockDAO.deleteByAssemblyId(id);
+            } else {
+                successfulOverclockDeletingResult = true;
+            }
+
             result += jdbcTemplate.update(DELETE_REFERENCES, id);
             result += jdbcTemplate.update(DELETE_ASSEMBLY, id);
 

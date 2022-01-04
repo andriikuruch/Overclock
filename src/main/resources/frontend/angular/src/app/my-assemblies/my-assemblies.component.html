@@ -1,0 +1,26 @@
+<div style="padding-top: 2.5%;">
+  <table *ngIf="myAssemblies.length>0" align="center" width="50%" style="color: #DFDFDF;" class="table table-bordered table-striped">
+    <thead class="thead-dark">
+    <tr style="font-size: 2.5em;">
+      <th scope="col" style="border-bottom: 2px solid black; border-right: 2px solid black;">Название сборки</th>
+      <th scope="col" style="border-bottom: 2px solid black; border-right: 2px solid black;">Балл</th>
+      <th scope="col" style="border-bottom: 2px solid black;">Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr style="font-size: 2.2em;" *ngFor="let assembly of myAssemblies">
+      <td style="border-right: 2px solid black; padding-left: 1.8%;" width="30%">{{myAssemblies.length + 1 - (myAssemblies.length - myAssemblies.indexOf(assembly))}}. {{assembly.name}}</td>
+      <td style="border-right: 2px solid black; text-align: center;" width="16%">{{assembly.score}}</td>
+      <td align="center" width="25%">
+        <button type="button" (click)="onTestAssembly(assembly.id)" style="height: 2.7em;">Тест</button>
+        <button type="button" (click)="onOverclockAssembly(assembly.id)" style="height: 2.7em;">Разгон</button>
+        <button type="button" (click)="onDeleteAssembly(assembly.id)" style="height: 2.7em;">Удалить</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div *ngIf="myAssemblies.length==0" style="color: #DFDFDF; font-size: 2.5em; text-align: center;">Сборки отсутствуют!</div>
+  <div style="padding-left: 26%; padding-top: 1%;">
+    <button type="button" (click)="onAddAssembly()" style="height: 2.7em;">Добавить сборку</button>
+  </div>
+</div>

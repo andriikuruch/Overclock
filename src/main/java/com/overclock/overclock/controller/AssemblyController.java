@@ -31,6 +31,12 @@ public class AssemblyController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @DeleteMapping("/{assembly_id}")
+    public ResponseEntity<?> deleteAssembly(@PathVariable("assembly_id") BigInteger id) {
+        assemblyService.delete(id);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
     @GetMapping("/{assembly_id}")
     public Assembly showAssembly(@PathVariable("assembly_id") BigInteger id) {
         return assemblyService.getAssemblyById(id);
@@ -49,5 +55,11 @@ public class AssemblyController {
     @GetMapping("/user_assemblies/{user_id}")
     public List<Assembly> getAllAssembliesByUser(@PathVariable("user_id") BigInteger userId) {
         return assemblyService.getAssembliesByAuthorId(userId);
+    }
+
+    @GetMapping("/my_assemblies")
+    public List<Assembly> getMyAssemblies() {
+        UserDetailsImpl user = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return assemblyService.getAssembliesByAuthorId(user.getId());
     }
 }
