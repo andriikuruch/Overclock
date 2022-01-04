@@ -1,0 +1,88 @@
+<br>
+
+  <div id="assemblyLeftSide">
+    <div class = "bg"></div>
+    <table border="1">
+      <th>Материнская плата</th>
+      <ng-container>
+        <tr *ngFor="let motherboard of motherboardCheckboxes">
+          <td>
+            <div class="labels-inline">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" [(ngModel)]="motherboard.checked" [value]="motherboard.value"> {{motherboard.value}}
+              </label>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </table>
+    <table border="1">
+      <th>ЦПУ</th>
+      <ng-container>
+        <tr *ngFor="let cpu of cpuCheckboxes">
+          <td>
+            <div class="labels-inline">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" [(ngModel)]="cpu.checked" [value]="cpu.value"> {{cpu.value}}
+              </label>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </table>
+    <table border="1">
+      <th>ГПУ</th>
+      <ng-container>
+        <tr *ngFor="let gpu of gpuCheckboxes">
+          <td>
+            <div class="labels-inline">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" [(ngModel)]="gpu.checked" [value]="gpu.value"> {{gpu.value}}
+              </label>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </table>
+    <table border="1">
+      <th>ОЗУ</th>
+      <ng-container>
+        <tr *ngFor="let ram of ramCheckboxes">
+          <td>
+            <div class="labels-inline">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" [(ngModel)]="ram.checked" [value]="ram.value"> {{ram.value}}
+              </label>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </table>
+  </div>
+
+  <div id="assemblyRightSide">
+    <div class = "bg"></div>
+    <div class="form-group">
+      <label for="search-text"> Поиск:  </label>
+      <input type="email" class="form-control" id="search-text" aria-describedby="search-text"
+            [(ngModel)]="searchText" placeholder="Название сборки" autofocus>
+    </div>
+    <button type="button" (click)="reset()">Сбросить</button>
+    <table border="1">
+      <th>Название сборки</th>
+      <th>Автор</th>
+      <th>Балл</th>
+      <ng-container *ngIf="users.length == assemblies.length">
+        <tr *ngFor="let assembly of assemblies
+                    | searchFilter: searchText : 'name'
+                    | partsfilter: { motherboard: ''} : motherboardChecked() : false
+                    | partsfilter: { cpu: ''} : cpuChecked() : false
+                    | partsfilter: { gpu: ''} : gpuChecked() : false
+                    | partsfilter: { ram: ''} : ramChecked() : false">
+          <td><a [routerLink]="['/assembly/'+assembly.id]">{{assembly.name}}</a></td>
+          <td>{{users[assemblies.indexOf(assembly)].userName}}</td>
+          <td>{{assembly.score}}</td>
+        </tr>
+      </ng-container>
+    </table>
+  </div>

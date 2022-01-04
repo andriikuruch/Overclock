@@ -21,6 +21,10 @@ export class AssemblyService {
     return this.http.get<Assembly>(`${this.apiServerUrl}/assembly/${assemblyId}`);
   }
 
+  public getAllAssemblies(): Observable<Assembly[]> {
+    return this.http.get<Assembly[]>(`${this.apiServerUrl}/assembly/all`);
+  }
+
   public addComment(assemblyId: number, comment: Comment): Observable<Comment> {
     return this.http.post<Comment>(`${this.apiServerUrl}/assembly/${assemblyId}/comment`, comment);
   }

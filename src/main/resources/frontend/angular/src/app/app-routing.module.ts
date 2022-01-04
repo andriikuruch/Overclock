@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {AssemblyComponent} from "./assembly/assembly.component";
+import {AssembliesComponent} from "./assemblies/assemblies.component";
 import {RatingTableComponent} from "./rating-table/rating-table.component";
 import {CreatingAssemblyComponent} from "./creating-assembly/creating-assembly.component";
 //import {OverclockComponent} from "./overclock/overclock.component";
@@ -14,7 +15,7 @@ const routes: Routes = [
   //{path: 'my_assemblies/overclocking', component: OverclockComponent },
   //{path: ' my_assemblies/testing', component: TestComponent },
   {path: 'rating', component: RatingTableComponent },
-  //{path: 'assemblies', component: AssembliesComponent},
+  {path: 'assemblies', component: AssembliesComponent},
   //{path: 'registration', component: RegistrationComponent},
   //{path: 'authorization', component: AuthorizationComponent},
   //{path: '**', component: NotFoundComponent},
