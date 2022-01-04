@@ -2,8 +2,20 @@
 <div id="main">
   <div class="login-form">
     <br>
-    <div class = "label">Имя пользователя:</div> <br><input id="userName" autocomplete="off"> <br>
-    <div class = "label">Пароль:</div><br><input id="password" type="password"> <br>
+    <div class = "label">Имя пользователя:</div> <br>
+    <input id="userName" [ngModel]="user.userName" minlength="4" maxlength = "23" #uname="ngModel"
+      [ngClass] = "{'input-bad': uname.errors}" autocomplete="off">
+    <br>
+    <div *ngIf="uname.errors?.['minlength'] && (uname.dirty || uname.touched)">
+      <div class = "hint">Используйте не менее 4 символов</div>
+    </div>
+    <div class = "label">Пароль:</div><br>
+    <input id="password" [ngModel]="user.password" #upass="ngModel" required
+      [ngClass] = "{'input-bad': upass.errors && (upass.dirty || upass.touched)}" type="password" >
+    <br>
+    <div  *ngIf="upass.errors?.['required'] && (upass.dirty || upass.touched)">
+      <div class = "hint">Пароль не может быть пустым</div>
+    </div>
     <div class = "buttons">
       <button id="forgotPassword" type="button">Забыли пароль?</button>
       <button id="authorize" type="button" (click)="onSubmit()">Войти</button>

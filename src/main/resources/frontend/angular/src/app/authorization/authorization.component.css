@@ -3,7 +3,7 @@
   margin-right: auto;
   margin-left: auto;
   font-family: "Segoe UI", serif;
-    font-size: 1.4vw;
+  font-size: 1.4vw;
 }
 
 #main {
@@ -37,9 +37,11 @@ button {
 }
 
 #forgotPassword {
+  font-size: 1.2vw;
 }
 
 #authorize {
+  font-size: 1.2vw;
   float: right
 }
 
@@ -53,9 +55,19 @@ button {
 }
 
 input {
-  border: 2px #48346B;
+  border: 3px #48346B;
   border-radius: 3px;
   padding: 7px 10px;
-  width: 100%
+  width: 100%;
+  color: black;
 }
 
+.input-bad {
+  border: 3px solid red;
+  background: rgba(255, 172, 172, 1.0);;
+}
+
+.hint {
+  font-size: 1.0vw;
+  margin-top: 2%;
+}
