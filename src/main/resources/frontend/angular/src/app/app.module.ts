@@ -13,12 +13,14 @@ import { CreatingAssemblyComponent } from './creating-assembly/creating-assembly
 import { SearchFilterPipe } from './pipes/searchfilter.pipe';
 import { PartsFilterPipe } from './pipes/partsfilter.pipe';
 import { HomePageComponent } from './home-page/home-page.component';
-//import { AuthorizationComponent } from "./authorization/authorization.component";
+import { AuthorizationComponent } from "./authorization/authorization.component";
 //import { RegistrationComponent } from "./registration/registration.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { FooterComponent } from './footer/footer.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {MyAssembliesComponent} from "./my-assemblies/my-assemblies.component";
+import { authInterceptorProviders } from './helpers/auth.interceptor';
+import { DataSharingService } from './service/datasharing.service';
 
 @NgModule({
   declarations: [
@@ -30,26 +32,21 @@ import {MyAssembliesComponent} from "./my-assemblies/my-assemblies.component";
     RatingTableComponent,
     CreatingAssemblyComponent,
     HomePageComponent,
-    //AuthorizationComponent,
+    AuthorizationComponent,
     //RegistrationComponent,
     NotFoundComponent,
-    FooterComponent
+    FooterComponent,
     SearchFilterPipe,
     PartsFilterPipe
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        ReactiveFormsModule
-    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [authInterceptorProviders, DataSharingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

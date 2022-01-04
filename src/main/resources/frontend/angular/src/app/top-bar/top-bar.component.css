@@ -27,6 +27,7 @@ li{
 
 li:hover {
   text-decoration: underline;
+  cursor: pointer;
 }
 
 li.top-bar{

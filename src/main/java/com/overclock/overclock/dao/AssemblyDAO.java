@@ -76,9 +76,9 @@ public interface AssemblyDAO {
                             "CPU.OBJECT_ID CPU_ID, CPU.NAME CPU_NAME, " +
                             "GPU.OBJECT_ID GPU_ID, GPU.NAME GPU_NAME, " +
                             "RAM.OBJECT_ID RAM_ID, RAM.NAME RAM_NAME, " +
-                            "AUTHOR_REF.OBJECT_ID AUTHOR_ID, SCORE.VALUE SCORE " +
+                            "AUTHOR.OBJECT_ID AUTHOR_ID, SCORE.VALUE SCORE " +
                         "FROM OBJECTS ASSEMBLY, OBJECTS RAM, OBJECTS MOTHERBOARD, " +
-                            "OBJECTS CPU, OBJECTS GPU, OBJREFERENCE AUTHOR_REF, " +
+                            "OBJECTS CPU, OBJECTS GPU, OBJECTS AUTHOR, OBJREFERENCE AUTHOR_REF," +
                             "OBJREFERENCE MOTHERBOARD_REF, OBJREFERENCE CPU_REF, " +
                             "OBJREFERENCE GPU_REF, OBJREFERENCE RAM_REF, ATTRIBUTES SCORE " +
                         "WHERE ASSEMBLY.OBJECT_TYPE_ID = 1 " +
@@ -97,7 +97,9 @@ public interface AssemblyDAO {
                             "AND GPU_REF.OBJECT_ID = GPU.OBJECT_ID " +
                             "AND GPU_REF.REFERENCE = ASSEMBLY.OBJECT_ID " +
                             "AND RAM_REF.OBJECT_ID = RAM.OBJECT_ID " +
-                            "AND RAM_REF.REFERENCE = ASSEMBLY.OBJECT_ID) " +
+                            "AND RAM_REF.REFERENCE = ASSEMBLY.OBJECT_ID " +
+                            "AND AUTHOR_REF.OBJECT_ID = AUTHOR.OBJECT_ID " +
+                            "AND AUTHOR_REF.REFERENCE = ASSEMBLY.OBJECT_ID) " +
                     "SELECT DISTINCT ALL_ASSEMBLIES.ASSEMBLY_ID, ALL_ASSEMBLIES.ASSEMBLY_NAME, " +
                             "ALL_ASSEMBLIES.MOTHERBOARD_ID, ALL_ASSEMBLIES.MOTHERBOARD_NAME, " +
                             "ALL_ASSEMBLIES.CPU_ID, ALL_ASSEMBLIES.CPU_NAME, " +

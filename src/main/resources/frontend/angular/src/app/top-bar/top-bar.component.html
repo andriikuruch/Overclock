@@ -2,11 +2,18 @@
   <ul>
     <li class="title"><a (click)="openHomePage()" ><img [src]="'../../assets/logo.png'" alt="logo"></a></li>
       <div class="centred-part">
-        <li class="top-bar"><a (click)="openMyAssemblies()">Мои сборки</a></li>
+          <li class="top-bar" *ngIf="isLoggedIn"><a (click)="openMyAssemblies()">Мои сборки</a></li>
+          <li class="top-bar" *ngIf="!isLoggedIn"><a (click)="openAuthorization()">Мои сборки</a></li>
         <li class="top-bar"><a (click)="openAssemblies()">Все сборки</a></li>
         <li class="top-bar"><a (click)="openRating()">Рейтинг</a></li>
       </div>
-    <li class="exit-bar"><a (click)="openRegistration()" >Регестрация</a></li>
-    <li class="exit-bar"><a (click)="openAuthorization()" >Вход</a></li>
+    <ng-template [ngIf]="isLoggedIn" [ngIfElse]="loggedOut">
+      <li class="exit-bar"><a >{{this.curUser}}</a></li>
+      <li class="exit-bar"><a (click)="logOut()" >Выйти</a></li>
+    </ng-template>
+    <ng-template #loggedOut>
+      <li class="exit-bar"><a (click)="openRegistration()" >Регистрация</a></li>
+      <li class="exit-bar"><a (click)="openAuthorization()" >Вход</a></li>
+    </ng-template>
   </ul>
 </div>

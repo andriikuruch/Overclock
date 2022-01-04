@@ -6,7 +6,7 @@ import {RatingTableComponent} from "./rating-table/rating-table.component";
 import {CreatingAssemblyComponent} from "./creating-assembly/creating-assembly.component";
 import {HomePageComponent} from "./home-page/home-page.component";
 //import {RegistrationComponent} from "./registration/registration.component";
-//import {AuthorizationComponent} from "./authorization/authorization.component";
+import {AuthorizationComponent} from "./authorization/authorization.component";
 import {NotFoundComponent} from "./not-found/not-found.component";
 import {MyAssembliesComponent} from "./my-assemblies/my-assemblies.component";
 
@@ -21,7 +21,7 @@ const routes: Routes = [
   {path: 'rating', component: RatingTableComponent },
   {path: 'assemblies', component: AssembliesComponent},
   //{path: 'registration', component: RegistrationComponent},
-  //{path: 'authorization', component: AuthorizationComponent},
+  {path: 'authorization', component: AuthorizationComponent},
   {path: '**', component: NotFoundComponent},
 ];
 
