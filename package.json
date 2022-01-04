@@ -1,5 +1,14 @@
 {
   "scripts": {
     "heroku-prebuild": "cd src/main/resources/frontend/angular && npm i"
+  },
+  "dependencies": {
+    "@angular/cdk": "^13.1.1",
+    "@angular/material": "^13.1.1",
+    "@angular/platform-browser-dynamic": "^13.1.1",
+    "@angular/router": "^13.1.1"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^13.1.2"
   }
 }

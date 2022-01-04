@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 body {
-  background:url(https://wallpaperaccess.com/full/1325090.jpg) no-repeat center center fixed;
+  background: url("assets/Background_home.png") no-repeat center center fixed;
   -webkit-background-size: cover;
   background-size: cover;
+  margin: 0 auto;
 }
