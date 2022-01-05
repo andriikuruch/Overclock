@@ -16,7 +16,6 @@ export class AuthorizationComponent implements OnInit {
   form: any = {};
   isLoggedIn = false;
   isLoginFailed = false;
-  errorMessage = '';
   user : any = {
                  name: '',
                  password: ''
@@ -48,14 +47,14 @@ export class AuthorizationComponent implements OnInit {
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;
+      },
+      err => {
+        this.isLoginFailed = true;
+      },
+      () => {
         this.dataSharingService.isLoggedIn.next(true);
         this.dataSharingService.curUser.next(this.getCurrentUser());
         this.router.navigate(['/']);
-      },
-      err => {
-        this.errorMessage = err.error.message;
-        this.isLoginFailed = true;
-        alert('error:' + err.error.message);
       }
     );
   }

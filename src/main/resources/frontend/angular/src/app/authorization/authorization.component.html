@@ -16,6 +16,9 @@
     <div  *ngIf="upass.errors?.['required'] && (upass.dirty || upass.touched)">
       <div class = "hint">Пароль не может быть пустым</div>
     </div>
+    <div *ngIf="isLoginFailed">
+      <div class = "hint">Неверное имя пользователя или пароль</div>
+    </div>
     <div class = "buttons">
       <button id="forgotPassword" type="button">Забыли пароль?</button>
       <button id="authorize" type="button" (click)="onSubmit()">Войти</button>
