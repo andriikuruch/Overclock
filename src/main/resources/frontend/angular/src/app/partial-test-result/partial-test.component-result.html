@@ -1,0 +1,35 @@
+<div id="score">
+  <div class="bg"></div>
+  <p>Ваш результат:</p>
+  <h1>{{score}}</h1>
+</div>
+
+<div id="assembly">
+  <div class="bg"></div>
+  <div class="text">
+    <h1>Тестируемый компонент: {{component.toUpperCase()}} </h1>
+    <p *ngIf="component == 'cpu'"> {{assembly.cpu.name}} <br>Частота по умолчанию - {{assembly.cpu.frequency}} ГГц; </p>
+    <p *ngIf="component == 'gpu'"> {{assembly.gpu.name}} <br>Частота ядра по умолчанию - {{assembly.gpu.coreFrequency}} МГц;
+                                 <br>Частота памяти по умолчанию - {{assembly.gpu.memoryFrequency}} МГц; </p>
+    <p *ngIf="component == 'ram'"> {{assembly.ram.name}}<br>Частота по умолчанию - {{assembly.ram.frequency}} МГц;
+                                 <br>Тайминги по умолчанию - {{assembly.ram.timings}}; </p>
+  </div>
+  <div class="text" *ngIf="assembly.overclock != null && assembly.overclock != 0">
+    <h1>Разгон:</h1>
+    <p *ngIf="component == 'cpu'"> Частота - {{overclock.cpufrequency}} ГГц; </p>
+    <p *ngIf="component == 'gpu'"> Частота ядра - {{overclock.gpucoreFrequency}} МГц;
+      <br>частота памяти - {{overclock.gpumemoryFrequency}} МГц; </p>
+    <p *ngIf="component == 'ram'">Частота - {{overclock.ramfrequency}} МГц;
+                                  <br>Тайминги - {{overclock.ramtimings}}; </p>
+  </div>
+</div>
+
+<div id="rating">
+  <div class="bg"></div>
+  <div id="textCongrats" class="text">
+    Отличный результат. Поздарвляем!
+  </div>
+  <img id="congrats" src="/assets/congratulations.jpg">
+</div>
+
+

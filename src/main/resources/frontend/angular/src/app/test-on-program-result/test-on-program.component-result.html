@@ -1,0 +1,36 @@
+<div id="score">
+  <div class="bg"></div>
+  <p>Ваш результат:</p>
+  <h1>{{score}}</h1>
+</div>
+
+<div id="assembly">
+  <div class="bg"></div>
+  <div class="text">
+    <h1>Ваша сборка: {{assembly.name}}</h1>
+    <p>ЦП: {{assembly.cpu.name}}</p>
+    <p>ГП: {{assembly.gpu.name}}</p>
+    <p>ОЗУ: {{assembly.ram.name}}</p>
+  </div>
+  <div class="text" *ngIf="assembly.overclock != null && assembly.overclock != 0">
+    <h1>Разгон:</h1>
+    <p>ЦП: частота - {{overclock.cpufrequency}} ГГц </p>
+    <p>ГП: частота ядра - {{overclock.gpucoreFrequency}} МГц;
+      <br>частота памяти - {{overclock.gpumemoryFrequency}} МГц; </p>
+    <p>ОЗУ: частота - {{overclock.ramfrequency}} ГГц;</p>
+  </div>
+</div>
+
+<div id="rating">
+  <div class="bg"></div>
+  <div id="textCongrats" class="text">
+    Отличный результат. Поздарвляем!
+  </div>
+  <img id="congrats" src="/assets/congratulations.jpg">
+  <div id="info" class="text">
+    Программа/игра в которой был проведён тест: {{program.replace('_',' ')}}
+  </div>
+  <img id="program" src="/assets/{{program.replace('_','%20')}}.jpg">
+</div>
+
+

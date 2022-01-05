@@ -10,9 +10,9 @@ import {AuthorizationComponent} from "./authorization/authorization.component";
 import {NotFoundComponent} from "./not-found/not-found.component";
 import {MyAssembliesComponent} from "./my-assemblies/my-assemblies.component";
 import {AssemblyTestComponent} from "./assembly-test/assembly-test.component";
-/*import {MainTestResultComponent} from "./main-test-result/main-test-result.component";
+import {MainTestResultComponent} from "./main-test-result/main-test-result.component";
 import {TestOnProgramResultComponent} from "./test-on-program-result/test-on-program-result.component";
-import {PartialTestComponentResult} from "./partial-test-result/partial-test.component-result";*/
+import {PartialTestComponentResult} from "./partial-test-result/partial-test.component-result";
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -21,9 +21,9 @@ const routes: Routes = [
   {path: 'my_assemblies', component: MyAssembliesComponent},
   {path: 'my_assemblies/creating', component: CreatingAssemblyComponent},
   {path: 'my_assemblies/:assemblyId/testing', component: AssemblyTestComponent},
-/*  {path: 'my_assemblies/:assemblyId/main_test_result', component: MainTestResultComponent},
+  {path: 'my_assemblies/:assemblyId/main_test_result', component: MainTestResultComponent},
   {path: 'my_assemblies/:assemblyId/test_on_program/:program', component: TestOnProgramResultComponent},
-  {path: 'my_assemblies/:assemblyId/partial_test/:component', component: PartialTestComponentResult},*/
+  {path: 'my_assemblies/:assemblyId/partial_test/:component', component: PartialTestComponentResult},
   {path: 'rating', component: RatingTableComponent },
   //{path: 'my_assemblies/overclocking', component: OverclockComponent },
   {path: 'rating', component: RatingTableComponent },

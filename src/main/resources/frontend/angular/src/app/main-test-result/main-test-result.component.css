@@ -1,0 +1,70 @@
+* {
+  color: #9686cf;
+  font-family: "Lucida Console";
+  font-size: large;
+}
+
+.bg {
+  z-index: -1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #111111;
+  opacity: 0.8;
+}
+
+p, h1 {
+  font-size: x-large;
+  padding-bottom: 3%;
+}
+
+#score {
+  text-align: center;
+  font-size: xxx-large;
+}
+
+#assembly {
+  position: relative;
+  width: 40%;
+  z-index: 1;
+  box-shadow: 0 0 0 3px #2e0e4f;
+  border-top: 20px solid #7f13f2;
+  color: #9686cf;
+  float: left;
+  margin-left: 5%;
+}
+
+#rating {
+  position: relative;
+  width: 40%;
+  z-index: 1;
+  box-shadow: 0 0 0 3px #2e0e4f;
+  border-top: 20px solid #7f13f2;
+  color: #9686cf;
+  float: right;
+  margin-right: 5%;
+}
+
+#score {
+  position: relative;
+  width: 30%;
+  z-index: 1;
+  box-shadow: 0 0 0 3px #2e0e4f;
+  border-top: 20px solid #7f13f2;
+  color: #9686cf;
+  margin: 1% auto auto;
+}
+
+.text {
+  margin: 2%;
+}
+
+#textCongrats {
+  text-align: center;
+}
+
+#congrats {
+  margin-left: 7%;
+  margin-right: 7%;
+  margin-bottom: 1%;
+}
