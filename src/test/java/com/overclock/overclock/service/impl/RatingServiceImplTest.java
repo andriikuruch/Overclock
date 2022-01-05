@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,17 +30,17 @@ public class RatingServiceImplTest {
     @Before
     public void init() {
         Assembly assembly1 = new Assembly.Builder(BigInteger.valueOf(1), "testAssembly1")
-                .setOverclock(BigInteger.valueOf(11)).setScore(BigInteger.valueOf(2500)).build();
+                .setOverclock(BigInteger.valueOf(11)).setScore(BigDecimal.valueOf(2500)).build();
         Assembly assembly2 = new Assembly.Builder(BigInteger.valueOf(2), "testAssembly2")
                 .build();
         Assembly assembly3 = new Assembly.Builder(BigInteger.valueOf(3), "testAssembly3")
-                .setOverclock(BigInteger.valueOf(12)).setScore(BigInteger.valueOf(1200)).build();
+                .setOverclock(BigInteger.valueOf(12)).setScore(BigDecimal.valueOf(1200)).build();
         Assembly assembly4 = new Assembly.Builder(BigInteger.valueOf(4), "testAssembly4")
-                .setOverclock(BigInteger.valueOf(13)).setScore(BigInteger.valueOf(1600)).build();
+                .setOverclock(BigInteger.valueOf(13)).setScore(BigDecimal.valueOf(1600)).build();
         Assembly assembly5 = new Assembly.Builder(BigInteger.valueOf(5), "testAssembly5")
-                .setScore(BigInteger.valueOf(1750)).build();
+                .setScore(BigDecimal.valueOf(1750)).build();
         Assembly assembly6 = new Assembly.Builder(BigInteger.valueOf(6), "testAssembly6")
-                .setScore(BigInteger.valueOf(2800)).build();
+                .setScore(BigDecimal.valueOf(2800)).build();
 
         testAssemblies = new ArrayList<>(Arrays.asList(assembly1, assembly2, assembly3, assembly4, assembly5, assembly6));
     }

@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Objects;
@@ -117,7 +118,7 @@ public class AssemblyServiceImpl implements AssemblyService {
     }
 
     @Override
-    public boolean updateScore(BigInteger id, BigInteger newScore) {
+    public boolean updateScore(BigInteger id, BigDecimal newScore) {
         return assemblyDAO.updateScore(id, newScore);
     }
 

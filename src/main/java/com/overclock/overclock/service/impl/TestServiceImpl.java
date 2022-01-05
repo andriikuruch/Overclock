@@ -40,7 +40,7 @@ public class TestServiceImpl implements TestService {
         switch (program) {
             case Blander:
                 return BigDecimal.valueOf(calculateScoreOnProgram(assembly, overclock, 0.4, 0.2, 0.4));
-            case AdobePremiere:
+            case Adobe_Premiere:
                 return BigDecimal.valueOf(calculateScoreOnProgram(assembly, overclock, 0.5, 0.2, 0.3));
             case CS_GO:
                 return BigDecimal.valueOf(calculateScoreOnProgram(assembly, overclock, 0.45, 0.4, 0.15));

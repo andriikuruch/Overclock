@@ -13,6 +13,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -111,16 +112,16 @@ public class AssemblyDAOImplTest {
 
     @Test
     public void updateScore() {
-        Assert.assertTrue(assemblyDAO.updateScore(BigInteger.valueOf(-5006), BigInteger.valueOf(3400)));
+        Assert.assertTrue(assemblyDAO.updateScore(BigInteger.valueOf(-5006), BigDecimal.valueOf(3400)));
     }
 
     @Test
     public void updateByInvalidScore() {
-        Assert.assertFalse(assemblyDAO.updateScore(BigInteger.valueOf(-5006), BigInteger.valueOf(-100)));
+        Assert.assertFalse(assemblyDAO.updateScore(BigInteger.valueOf(-5006), BigDecimal.valueOf(-100)));
     }
 
     @Test
     public void updateScoreByInvalidAssemblyId() {
-        Assert.assertFalse(assemblyDAO.updateScore(BigInteger.valueOf(0), BigInteger.valueOf(3400)));
+        Assert.assertFalse(assemblyDAO.updateScore(BigInteger.valueOf(0), BigDecimal.valueOf(3400)));
     }
 }

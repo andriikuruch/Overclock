@@ -21,6 +21,10 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MyAssembliesComponent} from "./my-assemblies/my-assemblies.component";
 import { authInterceptorProviders } from './helpers/auth.interceptor';
 import { DataSharingService } from './service/datasharing.service';
+import { AssemblyTestComponent } from './assembly-test/assembly-test.component';
+// import { MainTestResultComponent } from './main-test-result/main-test-result.component';
+// import { TestOnProgramResultComponent } from './test-on-program-result/test-on-program-result.component';
+// import { PartialTestComponentResult } from './partial-test-result/partial-test.component-result';
 
 @NgModule({
   declarations: [
@@ -37,7 +41,11 @@ import { DataSharingService } from './service/datasharing.service';
     NotFoundComponent,
     FooterComponent,
     SearchFilterPipe,
-    PartsFilterPipe
+    PartsFilterPipe,
+    AssemblyTestComponent,
+/*    MainTestResultComponent,
+    TestOnProgramResultComponent,
+    PartialTestComponentResult,*/
   ],
   imports: [
     BrowserModule,

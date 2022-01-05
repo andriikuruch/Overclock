@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -61,5 +62,11 @@ public class AssemblyController {
     public List<Assembly> getMyAssemblies() {
         UserDetailsImpl user = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return assemblyService.getAssembliesByAuthorId(user.getId());
+    }
+
+    @PostMapping("/{assembly_id}/score")
+    public ResponseEntity<?> updateScore(@PathVariable("assembly_id") BigInteger assemblyId, @RequestBody BigDecimal score) {
+        assemblyService.updateScore(assemblyId, score);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 }

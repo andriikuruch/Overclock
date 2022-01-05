@@ -107,7 +107,7 @@ public class CreateUtilities {
                 .setGpu(createGpu())
                 .setCpu(createCpu())
                 .setMotherboard(createMotherboard())
-                .setScore(BigInteger.valueOf(3500))
+                .setScore(BigDecimal.valueOf(3500))
                 .setAuthor(BigInteger.valueOf(12))
                 .setOverclock(BigInteger.valueOf(11))
                 .setComments(comments)
@@ -120,7 +120,7 @@ public class CreateUtilities {
                 .setGpu(createGpu())
                 .setCpu(createCpu())
                 .setMotherboard(createMotherboard())
-                .setScore(BigInteger.valueOf(3500))
+                .setScore(BigDecimal.valueOf(3500))
                 .setAuthor(BigInteger.valueOf(12))
                 .build();
     }
@@ -131,7 +131,7 @@ public class CreateUtilities {
                 .setGpu(createGpu())
                 .setCpu(createCpu())
                 .setMotherboard(createMotherboard())
-                .setScore(BigInteger.valueOf(5600))
+                .setScore(BigDecimal.valueOf(5600))
                 .setAuthor(BigInteger.valueOf(-5007))
                 .build();
     }
@@ -142,7 +142,7 @@ public class CreateUtilities {
                 .setGpu(createGpu())
                 .setCpu(createCpu())
                 .setMotherboard(createMotherboard())
-                .setScore(BigInteger.valueOf(5600))
+                .setScore(BigDecimal.valueOf(5600))
                 .setAuthor(BigInteger.valueOf(0))
                 .build();
     }

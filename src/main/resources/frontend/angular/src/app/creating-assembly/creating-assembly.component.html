@@ -9,8 +9,6 @@
     Выбрать оперативную память: <br> <select id="ram"><option id="{{ram.id}}" *ngFor="let ram of rams">{{ram.name}}</option></select><br>
     <br>
     <button (click)="createAssembly()" type="button">Сохранить</button>
-      <button [routerLink]="['my_assemblies/testing']" type="button">Тест</button>
-      <button [routerLink]="['my_assemblies/overclocking']" type="button">Разгон</button>
     </div>
   </div>
   <div id="right">

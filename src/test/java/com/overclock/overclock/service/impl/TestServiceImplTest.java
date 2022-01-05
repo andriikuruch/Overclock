@@ -200,7 +200,7 @@ public class TestServiceImplTest {
         double scoreInCSGO = testService.testAssemblyOnProgram(assembly, Program.CS_GO).doubleValue();
         double scoreInMetro = testService.testAssemblyOnProgram(assembly, Program.Metro_Exodus).doubleValue();
         double scoreInBlander = testService.testAssemblyOnProgram(assembly, Program.Blander).doubleValue();
-        double scoreInAdobePremiere = testService.testAssemblyOnProgram(assembly, Program.AdobePremiere).doubleValue();
+        double scoreInAdobePremiere = testService.testAssemblyOnProgram(assembly, Program.Adobe_Premiere).doubleValue();
 
         Assert.assertNotEquals(scoreInCSGO, scoreInMetro);
         Assert.assertNotEquals(scoreInBlander, scoreInAdobePremiere);

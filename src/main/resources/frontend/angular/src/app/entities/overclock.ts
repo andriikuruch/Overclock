@@ -1,11 +1,11 @@
 export interface Overclock {
   id?: number;
-  CPUFrequency?: number;
-  CPUVoltage?: number;
-  GPUCoreFrequency?: number;
-  GPUMemoryFrequency?: number;
-  GPUVoltage?: number;
-  RAMVoltage?: number;
-  RAMFrequency?: number;
-  RAMTimings?: string;
+  cpufrequency?: string;
+  cpuvoltage?: string;
+  gpuvoltage?: string;
+  ramvoltage?: string;
+  ramfrequency?: string;
+  ramtimings?: string;
+  gpucoreFrequency?: string;
+  gpumemoryFrequency?: string;
 }

@@ -3,7 +3,7 @@ package com.overclock.overclock.model.enums;
 public enum Program {
 
     Blander("Blander"),
-    AdobePremiere("Adobe Premiere"),
+    Adobe_Premiere("Adobe Premiere"),
     CS_GO("CS GO"),
     Metro_Exodus("Metro Exodus");
 

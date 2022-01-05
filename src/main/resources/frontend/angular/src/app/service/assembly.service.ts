@@ -8,6 +8,7 @@ import {CPU} from "../entities/cpu";
 import {RAM} from "../entities/ram";
 import {GPU} from "../entities/gpu";
 import {Motherboard} from "../entities/motherboard";
+import {Overclock} from "../entities/overclock";
 
 @Injectable({
   providedIn: 'root'
@@ -47,5 +48,13 @@ export class AssemblyService {
 
   public getAllRAMs(): Observable<RAM[]> {
     return this.http.get<RAM[]>(`${this.apiServerUrl}/ram`);
+  }
+
+  public updateScore(assembly_id: number, score: number): Observable<Assembly> {
+    return this.http.post<Assembly>(`${this.apiServerUrl}/assembly/${assembly_id}/score`, score);
+  }
+
+  public getOverclock(overclockId: number): Observable<Overclock> {
+    return this.http.get<Overclock>(`${this.apiServerUrl}/assembly/overclock/${overclockId}`)
   }
 }

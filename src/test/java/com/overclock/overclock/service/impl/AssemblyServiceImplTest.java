@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,7 @@ public class AssemblyServiceImplTest {
                 .setGpu(CreateUtilities.createGpu())
                 .setCpu(CreateUtilities.createCpu())
                 .setMotherboard(CreateUtilities.createMotherboard())
-                .setScore(BigInteger.valueOf(3500))
+                .setScore(BigDecimal.valueOf(3500))
                 .setAuthor(BigInteger.valueOf(1))
                 .setOverclock(BigInteger.valueOf(11))
                 .setComments(CreateUtilities.createAssemblyWithFullInformation().getComments())
@@ -58,7 +59,7 @@ public class AssemblyServiceImplTest {
                 .setGpu(CreateUtilities.createGpu())
                 .setCpu(CreateUtilities.createCpu())
                 .setMotherboard(CreateUtilities.createMotherboard())
-                .setScore(BigInteger.valueOf(0))
+                .setScore(BigDecimal.valueOf(0))
                 .setAuthor(BigInteger.valueOf(2))
                 .setOverclock(BigInteger.valueOf(1))
                 .setComments(CreateUtilities.createAssemblyWithFullInformation().getComments())

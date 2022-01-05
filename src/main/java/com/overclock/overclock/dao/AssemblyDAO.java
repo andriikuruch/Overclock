@@ -2,6 +2,7 @@ package com.overclock.overclock.dao;
 
 import com.overclock.overclock.model.Assembly;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -143,5 +144,5 @@ public interface AssemblyDAO {
     List<Assembly> getAssembliesByAuthorName(String author);
     boolean save(Assembly assembly);
     boolean delete(BigInteger id);
-    boolean updateScore(BigInteger id, BigInteger newScore);
+    boolean updateScore(BigInteger id, BigDecimal newScore);
 }

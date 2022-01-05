@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class AssemblyDAOImpl implements AssemblyDAO, QueryConstants {
         try {
             return jdbcTemplate.queryForObject(QUERY_GET_BY_ID, (rs, rowNum) -> {
                 BigInteger assemblyId = BigInteger.valueOf(rs.getLong("ASSEMBLY_ID"));
-                BigInteger score = BigInteger.valueOf(rs.getLong("SCORE"));
+                BigDecimal score = BigDecimal.valueOf(rs.getDouble("SCORE"));
 
                 long overclockIdLong = rs.getLong("OVERCLOCK_ID");
                 BigInteger overclockId = overclockIdLong != 0 ? BigInteger.valueOf(overclockIdLong) : null;
@@ -156,7 +157,7 @@ public class AssemblyDAOImpl implements AssemblyDAO, QueryConstants {
 
     @Override
     @Transactional
-    public boolean updateScore(BigInteger id, BigInteger newScore) {
+    public boolean updateScore(BigInteger id, BigDecimal newScore) {
         if (newScore.intValue() < 0) {
             LOGGER.error("Invalid score");
             return false;
@@ -164,7 +165,7 @@ public class AssemblyDAOImpl implements AssemblyDAO, QueryConstants {
         try {
             int assemblyObjectTypeId = jdbcTemplate.queryForObject(SQL_SELECT_OBJECT_TYPE_ID_BY_OBJECT_ID, Integer.class, id);
             if (assemblyObjectTypeId == 1) { /* Assembly */
-                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newScore, 8, id); /* Score */
+                jdbcTemplate.update(SQL_UPDATE_ATTRIBUTES_VALUE, newScore.toString(), 8, id); /* Score */
                 return true;
             } else {
                 LOGGER.error("Identifier belongs not to a assembly");

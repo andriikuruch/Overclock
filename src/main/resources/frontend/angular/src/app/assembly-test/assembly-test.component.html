@@ -1,0 +1,46 @@
+<div id="assembly">
+  <div class="bg"></div>
+  <div class="text">
+    <h1>Ваша сборка: {{assembly.name}}</h1>
+    <img src="/assets/pc.png">
+    <p>ЦП: {{assembly.cpu.name}}</p>
+    <p>ГП: {{assembly.gpu.name}}</p>
+    <p>ОЗУ: {{assembly.ram.name}}</p>
+  </div>
+</div>
+
+<div class="leftSide" id="main-test">
+  <div class="bg"></div>
+    <div class="text">
+    <h1>Общий тест:</h1>
+    Проверьте производительность вашей конфигурации в комплексном тесте
+      <button (click)="navigateToMainTest()" type="button" id="main">Начать</button>
+  </div>
+</div>
+
+<div class="leftSide">
+  <div class="bg"></div>
+    <div class="text">
+    <h1>Выборочный тест:</h1>
+      <p class="info">Проверьте производительность отдельных комплектующих</p>
+      <button (click)="navigateToPartialTest('cpu')" type="button" class="partialTest">ЦП</button>
+      <button (click)="navigateToPartialTest('gpu')" type="button" class="partialTest">ГП</button>
+      <button (click)="navigateToPartialTest('ram')" type="button" class="partialTest">ОЗУ</button>
+  </div>
+</div>
+
+<div class="leftSide">
+  <div class="bg"></div>
+    <div id="prg" class="text">
+      <h1>Тест в выбранном ПО:</h1>
+      <p class="info">Проверьте как хорошо покажет себя ваша сборка в той или иной программе</p>
+      <button (click)="navigateToTestOnProgram()" type="button">Начать</button>
+  </div>
+  <figure id="program">
+    <button (click)="switchLeft()" id="left" class="arrow" type="button"><</button>
+    <img id="program-img" src="assets/Blander.jpg">
+    <button (click)="switchRight()" id="right" class="arrow" type="button">></button>
+    <figcaption>{{selectedProgram}}</figcaption>
+  </figure>
+</div>
+

@@ -4,6 +4,7 @@ import com.overclock.overclock.model.*;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +19,7 @@ public class AssemblyListRowMapper implements RowMapper<Assembly> {
         BigInteger overclockId = overclockIdLong != 0 ? BigInteger.valueOf(overclockIdLong) : null;
 
         BigInteger authorId = BigInteger.valueOf(rs.getLong("AUTHOR_ID"));
-        BigInteger score = BigInteger.valueOf(rs.getLong("SCORE"));
+        BigDecimal score = BigDecimal.valueOf(rs.getDouble("SCORE"));
 
         BigInteger motherboardId = BigInteger.valueOf(rs.getLong("MOTHERBOARD_ID"));
         Motherboard motherboard = new Motherboard.Builder(motherboardId,

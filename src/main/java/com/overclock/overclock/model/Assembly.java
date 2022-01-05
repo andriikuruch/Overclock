@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class Assembly {
     @NotNull
     private BigInteger overclock;
 
-    private BigInteger score;
+    private BigDecimal score;
 
     private Assembly(Builder builder) {
         this.id = builder.id;
@@ -68,7 +69,7 @@ public class Assembly {
         private BigInteger author;
         private List<Comment> comments;
         private BigInteger overclock;
-        private BigInteger score;
+        private BigDecimal score;
 
         public Builder(BigInteger id, String name) {
             this.id = id;
@@ -111,7 +112,7 @@ public class Assembly {
             return this;
         }
 
-        public Builder setScore(BigInteger score) {
+        public Builder setScore(BigDecimal score) {
             this.score = score;
             return this;
         }
@@ -157,7 +158,7 @@ public class Assembly {
         return overclock;
     }
 
-    public BigInteger getScore() {
+    public BigDecimal getScore() {
         return score;
     }
 
@@ -189,7 +190,7 @@ public class Assembly {
         this.overclock = overclockId;
     }
 
-    public void setScore(BigInteger score) {
+    public void setScore(BigDecimal score) {
         this.score = score;
     }
 

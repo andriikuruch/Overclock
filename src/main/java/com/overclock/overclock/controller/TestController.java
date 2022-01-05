@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 @RestController
-@RequestMapping(value = "/api/test")
+@RequestMapping(value = "/api/test/assembly")
 public class TestController {
     @Autowired
     private TestService testService;
@@ -25,32 +25,32 @@ public class TestController {
     @Autowired
     private OverclockService overclockService;
 
-    @GetMapping("/assembly/{assembly_id}")
+    @GetMapping("/{assembly_id}")
     public BigDecimal testAssembly(@PathVariable("assembly_id") BigInteger assemblyId) {
         return testService.testAssembly(assemblyService.getAssemblyById(assemblyId));
     }
 
-    @GetMapping(("/assembly/{assembly_id}/{program}"))
+    @GetMapping(("/{assembly_id}/{program}"))
     public BigDecimal testAssemblyOnProgram(@PathVariable("assembly_id") BigInteger assemblyId,
                                                    @PathVariable("program") Program program) {
         return testService.testAssemblyOnProgram(assemblyService.getAssemblyById(assemblyId), program);
     }
 
-    @GetMapping("/assembly/{assembly_id}/cpu")
+    @GetMapping("/{assembly_id}/component/cpu")
     public BigDecimal testCPU(@PathVariable("assembly_id") BigInteger assemblyId) {
         Assembly assembly = assemblyService.getAssemblyById(assemblyId);
         Overclock overclock = overclockService.getOverclockById(assembly.getOverclock());
         return testService.testCPU(assembly.getCpu(), overclock);
     }
 
-    @GetMapping("/assembly/{assembly_id}/gpu")
+    @GetMapping("/{assembly_id}/component/gpu")
     public BigDecimal testGPU(@PathVariable("assembly_id") BigInteger assemblyId) {
         Assembly assembly = assemblyService.getAssemblyById(assemblyId);
         Overclock overclock = overclockService.getOverclockById(assembly.getOverclock());
         return  testService.testGPU(assembly.getGpu(), overclock);
     }
 
-    @GetMapping("/assembly/{assembly_id}/ram")
+    @GetMapping("/{assembly_id}/component/ram")
     public BigDecimal testRAM(@PathVariable("assembly_id") BigInteger assemblyId) {
         Assembly assembly = assemblyService.getAssemblyById(assemblyId);
         Overclock overclock = overclockService.getOverclockById(assembly.getOverclock());
