@@ -29,6 +29,12 @@ export class AssembliesComponent implements OnInit {
   public gpuCheckboxes: Array<any>;
   public ramCheckboxes: Array<any>;
 
+   config = {
+              itemsPerPage: 10,
+              currentPage: 1
+            };
+   pageNums = [10, 25, 50];
+
   constructor(private assemblyService: AssemblyService, private userService: UserService) {
     this.motherboardCheckboxes = [];
     this.cpuCheckboxes = [];
@@ -65,14 +71,6 @@ export class AssembliesComponent implements OnInit {
         alert(error.message);
       }
     );
-  }
-
-  public reset(): void {
-    this.motherboardCheckboxes = this.motherboardCheckboxes.map(o => ({ ...o, checked: o.checked = false }));
-    this.cpuCheckboxes = this.cpuCheckboxes.map(o => ({ ...o, checked: o.checked = false }));
-    this.gpuCheckboxes = this.gpuCheckboxes.map(o => ({ ...o, checked: o.checked = false }));
-    this.ramCheckboxes = this.ramCheckboxes.map(o => ({ ...o, checked: o.checked = false }));
-    this.searchText = '';
   }
 
   public getAllMotherboards(): void {
@@ -143,6 +141,27 @@ export class AssembliesComponent implements OnInit {
     for (let i = 0; i < this.assemblies.length; i++) {
       this.getUserById(this.assemblies[i].author, i);
     }
+  }
+
+  pageChanged(event : any) : any {
+    this.config.currentPage = event;
+  }
+
+  resetPage() : void {
+    this.config.currentPage = 1;
+  }
+
+  setItemsPerPage(num : any) : void {
+    this.config.itemsPerPage = num;
+  }
+
+  public reset(): void {
+    this.motherboardCheckboxes = this.motherboardCheckboxes.map(o => ({ ...o, checked: o.checked = false }));
+    this.cpuCheckboxes = this.cpuCheckboxes.map(o => ({ ...o, checked: o.checked = false }));
+    this.gpuCheckboxes = this.gpuCheckboxes.map(o => ({ ...o, checked: o.checked = false }));
+    this.ramCheckboxes = this.ramCheckboxes.map(o => ({ ...o, checked: o.checked = false }));
+    this.searchText = '';
+    this.resetPage();
   }
 
   ngOnInit(): void {

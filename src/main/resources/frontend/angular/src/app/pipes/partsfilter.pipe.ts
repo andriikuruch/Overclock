@@ -1,10 +1,11 @@
 import {Pipe, PipeTransform} from '@angular/core';
+import { Assembly } from "../entities/assembly";
 
 @Pipe({
     name: 'partsfilter'
 })
 export class PartsFilterPipe implements PipeTransform {
-  transform(items: any, filter: any, filterItems: Array<any>, isAnd: boolean): any {
+  transform(items: any, filter: any, filterItems: Array<any>, isAnd: boolean): Assembly[] {
     if (filter && Array.isArray(items) && filterItems) {
       let filterKeys = Object.keys(filter);
       let checkedItems = filterItems.filter(item => { return item.checked; });

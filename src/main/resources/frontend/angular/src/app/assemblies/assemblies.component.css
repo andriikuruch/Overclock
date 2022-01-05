@@ -3,7 +3,7 @@
   margin-right: auto;
   margin-left: auto;
   font-family: "Lucida Console";
-  font-size: large;
+  font-size: 1vw;
 }
 
 button {
@@ -59,7 +59,7 @@ table {
 }
 
 th {
-  font-size: 20px;
+  font-size: 1.1vw;
   border: 5px solid gray;
 }
 
@@ -85,10 +85,27 @@ a {
   margin-right: 1%;
   z-index: 1;
   width: 67%;
-  height: 450px;
   box-shadow: 0 0 0 3px #2e0e4f;
   border-top: 20px solid #7f13f2;
   color: #9686cf;
+}
+
+#paginationControls {
+  position: relative;
+  margin-left: 8vh;
+  width: 100%;
+}
+
+#pageNums, pagination-controls {
+  margin-left: 42vh;
+  margin-top: 1.7vh;
+  float: left;
+  position: relative;
+}
+
+#pageNums {
+  height: 6.1vh;
+  width: 8vh;
 }
 
 #assemblyLeftSide, assemblyRightSide {

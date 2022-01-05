@@ -9,7 +9,7 @@
           <td>
             <div class="labels-inline">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" [(ngModel)]="motherboard.checked" [value]="motherboard.value"> {{motherboard.value}}
+                <input type="checkbox" class="form-check-input" [(ngModel)]="motherboard.checked" [value]="motherboard.value" (change)="resetPage()"> {{motherboard.value}}
               </label>
             </div>
           </td>
@@ -23,7 +23,7 @@
           <td>
             <div class="labels-inline">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" [(ngModel)]="cpu.checked" [value]="cpu.value"> {{cpu.value}}
+                <input type="checkbox" class="form-check-input" [(ngModel)]="cpu.checked" [value]="cpu.value" (change)="resetPage()"> {{cpu.value}}
               </label>
             </div>
           </td>
@@ -37,7 +37,7 @@
           <td>
             <div class="labels-inline">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" [(ngModel)]="gpu.checked" [value]="gpu.value"> {{gpu.value}}
+                <input type="checkbox" class="form-check-input" [(ngModel)]="gpu.checked" [value]="gpu.value" (change)="resetPage()"> {{gpu.value}}
               </label>
             </div>
           </td>
@@ -51,7 +51,7 @@
           <td>
             <div class="labels-inline">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" [(ngModel)]="ram.checked" [value]="ram.value"> {{ram.value}}
+                <input type="checkbox" class="form-check-input" [(ngModel)]="ram.checked" [value]="ram.value" (change)="resetPage()"> {{ram.value}}
               </label>
             </div>
           </td>
@@ -64,10 +64,10 @@
     <div class = "bg"></div>
     <div class="form-group">
       <label for="search-text"> Поиск:  </label>
-      <input type="email" class="form-control" id="search-text" aria-describedby="search-text"
+      <input type="email" class="form-control" id="search-text" aria-describedby="search-text" maxlength = "23" (ngModelChange)="resetPage()"
             [(ngModel)]="searchText" placeholder="Название сборки" autofocus>
     </div>
-    <button type="button" (click)="reset()">Сбросить</button>
+    <button type="button" (click)="reset();">Сбросить</button>
     <table border="1">
       <th>Название сборки</th>
       <th>Автор</th>
@@ -78,11 +78,21 @@
                     | partsfilter: { motherboard: ''} : motherboardChecked() : false
                     | partsfilter: { cpu: ''} : cpuChecked() : false
                     | partsfilter: { gpu: ''} : gpuChecked() : false
-                    | partsfilter: { ram: ''} : ramChecked() : false">
+                    | partsfilter: { ram: ''} : ramChecked() : false
+                    | paginate: config">
           <td><a [routerLink]="['/assembly/'+assembly.id]">{{assembly.name}}</a></td>
           <td>{{users[assemblies.indexOf(assembly)].userName}}</td>
           <td>{{assembly.score}}</td>
         </tr>
       </ng-container>
+      <div id = "paginationControls">
+        <pagination-controls class = "pagination-buttons"
+                             (pageChange)="pageChanged($event)"
+                             previousLabel=""
+                             nextLabel=""></pagination-controls>
+        <select id="pageNums" #selectItemsPerPage (change)='setItemsPerPage(selectItemsPerPage.value); resetPage();' ><option id="{{pn}}" *ngFor="let pn of pageNums">{{pn}}</option></select>
+      </div>
     </table>
+
+
   </div>
