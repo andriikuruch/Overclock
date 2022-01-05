@@ -1,22 +1,22 @@
 <br>
 <div id="main">
-  <div class = "bg"></div>
+  <div class="bg"></div>
   <div id="switchButtons">
-  <button id="overclockTop" type="button" (click)="getTopByOverclock()">С разгоном</button>
-  <button id="defaultTop" type="button" (click)="getTopByDefault()">Без разгона</button>
-</div>
-<table border="1">
+    <button id="overclockTop" class="ratingButton" type="button" (click)="getTopByOverclock()">С разгоном</button>
+    <button id="defaultTop" class="ratingButton" type="button" (click)="getTopByDefault()">Без разгона</button>
+  </div>
+  <table border="1">
     <th>Позиция</th>
     <th>Название сборки</th>
     <th>Автор</th>
     <th>Балл</th>
-  <ng-container *ngIf="users.length == assemblies.length">
-  <tr *ngFor="let assembly of assemblies">
-    <td>{{assemblies.length + 1 - (assemblies.length - assemblies.indexOf(assembly))}}</td>
-    <td><a [routerLink]="['/assembly/'+assembly.id]">{{assembly.name}}</a></td>
-    <td>{{users[assemblies.indexOf(assembly)].userName}}</td>
-    <td>{{assembly.score}}</td>
-  </tr>
-  </ng-container>
-</table>
+    <ng-container *ngIf="users.length == assemblies.length">
+      <tr *ngFor="let assembly of assemblies">
+        <td>{{assemblies.length + 1 - (assemblies.length - assemblies.indexOf(assembly))}}</td>
+        <td><a [routerLink]="['/assembly/'+assembly.id]">{{assembly.name}}</a></td>
+        <td>{{users[assemblies.indexOf(assembly)].userName}}</td>
+        <td>{{assembly.score}}</td>
+      </tr>
+    </ng-container>
+  </table>
 </div>
