@@ -30,7 +30,7 @@ public class ValidationServiceImpl implements ValidationService {
                                 !isValidComponent(cpu.getGeneration().toInt(), CPUGeneration.TenGen.toInt(), CPUGeneration.TenGen.toInt())) &&
                         (!isValidComponent(motherboard.getChipset().toInt(), 9, 11) || !isValidComponent(cpu.getGeneration().toInt(), 38, 39)) &&
                         (!isValidComponent(motherboard.getChipset().toInt(), 12, 19) || !isValidComponent(cpu.getGeneration().toInt(), 40, 43)))) {
-            logAndThrowValidationException("Motherboard and CPU is not compatibility", new AbstractComponent[]{motherboard, cpu});
+            logAndThrowValidationException("Motherboard and CPU are not compatible", new AbstractComponent[]{motherboard, cpu});
         }
     }
 

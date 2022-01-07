@@ -30,8 +30,8 @@ export class AssemblyService {
     return this.http.post<Comment>(`${this.apiServerUrl}/assembly/${assemblyId}/comment`, comment);
   }
 
-  public createAssembly(assembly: Assembly): Observable<Assembly> {
-    return this.http.post<Assembly>(`${this.apiServerUrl}/assembly`, assembly);
+  public createAssembly(assembly: Assembly): Observable<string> {
+    return this.http.post(`${this.apiServerUrl}/assembly`, assembly, {responseType: 'text'});
   }
 
   public getAllMotherboards(): Observable<Motherboard[]> {

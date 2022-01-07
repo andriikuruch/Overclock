@@ -40,6 +40,12 @@ h2, pre {
 
 .text {
   padding: 2%;
+  word-wrap: break-word;
+}
+
+#author {
+  color: #9686cf;
+  font-size: 20px;
 }
 
 img {
@@ -64,7 +70,7 @@ img {
 
 #date {
   color: grey;
-  font-size: x-large;
+  font-size: medium;
 }
 
 textarea {
@@ -86,4 +92,13 @@ button {
   height: 450px;
 }
 
+pagination-controls ::ng-deep ul > li:not(.active) > a {
+  background-color: #7f13f2 !important;
+  color: #9686cf !important;
+}
+
+pagination-controls ::ng-deep ul > li {
+  background-color: #2e0e4f !important;
+  color: #9686cf !important;
+}
 

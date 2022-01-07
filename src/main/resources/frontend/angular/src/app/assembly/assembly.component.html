@@ -32,9 +32,15 @@
 <div id="comments">
   <div class = "bg"></div>
   <div class="text">Комментарии:<br><br>
-    <div class="text" *ngFor="let comment of assembly.comments">
-      {{comment.author}} <br>
-      {{comment.commentMessage}} <span id="date">{{comment.dateOfComment.substring(0, 10)}}</span><br><br>
+    <div class="text" *ngFor="let comment of assembly.comments | paginate: config">
+      <div id="author">{{comment.author}}<span id="date"> {{comment.dateOfComment.substring(0, 10)}}</span></div>
+      {{comment.commentMessage}} <br><br>
+    </div>
+    <div id = "paginationControls">
+      <pagination-controls class = "pagination-buttons"
+                           (pageChange)="pageChanged($event)"
+                           previousLabel=""
+                           nextLabel=""></pagination-controls>
     </div>
     <textarea id="commentMessage"></textarea> <br>
     <button type="button" (click)="onAddComment(assembly.id)">Оставить комментарий</button>

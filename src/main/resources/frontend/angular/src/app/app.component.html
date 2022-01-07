@@ -1,3 +1,15 @@
 <app-top-bar></app-top-bar>
-<router-outlet></router-outlet>
+  <router-outlet>
+    <div id="popup" class="popup">
+      <div class="popup_body">
+        <div class="popup_content">
+          <a (click)="close()" class="popup_close">X</a>
+          <div class="popup_title">Уведомление</div>
+          <br>
+          <div id="popup_text" class="popup_text"></div>
+        </div>
+      </div>
+    </div>
+  </router-outlet>
 <app-footer></app-footer>
+

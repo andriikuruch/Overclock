@@ -7,6 +7,11 @@ import {Component, OnInit} from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
+  public close(): void {
+    let popup = document.getElementById("popup");
+    popup!.style.display = "none";
+  }
+
   ngOnInit(): void {
   }
 }

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {AssemblyService} from "../service/assembly.service";
 import {Assembly} from "../entities/assembly";
-import {HttpErrorResponse} from "@angular/common/http";
 import {GPU} from "../entities/gpu";
 import {CPU} from "../entities/cpu";
 import {RAM} from "../entities/ram";
 import {Motherboard} from "../entities/motherboard";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
+import {AppearanceService} from "../service/appearance.service";
 
 @Component({
   selector: 'app-creating-assembly',
@@ -21,10 +21,11 @@ export class CreatingAssemblyComponent implements OnInit {
   public cpus: CPU[] = [];
   public gpus: GPU[] = [];
   public rams: RAM[] = [];
+  public text: string = "";
 
   private subscription: Subscription;
 
-  constructor(private assemblyService: AssemblyService, activateRoute: ActivatedRoute) {
+  constructor(private assemblyService: AssemblyService, private appearanceService: AppearanceService, activateRoute: ActivatedRoute) {
   this.subscription = activateRoute.params.subscribe(params=>this.assembly.id=params['id']);
 }
   public createAssembly(): void {
@@ -32,7 +33,7 @@ export class CreatingAssemblyComponent implements OnInit {
     let nameInput = (<HTMLInputElement>document.getElementById("name"));
     let name: string = nameInput.value;
     if (name == '') {
-      alert('Имя не введено!')
+      this.appearanceService.customAlert("Имя не введено");
       return;
     }
 
@@ -70,12 +71,8 @@ export class CreatingAssemblyComponent implements OnInit {
     }
 
     this.assemblyService.createAssembly(this.assembly).subscribe(
-      (response: Assembly) => {
-        this.assembly = response;
-        alert('Сборка '+  name +' успешно создана');
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
+      (response: string) => {
+        this.appearanceService.customAlert(response);
       }
     );
     nameInput.value = '';
@@ -85,9 +82,6 @@ export class CreatingAssemblyComponent implements OnInit {
     this.assemblyService.getAllMotherboards().subscribe(
       (response: Motherboard[]) => {
         this.mbs = response;
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
       }
     );
   }
@@ -96,9 +90,6 @@ export class CreatingAssemblyComponent implements OnInit {
     this.assemblyService.getAllCPUs().subscribe(
       (response: CPU[]) => {
         this.cpus = response;
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
       }
     );
   }
@@ -107,9 +98,6 @@ export class CreatingAssemblyComponent implements OnInit {
     this.assemblyService.getAllGPUs().subscribe(
       (response: GPU[]) => {
         this.gpus = response;
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
       }
     );
   }
@@ -118,9 +106,6 @@ export class CreatingAssemblyComponent implements OnInit {
     this.assemblyService.getAllRAMs().subscribe(
       (response: RAM[]) => {
         this.rams = response;
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
       }
     );
   }
