@@ -15,6 +15,11 @@ export class RatingTableComponent implements OnInit {
   public assemblies: Assembly[] = [];
   public users: User[] = [];
 
+  config = {
+    itemsPerPage: 15,
+    currentPage: 1
+  };
+
   constructor(private ratingService: RatingService, private userService: UserService) { }
 
   public getTopByOverclock(): void {
@@ -69,6 +74,14 @@ export class RatingTableComponent implements OnInit {
     for (let i = 0; i < this.assemblies.length; i++) {
       this.getUserById(this.assemblies[i].author, i);
     }
+  }
+
+  pageChanged(event : any) : any {
+    this.config.currentPage = event;
+  }
+
+  resetPage() : void {
+    this.config.currentPage = 1;
   }
 
   ngOnInit(): void {

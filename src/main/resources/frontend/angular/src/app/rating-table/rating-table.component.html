@@ -11,12 +11,18 @@
     <th>Автор</th>
     <th>Балл</th>
     <ng-container *ngIf="users.length == assemblies.length">
-      <tr *ngFor="let assembly of assemblies">
-        <td>{{assemblies.length + 1 - (assemblies.length - assemblies.indexOf(assembly))}}</td>
+      <tr *ngFor="let assembly of assemblies | paginate: config">
+        <td id="pos">{{assemblies.length + 1 - (assemblies.length - assemblies.indexOf(assembly))}}</td>
         <td><a [routerLink]="['/assembly/'+assembly.id]">{{assembly.name}}</a></td>
         <td>{{users[assemblies.indexOf(assembly)].userName}}</td>
         <td>{{assembly.score}}</td>
       </tr>
     </ng-container>
+    <div id = "paginationControls">
+      <pagination-controls class = "pagination-buttons"
+                           (pageChange)="pageChanged($event)"
+                           previousLabel=""
+                           nextLabel=""></pagination-controls>
+    </div>
   </table>
 </div>

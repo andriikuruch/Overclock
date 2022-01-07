@@ -21,7 +21,6 @@ table {
 
 #switchButtons {
   display: flex;
-  display: flex;
   justify-content: center;
   padding: 10px 0 0 0;
 }
@@ -57,3 +56,26 @@ th {
 a {
   text-decoration: none;
 }
+
+#paginationControls {
+  position: relative;
+  width: 100%;
+  margin-left: 60vh;
+  margin-top: 1.7vh;
+  float: left;
+}
+
+#pos {
+  width: 10%;
+}
+
+pagination-controls ::ng-deep ul > li:not(.active) > a {
+  background-color: #7f13f2 !important;
+  color: #9686cf !important;
+}
+
+pagination-controls ::ng-deep ul > li {
+  background-color: #2e0e4f !important;
+  color: #9686cf !important;
+}
+
