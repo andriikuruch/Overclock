@@ -19,9 +19,17 @@
     <div *ngIf="isLoginFailed">
       <div class = "hint">Неверное имя пользователя или пароль</div>
     </div>
-    <div class = "buttons">
-      <button id="forgotPassword" type="button">Забыли пароль?</button>
-      <button id="authorize" type="button" (click)="onSubmit()">Войти</button>
+    <div *ngIf="(upass.errors?.['required']) || (upass.errors?.['required'])">
+      <div class = "buttons">
+        <button type="button">Забыли пароль?</button>
+        <button id="authorizeDisabled" type="button" (click)="onSubmit()" disabled>Войти</button>
+      </div>
+    </div>
+    <div *ngIf="!(upass.errors?.['required']) && !(upass.errors?.['required'])">
+      <div class = "buttons">
+        <button type="button">Забыли пароль?</button>
+        <button id="authorize" type="button" (click)="onSubmit()">Войти</button>
+      </div>
     </div>
     <br>
   </div>

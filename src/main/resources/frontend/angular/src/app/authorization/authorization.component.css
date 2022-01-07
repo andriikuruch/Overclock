@@ -12,7 +12,7 @@
   margin: auto;
   width: 40%;
   text-align: center;
-  border-radius: 25px;
+  border-radius: 2.5vh;
 }
 
 .login-form {
@@ -25,24 +25,26 @@
 }
 
 button {
-  height: 50px;
+  font-size: 1.2vw;
+  height: 5vh;
   color:  #FFFFFF;
-  background: rgba(0, 0, 0, 0.0);;
-  margin-top: 6%;
-  margin-bottom: 5%;
+  background: rgba(0, 0, 0, 0.0);
+  margin-top: 2.2vh;
+  margin-bottom: 1.9vh;
   overflow: auto;
   white-space: nowrap;
   border: none;
   cursor:pointer;
 }
 
-#forgotPassword {
-  font-size: 1.2vw;
+#authorize {
+  float: right
 }
 
-#authorize {
-  font-size: 1.2vw;
-  float: right
+#authorizeDisabled {
+  float: right;
+  color: grey;
+  cursor: not-allowed;
 }
 
 #userName, password {
@@ -55,16 +57,16 @@ button {
 }
 
 input {
-  border: 3px #48346B;
-  border-radius: 3px;
-  padding: 7px 10px;
-  width: 100%;
+  border: 0.35vh solid rgba(255, 172, 172, 0.0);;
+  border-radius: 0.35vh;
+  padding: 0.7vh 1vh;
+  width: 95%;
   color: black;
 }
 
 .input-bad {
-  border: 3px solid red;
-  background: rgba(255, 172, 172, 1.0);;
+  border: 0.35vh solid red;
+  background: rgba(255, 172, 172, 1.0);
 }
 
 .hint {

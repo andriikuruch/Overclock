@@ -16,7 +16,6 @@ a:active{
   color: #878FFF;
   border-bottom: 1px;
   border-bottom-color: #878FFF;
-  font-size: 1.3vw;
 }
 
 li{
@@ -49,8 +48,4 @@ li.title{
 div.centred-part{
   padding-right: 6vw;
   align-self: center;
-}
-
-.exit-bar a:active{
-  font-size: 1vw;
 }

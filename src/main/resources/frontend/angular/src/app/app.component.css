@@ -13,33 +13,34 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 30px 10px;
+  padding: 2vh 1vh;
 }
 
 .popup_content {
-  border-radius: 10px;
+  border-radius: 1.8vh;
   background-color: #2e0e4f;
   color: #9686cf;
   max-width: 100%;
-  padding: 30px;
+  padding: 4vh;
   position: relative;
 }
 
 .popup_close {
   position: absolute;
-  right: 10px;
-  top: 10px;
-  font-size: 20px;
-  color: black;
+  right: 1.1vh;
+  top: 1.1vh;
+  font-size: 1.4vw;
+  color: rgba(255,255,255, 0.8);
   text-decoration: none;
+  cursor: pointer;
 }
 
 .popup_title {
-  font-size: xx-large;
+  font-size: 1.65vw;
   text-align: center;
   color: white;
 }
 
 .popup_text {
-  font-size: x-large;
+  font-size: 1.4vw;
 }

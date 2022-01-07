@@ -9,10 +9,10 @@
 button {
   position: relative;
   width: 20%;
-  height: 40px;
+  height: 4.7vh;
   color:  #9686cf;
   background: #2c283b;
-  margin-top: 1%;
+  margin-top: 1.5%;
   margin-bottom: 1%;
   float: left;
 }
@@ -20,7 +20,6 @@ button {
 .form-group {
   position: relative;
   margin-left: 10%;
-  margin-right: 10%;
   margin-top: 2%;
   margin-bottom: 2%;
   width: 50%;
@@ -30,12 +29,6 @@ button {
 table {
   width: 100%;
   text-align: center;
-  margin-top: 1%;
-}
-
-#switchButtons {
-  margin-left: 20%;
-  margin-right: 20%;
   margin-top: 1%;
 }
 
@@ -51,16 +44,20 @@ table {
 #main {
   position: relative;
   z-index: 1;
-  box-shadow: 0 0 0 3px #2e0e4f;
+  box-shadow: 0 0 0 0.35vh #2e0e4f;
   border-top: 1px solid #7f13f2;
   margin-left: 1%;
   margin-right: 1%;
   margin-top: 1%;
 }
 
+#assemblyLeftSide, assemblyRightSide {
+  float: left;
+}
+
 th {
   font-size: 1.1vw;
-  border: 5px solid gray;
+  border: 0.5vh solid gray;
 }
 
 a {
@@ -73,8 +70,8 @@ a {
   margin-left: 1%;
   width: 27%;
   z-index: 1;
-  box-shadow: 0 0 0 3px #2e0e4f;
-  border-top: 20px solid #7f13f2;
+  box-shadow: 0 0 0 0.35vh #2e0e4f;
+  border-top: 2.3vh solid #7f13f2;
   color: #9686cf;
 }
 
@@ -85,18 +82,18 @@ a {
   margin-right: 1%;
   z-index: 1;
   width: 67%;
-  box-shadow: 0 0 0 3px #2e0e4f;
-  border-top: 20px solid #7f13f2;
+  box-shadow: 0 0 0 0.35vh #2e0e4f;
+  border-top: 2.3vh solid #7f13f2;
   color: #9686cf;
 }
 
 #paginationControls {
   position: relative;
-  margin-left: 8vh;
+  margin-left: 20vh;
   width: 100%;
 }
 
-#pageNums, pagination-controls {
+#pagination-controls {
   margin-left: 42vh;
   margin-top: 1.7vh;
   float: left;
@@ -104,16 +101,31 @@ a {
 }
 
 #pageNums {
-  height: 6.1vh;
+  margin-left: 15vh;
+  margin-top: 1.7vh;
+  height: 5.8vh;
   width: 8vh;
-}
-
-#assemblyLeftSide, assemblyRightSide {
-  float: left;
 }
 
 .labels-inline {
   float: left;
-  margin-left: 2%;
+  margin-left: 1vh;
   text-align: left;
+}
+
+pagination-controls ::ng-deep ul > li:not(.active) > a {
+  background-color: #7f13f2 !important;
+  color: #9686cf !important;
+}
+
+pagination-controls ::ng-deep ul > li {
+  background-color: #2e0e4f !important;
+  color: #9686cf !important;
+}
+
+input[type="checkbox"]
+{
+    border: 0.1vh solid #bcbcbc;
+    width: 1.4vh;
+    height: 1.4vh;
 }

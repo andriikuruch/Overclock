@@ -68,6 +68,7 @@
             [(ngModel)]="searchText" placeholder="Название сборки" autofocus>
     </div>
     <button type="button" (click)="reset();">Сбросить</button>
+    <select id="pageNums" #selectItemsPerPage (change)='setItemsPerPage(selectItemsPerPage.value); resetPage();' ><option id="{{pn}}" *ngFor="let pn of pageNums">{{pn}}</option></select>
     <table border="1">
       <th>Название сборки</th>
       <th>Автор</th>
@@ -90,7 +91,6 @@
                              (pageChange)="pageChanged($event)"
                              previousLabel=""
                              nextLabel=""></pagination-controls>
-        <select id="pageNums" #selectItemsPerPage (change)='setItemsPerPage(selectItemsPerPage.value); resetPage();' ><option id="{{pn}}" *ngFor="let pn of pageNums">{{pn}}</option></select>
       </div>
     </table>
 
