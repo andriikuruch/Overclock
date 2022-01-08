@@ -1,0 +1,75 @@
+<div style="float: left; padding-left: 15%; color: #DFDFDF; font-size: 1.7em; max-width: 30%;">
+  <h3>Разгон для сборки {{assembly.name}}</h3>
+  <form (ngSubmit)="onSubmit()" #overclockForm="ngForm">
+    <table width="100%" style="padding-bottom: 5%;">
+      <tr>
+        <td colspan="2"><label class="headingOver">Разгон процессора</label></td>
+      </tr>
+      <tr>
+        <td width="60%"><label>Частота (ГГц):</label></td>
+        <td><input type="number" [(ngModel)]="overclocking.cpufrequency" name="cpufrequency" #cpufrequency="ngModel" [min]="1" [max]="6" [required]="true"></td>
+      </tr>
+      <tr *ngIf="!cpufrequency.valid">
+        <td colspan="2"><label style="color: red; font-size: 0.7em;">*пределы значений: от 1.0 до 6.0 ГГц</label></td>
+      </tr>
+    </table>
+
+    <table width="100%" style="padding-bottom: 5%;">
+      <tr>
+        <td colspan="2"><label class="headingOver">Разгон видеокарты</label></td>
+      </tr>
+      <tr>
+        <td width="60%"><label>Частота ядра (МГц):</label></td>
+        <td><input type="number" [(ngModel)]="overclocking.gpucoreFrequency" name="gpucoreFrequency" #gpucoreFrequency="ngModel" [min]="1000" [max]="2000" [required]="true"></td>
+      </tr>
+      <tr *ngIf="!gpucoreFrequency.valid">
+        <td colspan="2"><label style="color: red; font-size: 0.7em;">*пределы значений: от 1000 до 2000 МГц</label></td>
+      </tr>
+      <tr>
+        <td width="60%"><label>Частота памяти (МГц):</label></td>
+        <td><input type="number" [(ngModel)]="overclocking.gpumemoryFrequency" name="gpumemoryFrequency" #gpumemoryFrequency="ngModel" [min]="1000" [max]="23000" [required]="true"></td>
+      </tr>
+      <tr *ngIf="!gpumemoryFrequency.valid">
+        <td colspan="2"><label style="color: red; font-size: 0.7em;">*пределы значений: от 1000 до 23000 МГц</label></td>
+      </tr>
+    </table>
+
+    <table width="100%" style="padding-bottom: 5%;">
+      <tr>
+        <td colspan="2"><label class="headingOver">Разгон оперативной памяти</label></td>
+      </tr>
+      <tr>
+        <td width="60%"><label>Тайминги:</label></td>
+        <td><input type="text" [(ngModel)]="overclocking.ramtimings" name="ramtimings" #ramtimings="ngModel" maxlength="12" [pattern]="patternTimings" [required]="true"></td>
+      </tr>
+      <tr *ngIf="!ramtimings.valid">
+        <td colspan="2"><label style="color: red; font-size: 0.7em;">*пределы значений: от 10-10-10-20 до 40-40-40-60</label></td>
+      </tr>
+      <tr>
+        <td width="60%"><label>Частота (МГц):</label></td>
+        <td><input type="number" [(ngModel)]="overclocking.ramfrequency" name="ramfrequency" #ramfrequency="ngModel" [min]="2133" [max]="5000" [required]="true"></td>
+      </tr>
+      <tr *ngIf="!ramfrequency.valid">
+        <td colspan="2"><label style="color: red; font-size: 0.7em;">*пределы значений: от 2133 до 5000 МГц</label></td>
+      </tr>
+    </table>
+
+    <button type="button" (click)="onReset()">Сбросить</button>
+    <button type="submit" [disabled]="!overclockForm.valid">Сохранить</button>
+    <button type="button" (click)="onTest()">Тест</button>
+  </form>
+</div>
+<div style="float: right; padding-right: 15%; padding-top: 0.5%; color: #DFDFDF; width: 40%;">
+  <h1>Общие советы по разгону:</h1>
+  <div style="font-size: 1.4em; text-align: justify; background-color: rgba(0, 0, 0, 0.4); border-radius: 10px; padding-right: 2%; padding-top: 0.1%; padding-bottom: 0.1%">
+    <ul>
+      <li>При разгоне устройства необходимо учитывать базовую частоту. При больших значениях происходит имитация троттлинга, в результате которого в тестах сборка получает меньше баллов.</li>
+      <li>Для частоты процессора возможные значения находятся в пределах от 1 до 6 ГГц.</li>
+      <li>Для частоты ядра видеокарты возможные значения находятся в пределах от 1000 до 2000 МГц.</li>
+      <li>Для частоты памяти видеокарты возможные значения находятся в пределах от 1000 до 23000 МГц.</li>
+      <li>Формат записи таймингов имеет вид: XX-XX-XX-XX. Минимальные значения: 10-10-10-20. Максимальные значения: 40-40-40-60.</li>
+      <li>Для частоты памяти возможные значения находятся в пределах от 2133 до 5000 МГц.</li>
+      <li>В зависимости от выбранного пресета в тесте, разгон устройства может давать разный результат.</li>
+    </ul>
+  </div>
+</div>

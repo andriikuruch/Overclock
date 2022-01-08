@@ -26,6 +26,7 @@ import { AssemblyTestComponent } from './assembly-test/assembly-test.component';
 import { MainTestResultComponent } from './main-test-result/main-test-result.component';
 import { TestOnProgramResultComponent } from './test-on-program-result/test-on-program-result.component';
 import { PartialTestComponentResult } from './partial-test-result/partial-test.component-result';
+import {OverclockingComponent} from "./overclocking/overclocking.component";
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { PartialTestComponentResult } from './partial-test-result/partial-test.c
     AssemblyComponent,
     MyAssembliesComponent,
     AssembliesComponent,
+    OverclockingComponent,
     RatingTableComponent,
     CreatingAssemblyComponent,
     HomePageComponent,
