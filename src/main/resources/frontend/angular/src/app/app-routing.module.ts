@@ -28,7 +28,6 @@ const routes: Routes = [
   {path: 'my_assemblies/:assemblyId/test_on_program/:program', component: TestOnProgramResultComponent},
   {path: 'my_assemblies/:assemblyId/partial_test/:component', component: PartialTestComponentResult},
   {path: 'rating', component: RatingTableComponent },
-  {path: 'rating', component: RatingTableComponent },
   {path: 'assemblies', component: AssembliesComponent},
   {path: 'registration', component: RegistrationComponent},
   {path: 'api/registration/activate-account', component:ActivatingAccountComponent, pathMatch: 'prefix'},
