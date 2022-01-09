@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpErrorResponse} from "@angular/common/http";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../service/user.service";
-import {User} from "../entities/user";
+import {User} from "../model/user";
 import {Router} from "@angular/router";
 import { AuthService } from '../service/auth.service';
 import { TokenStorageService } from '../service/token-storage.service';
@@ -13,13 +14,24 @@ import { DataSharingService } from '../service/datasharing.service';
   styleUrls: ['./authorization.component.css']
 })
 export class AuthorizationComponent implements OnInit {
-  form: any = {};
+  data: User | undefined;
+  form: FormGroup = new FormGroup({
+    username: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(23)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(23)])
+  });
+
+  get username() {
+    return this.form.get('username');
+  }
+
+  get password() {
+    return this.form.get('password');
+  }
+
+  user: User = new User('', '', '', '');
+
   isLoggedIn = false;
   isLoginFailed = false;
-  user : any = {
-                 name: '',
-                 password: ''
-                }
 
   constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router,
               private dataSharingService: DataSharingService) {
@@ -29,17 +41,6 @@ export class AuthorizationComponent implements OnInit {
   }
 
   public onSubmit() : void {
-    let nameInput = (<HTMLInputElement>document.getElementById("userName"));
-    let name: string = nameInput.value;
-    let passInput = (<HTMLInputElement>document.getElementById("password"));
-    let password: string = passInput.value;
-
-    this.user = {
-                  name : name,
-                  password : password
-                }
-
-
     this.authService.login(this.user).subscribe(
       data => {
         this.tokenStorage.saveToken(data.accessToken);
