@@ -53,11 +53,19 @@ export class AuthorizationComponent implements OnInit {
         this.isLoginFailed = true;
       },
       () => {
-        this.dataSharingService.isLoggedIn.next(true);
-        this.dataSharingService.curUser.next(this.getCurrentUser());
+        this.setCredentials();
         this.router.navigate(['/']);
       }
     );
+  }
+
+  setCredentials() : void {
+    this.dataSharingService.isLoggedIn.next(true);
+    this.dataSharingService.curUser.next(this.getCurrentUser());
+    if (this.getCurrentRole()  === "ADMIN")
+      this.dataSharingService.isAdmin.next(true);
+    else
+      this.dataSharingService.isAdmin.next(false);
   }
 
   reloadPage() : void {
@@ -68,6 +76,11 @@ export class AuthorizationComponent implements OnInit {
     return this.tokenStorage.getUser().userName;
   }
 
+  getCurrentRole() : string {
+    return this.tokenStorage.getUser().role;
+  }
+
   ngOnInit() : void {
-    }
+  }
+
 }
