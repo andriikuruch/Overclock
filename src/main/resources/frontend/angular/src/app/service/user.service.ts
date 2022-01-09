@@ -11,9 +11,14 @@ export class UserService {
 
   private apiServerUrl = environment.apiBaseUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   public getUserById(userId: number): Observable<User> {
     return this.http.get<User>(`${this.apiServerUrl}/user/${userId}`)
+  }
+
+  public getCurrentUser(): Observable<User> {
+    return this.http.get<User>(`${this.apiServerUrl}/user/current_user`)
   }
 }

@@ -17,4 +17,5 @@ public interface UserService extends UserDetailsService {
     boolean updateEmail(BigInteger id, String email);
     boolean updateUserActiveStatus(BigInteger id, boolean isActive);
     User getUserByEmail(String email);
+    User getCurrentUser();
 }

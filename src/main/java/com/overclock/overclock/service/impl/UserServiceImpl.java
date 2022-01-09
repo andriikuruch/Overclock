@@ -6,6 +6,7 @@ import com.overclock.overclock.security.UserDetailsImpl;
 import com.overclock.overclock.service.UserService;
 import com.overclock.overclock.controller.request.RequestUser;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -86,5 +87,11 @@ public class UserServiceImpl implements UserService {
         }
 
         return UserDetailsImpl.fromUser(user);
+    }
+
+    @Override
+    public User getCurrentUser() {
+        UserDetailsImpl user = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return getFullInformationById(user.getId());
     }
 }

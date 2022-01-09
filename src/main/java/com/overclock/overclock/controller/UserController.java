@@ -20,4 +20,9 @@ public class UserController {
     public User getUserById(@PathVariable("user_id") BigInteger id) {
         return userService.getFullInformationById(id);
     }
+
+    @GetMapping("/current_user")
+    public User getCurrentUser() {
+        return userService.getCurrentUser();
+    }
 }
