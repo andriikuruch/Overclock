@@ -18,10 +18,15 @@ export class TopBarComponent implements OnInit {
     this.dataSharingService.curUser.subscribe( value => {
       this.curUser = value;
     });
+    this.dataSharingService.isAdmin.subscribe(value => {
+      this.isAdmin = value;
+    })
   }
 
   isLoggedIn : boolean = false;
   curUser : string = '';
+  role : string = '';
+  isAdmin : boolean = false;
 
   ngOnInit() {
     if (this.tokenStorage.getToken()) {
@@ -29,6 +34,10 @@ export class TopBarComponent implements OnInit {
       this.getCurrentUser();
     } else
       this.dataSharingService.isLoggedIn.next(false);
+    if (this.tokenStorage.getUser().role  === "ADMIN"){
+      this.dataSharingService.isAdmin.next(true);
+    } else
+      this.dataSharingService.isAdmin.next(false);
   }
 
   openMyAssemblies(): void {
@@ -55,6 +64,10 @@ export class TopBarComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
+  openComponents(): void{
+    this.router.navigate(['/components']);
+  }
+
   getCurrentUser(): void {
     this.curUser = this.tokenStorage.getUser().userName;
   }
@@ -64,5 +77,4 @@ export class TopBarComponent implements OnInit {
     this.dataSharingService.isLoggedIn.next(false);
     this.openHomePage();
   }
-
 }
