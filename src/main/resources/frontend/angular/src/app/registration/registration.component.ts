@@ -51,7 +51,7 @@ import {AppearanceService} from "../service/appearance.service";
         err => {
           this.errorMessage = err.error.message;
           console.log(this.errorMessage);
-          this.appearanceService.customAlert("Пользователь с данным почтовым аккаунтом уже зарегистрирован или такого почтового адресса не существует");
+          this.appearanceService.customAlert("Пользователь с данным почтовым аккаунтом уже зарегистрирован или такого почтового адреса не существует");
         }
       );
     }else {
