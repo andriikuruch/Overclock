@@ -39,7 +39,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         if (!result) {
             throw new IllegalStateException("Can not generate activate account token");
         }
-        String link = "http://localhost:8000/api/registration/activate-account?token=" + activateAccountToken;
+        String link = user.getFrontUrl() + "/api/registration/activate-account?token=" + activateAccountToken;
 
         emailSender.sendActivateAccountMail(user.getEmail(), link);
     }

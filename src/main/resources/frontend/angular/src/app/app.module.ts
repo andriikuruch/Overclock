@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
@@ -15,7 +14,7 @@ import { SearchFilterPipe } from './pipes/searchfilter.pipe';
 import { PartsFilterPipe } from './pipes/partsfilter.pipe';
 import { HomePageComponent } from './home-page/home-page.component';
 import { AuthorizationComponent } from "./authorization/authorization.component";
-//import { RegistrationComponent } from "./registration/registration.component";
+import { RegistrationComponent } from "./registration/registration.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { FooterComponent } from './footer/footer.component';
 import {ReactiveFormsModule} from "@angular/forms";
@@ -27,6 +26,7 @@ import { MainTestResultComponent } from './main-test-result/main-test-result.com
 import { TestOnProgramResultComponent } from './test-on-program-result/test-on-program-result.component';
 import { PartialTestComponentResult } from './partial-test-result/partial-test.component-result';
 import {OverclockingComponent} from "./overclocking/overclocking.component";
+import {ActivatingAccountComponent} from "./activating-account/activating-account.component";
 
 @NgModule({
   declarations: [
@@ -40,7 +40,7 @@ import {OverclockingComponent} from "./overclocking/overclocking.component";
     CreatingAssemblyComponent,
     HomePageComponent,
     AuthorizationComponent,
-    //RegistrationComponent,
+    RegistrationComponent,
     NotFoundComponent,
     FooterComponent,
     SearchFilterPipe,
@@ -49,6 +49,7 @@ import {OverclockingComponent} from "./overclocking/overclocking.component";
     MainTestResultComponent,
     TestOnProgramResultComponent,
     PartialTestComponentResult,
+    ActivatingAccountComponent
   ],
   imports: [
     BrowserModule,

@@ -5,7 +5,7 @@ import {AssembliesComponent} from "./assemblies/assemblies.component";
 import {RatingTableComponent} from "./rating-table/rating-table.component";
 import {CreatingAssemblyComponent} from "./creating-assembly/creating-assembly.component";
 import {HomePageComponent} from "./home-page/home-page.component";
-//import {RegistrationComponent} from "./registration/registration.component";
+import {RegistrationComponent} from "./registration/registration.component";
 import {AuthorizationComponent} from "./authorization/authorization.component";
 import {NotFoundComponent} from "./not-found/not-found.component";
 import {MyAssembliesComponent} from "./my-assemblies/my-assemblies.component";
@@ -14,6 +14,7 @@ import {MainTestResultComponent} from "./main-test-result/main-test-result.compo
 import {TestOnProgramResultComponent} from "./test-on-program-result/test-on-program-result.component";
 import {PartialTestComponentResult} from "./partial-test-result/partial-test.component-result";
 import {OverclockingComponent} from "./overclocking/overclocking.component";
+import {ActivatingAccountComponent} from "./activating-account/activating-account.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -29,7 +30,8 @@ const routes: Routes = [
   {path: 'rating', component: RatingTableComponent },
   {path: 'rating', component: RatingTableComponent },
   {path: 'assemblies', component: AssembliesComponent},
-  //{path: 'registration', component: RegistrationComponent},
+  {path: 'registration', component: RegistrationComponent},
+  {path: 'api/registration/activate-account', component:ActivatingAccountComponent, pathMatch: 'prefix'},
   {path: 'authorization', component: AuthorizationComponent},
   {path: '**', component: NotFoundComponent},
 ];

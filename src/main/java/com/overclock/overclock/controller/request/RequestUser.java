@@ -15,6 +15,8 @@ public class RequestUser {
     @Nullable
     protected String email;
 
+    protected String frontUrl;
+
     public RequestUser(String username, String password, String email) {
         this.username = username;
         this.password = password;
@@ -43,5 +45,13 @@ public class RequestUser {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getFrontUrl() {
+        return frontUrl;
+    }
+
+    public void setFrontUrl(String frontUrl) {
+        this.frontUrl = frontUrl;
     }
 }

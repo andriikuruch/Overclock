@@ -18,16 +18,31 @@ export class AuthService {
 
   login(credentials : any): Observable<any> {
     return this.http.post(this.apiServerUrl + '/authorization', {
-      name: credentials.name,
+      username: credentials.name,
       password: credentials.password
     }, httpOptions);
   }
 
   register(user : any): Observable<any> {
     return this.http.post(this.apiServerUrl + '/registration', {
-      userName: user.userName,
+      username: user.username,
       email: user.email,
-      password: user.password
+      password: user.password,
+      frontUrl: this.getBaseUrl()
     }, httpOptions);
+  }
+
+  getBaseUrl() {
+    if (Zone.current.get("originUrl")) {
+      return Zone.current.get('originUrl');
+    } else if (location) {
+      return location.origin;
+    } else {
+      return 'something went wrong!';
+    }
+  }
+
+  activateAccount(activatePasswordToken: any) {
+    return this.http.get(this.apiServerUrl + '/registration/activate-account?token=' + activatePasswordToken);
   }
 }

@@ -1,0 +1,7 @@
+<div id="main">
+  <div id="content">
+    <p *ngIf="!isActivated">Аккаунт активируется...</p>
+    <p *ngIf="isActivated">Ваш аккаунт успешно активирован!</p>
+    <button  *ngIf="isActivated" (click)="openCreationAssembly()">Создать сборку</button>
+  </div>
+</div>

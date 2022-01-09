@@ -1,0 +1,23 @@
+<div id="main">
+  <div class="registration-form">
+    <div class="signup" [formGroup]="form" >
+      <div class="label" id="signup">Регестрация</div>
+      <input [(ngModel)]="user.username" formControlName="username" type="text" class="input" placeholder="Имя пользователя" required/>
+      <div *ngIf="username?.invalid && username?.touched">
+        <div class = "hint">Имя пользователя должно содержать не менше 4 символов</div>
+      </div>
+      <input [(ngModel)]="user.email" formControlName="email" type="email" class="input" placeholder="Email" required/>
+      <div *ngIf="email?.invalid && email?.touched">
+        <div class = "hint">Неверный адресс почтового аккаунта</div>
+      </div>
+      <input [(ngModel)]="user.password" formControlName="password" type="password" class="input" placeholder="Пароль" required/>
+      <div *ngIf="password?.invalid && password?.touched">
+        <div class = "hint">Пароль должен содержать не менше 6 символов</div>
+      </div>
+      <button (click)="onSubmit()"  class="submit-btn" id="register">Создать аккаунт</button>
+      <div *ngIf="form.valid">
+        <div id="hint_bottom">Для активации аккаунта после заполнения формы перейдите по ссылке указанной в письме, которое Вы получите на предоставленный почтовый адресс</div>
+      </div>
+    </div>
+  </div>
+</div>
