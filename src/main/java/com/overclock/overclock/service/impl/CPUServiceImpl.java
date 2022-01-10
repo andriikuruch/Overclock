@@ -93,14 +93,14 @@ public class CPUServiceImpl implements CPUService {
         List<CPUFamily> cpuFamilies = new ArrayList<>();
         switch (generation) {
             case EightGen:
-            case TenGen:
-            case NineGen:
-                for (int i = 25; i <= 28; i++) {
+                for (int i = 25; i <= 27; i++) {
                     cpuFamilies.add(CPUFamily.fromInt(i));
                 }
                 break;
+            case TenGen:
+            case NineGen:
             case ElevenGen:
-                for (int i = 26; i <= 28; i++) {
+                for (int i = 25; i <= 28; i++) {
                     cpuFamilies.add(CPUFamily.fromInt(i));
                 }
                 break;
@@ -111,12 +111,8 @@ public class CPUServiceImpl implements CPUService {
                 }
                 break;
             case ZenTwo:
-                for (int i = 29; i <= 32; i++) {
-                    cpuFamilies.add(CPUFamily.fromInt(i));
-                }
-                break;
             case ZenThree:
-                for (int i = 30; i <= 32; i++) {
+                for (int i = 29; i <= 32; i++) {
                     cpuFamilies.add(CPUFamily.fromInt(i));
                 }
                 break;

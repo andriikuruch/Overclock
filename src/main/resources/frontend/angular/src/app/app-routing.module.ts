@@ -15,6 +15,7 @@ import {TestOnProgramResultComponent} from "./test-on-program-result/test-on-pro
 import {PartialTestComponentResult} from "./partial-test-result/partial-test.component-result";
 import {OverclockingComponent} from "./overclocking/overclocking.component";
 import {ActivatingAccountComponent} from "./activating-account/activating-account.component";
+import {ComponentManagementComponent} from "./component-management/component-management.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -27,12 +28,13 @@ const routes: Routes = [
   {path: 'my_assemblies/:assemblyId/main_test_result', component: MainTestResultComponent},
   {path: 'my_assemblies/:assemblyId/test_on_program/:program', component: TestOnProgramResultComponent},
   {path: 'my_assemblies/:assemblyId/partial_test/:component', component: PartialTestComponentResult},
+  {path: 'components', component: ComponentManagementComponent},
   {path: 'rating', component: RatingTableComponent },
   {path: 'assemblies', component: AssembliesComponent},
   {path: 'registration', component: RegistrationComponent},
   {path: 'api/registration/activate-account', component:ActivatingAccountComponent, pathMatch: 'prefix'},
   {path: 'authorization', component: AuthorizationComponent},
-  {path: '**', component: NotFoundComponent},
+  {path: '**', component: NotFoundComponent}
 ];
 
 @NgModule({
