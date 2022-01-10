@@ -1,31 +1,36 @@
-<br>
 <div id="main">
-  <div class="login-form">
+  <div class="login-form" [formGroup]="form">
     <br>
     <div class = "label">Вход в аккаунт</div> <br>
-    <input id="userName" [ngModel]="user.userName" minlength="4" maxlength = "23" #uname="ngModel"
-      [ngClass] = "{'input-bad': uname.errors}" autocomplete="off" placeholder="Имя пользователя">
+    <input id="username" [(ngModel)]="user.username" formControlName="username" maxlength = "23" autocomplete="off"
+      [ngClass] = "{'input-bad': username?.errors && (username?.dirty || username?.touched)}" placeholder="Имя пользователя">
     <br>
-    <div *ngIf="uname.errors?.['minlength'] && (uname.dirty || uname.touched)">
+    <div *ngIf="username?.errors?.['minlength'] && (username?.dirty || username?.touched)">
       <div class = "hint">Используйте не менее 4 символов</div>
+    </div>
+    <div *ngIf="username?.errors?.['required'] && (username?.dirty || username?.touched)">
+      <div class = "hint">Имя пользователя не может быть пустым</div>
     </div>
     <br>
     <br>
-    <input id="password" [ngModel]="user.password" #upass="ngModel" required
-      [ngClass] = "{'input-bad': upass.errors && (upass.dirty || upass.touched)}" type="password"  placeholder="Пароль">
-    <div  *ngIf="upass.errors?.['required'] && (upass.dirty || upass.touched)">
+    <input id="password" [(ngModel)]="user.password" formControlName="password" maxlength = "23" type="password"
+      [ngClass] = "{'input-bad': password?.errors && (password?.dirty || password?.touched)}" placeholder="Пароль">
+    <div  *ngIf="password?.errors?.['required'] && (password?.dirty || password?.touched)">
       <div class = "hint">Пароль не может быть пустым</div>
+    </div>
+    <div  *ngIf="password?.errors?.['minlength'] && (password?.dirty || password?.touched)">
+      <div class = "hint">Используйте не менее 6 символов</div>
     </div>
     <div *ngIf="isLoginFailed">
       <div class = "hint">Неверное имя пользователя или пароль</div>
     </div>
-    <div *ngIf="(upass.errors?.['required']) || (upass.errors?.['required'])">
+    <div *ngIf="!form.valid">
       <div class = "buttons">
         <button class="forgotPassword" type="button">Забыли пароль?</button>
         <button id="authorizeDisabled" type="button" (click)="onSubmit()" disabled>Войти</button>
       </div>
     </div>
-    <div *ngIf="!(upass.errors?.['required']) && !(upass.errors?.['required'])">
+    <div *ngIf="form.valid">
       <div class = "buttons">
         <button class="forgotPassword" type="button">Забыли пароль?</button>
         <button id="authorize" type="button" (click)="onSubmit()">Войти</button>

@@ -75,6 +75,7 @@ export class TopBarComponent implements OnInit {
   logOut() {
     this.tokenStorage.signOut();
     this.dataSharingService.isLoggedIn.next(false);
+    this.dataSharingService.isAdmin.next(false);
     this.openHomePage();
   }
 }

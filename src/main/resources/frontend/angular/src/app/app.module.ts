@@ -27,6 +27,7 @@ import { TestOnProgramResultComponent } from './test-on-program-result/test-on-p
 import { PartialTestComponentResult } from './partial-test-result/partial-test.component-result';
 import {OverclockingComponent} from "./overclocking/overclocking.component";
 import {ActivatingAccountComponent} from "./activating-account/activating-account.component";
+import { ComponentManagementComponent } from './component-management/component-management.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import {ActivatingAccountComponent} from "./activating-account/activating-accoun
     MainTestResultComponent,
     TestOnProgramResultComponent,
     PartialTestComponentResult,
-    ActivatingAccountComponent
+    ActivatingAccountComponent,
+    ComponentManagementComponent
   ],
   imports: [
     BrowserModule,

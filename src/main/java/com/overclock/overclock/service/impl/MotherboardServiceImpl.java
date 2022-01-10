@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -47,10 +48,9 @@ public class MotherboardServiceImpl implements MotherboardService {
 
     @Override
     public List<String> getMotherboardChipsetManufacturers() {
-        List<Motherboard> motherboards = getAllMotherboards();
         List<String> chipsetManufacturers = new ArrayList<>();
-        for (Motherboard motherboard : motherboards) {
-            chipsetManufacturers.add(motherboard.getChipsetManufacturer().toString());
+        for (ChipsetManufacturer manufacturer : ChipsetManufacturer.values()) {
+            chipsetManufacturers.add(manufacturer.name());
         }
         return chipsetManufacturers;
     }
