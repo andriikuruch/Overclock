@@ -7,6 +7,8 @@ import {Subscription} from "rxjs";
 import {UserService} from "../service/user.service";
 import {User} from "../entities/user";
 import {AppearanceService} from "../service/appearance.service";
+import {HttpErrorResponse} from "@angular/common/http";
+import {DataSharingService} from "../service/datasharing.service";
 
 @Component({
   selector: 'app-assembly-component',
@@ -24,9 +26,14 @@ export class AssemblyComponent implements OnInit {
     currentPage: 1
   };
 
+  isLoggedIn : boolean = false;
+
   constructor(private assemblyService: AssemblyService, activateRoute: ActivatedRoute,
-              private userService: UserService, private appearanceService: AppearanceService) {
+              private userService: UserService, private appearanceService: AppearanceService, private dataSharingService: DataSharingService) {
     this.subscription = activateRoute.params.subscribe(params=>this.assembly.id=params['id']);
+    this.dataSharingService.isLoggedIn.subscribe( value => {
+      this.isLoggedIn = value;
+    });
   }
 
   public getAssembly(): void {

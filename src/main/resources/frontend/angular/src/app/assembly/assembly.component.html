@@ -42,7 +42,7 @@
                            previousLabel=""
                            nextLabel=""></pagination-controls>
     </div>
-    <textarea id="commentMessage"></textarea> <br>
-    <button type="button" (click)="onAddComment(assembly.id)">Оставить комментарий</button>
+    <textarea *ngIf="isLoggedIn" id="commentMessage"></textarea> <br>
+    <button *ngIf="isLoggedIn" type="button" (click)="onAddComment(assembly.id)">Оставить комментарий</button>
   </div>
 </div>
