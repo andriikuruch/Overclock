@@ -83,4 +83,8 @@ export class AuthorizationComponent implements OnInit {
   ngOnInit() : void {
   }
 
+  openForgotPassword(): void {
+    this.router.navigate(['/forgot-password']);
+  }
+
 }

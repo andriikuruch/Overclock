@@ -15,6 +15,8 @@ import {TestOnProgramResultComponent} from "./test-on-program-result/test-on-pro
 import {PartialTestComponentResult} from "./partial-test-result/partial-test.component-result";
 import {OverclockingComponent} from "./overclocking/overclocking.component";
 import {ActivatingAccountComponent} from "./activating-account/activating-account.component";
+import {ForgotPasswordComponent} from "./forgot-password/forgot-password.component";
+import {ResetPasswordComponent} from './reset-password/reset-password.component';
 import {ComponentManagementComponent} from "./component-management/component-management.component";
 
 const routes: Routes = [
@@ -34,6 +36,8 @@ const routes: Routes = [
   {path: 'registration', component: RegistrationComponent},
   {path: 'api/registration/activate-account', component:ActivatingAccountComponent, pathMatch: 'prefix'},
   {path: 'authorization', component: AuthorizationComponent},
+  {path: 'forgot-password', component: ForgotPasswordComponent},
+  {path: 'reset-password', component: ResetPasswordComponent},
   {path: '**', component: NotFoundComponent}
 ];
 

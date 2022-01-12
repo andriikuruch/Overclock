@@ -35,16 +35,16 @@ public class EmailSenderImpl implements EmailSender {
     public void sendForgotPasswordMail(String to, String link) {
         String subject = "[Overclock] Reset password";
         String text = "Follow this link to reset your password: " + link + ".\n"
-                + "If you don`t send such request, just ignore this message.";
+                + "If you didn't send any requests, just ignore this message.";
 
         sendMail(to, subject, text);
     }
 
     @Override
     public void sendActivateAccountMail(String to, String link) {
-        String subject = "[Overclock] Active your account";
+        String subject = "[Overclock] Activate your account";
         String text = "Please, follow this link to activate your account " + link + ".\n"
-                + "If you don`t send such request, please contact us.";
+                + "If you didn't send any requests, please contact us.";
 
         sendMail(to, subject, text);
     }

@@ -1,5 +1,6 @@
 package com.overclock.overclock.service.impl;
 
+import com.overclock.overclock.controller.request.ForgotPasswordRequest;
 import com.overclock.overclock.controller.request.RequestUser;
 import com.overclock.overclock.model.User;
 import com.overclock.overclock.security.UserDetailsImpl;
@@ -125,7 +126,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Override
     @Transactional
-    public void forgotPassword(String email) throws IllegalStateException, UsernameNotFoundException {
+    public void forgotPassword(ForgotPasswordRequest request) throws IllegalStateException, UsernameNotFoundException {
+        String email = request.getEmail();
         User user = userService.getUserByEmail(email);
 
         if (user == null) {
@@ -143,7 +145,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             throw new IllegalStateException("Can not generate reset password token");
         }
 
-        String link = "http://localhost:8000/api/authorization/reset-password?token=" + resetPasswordToken;
+        String link = request.getFrontUrl() + "/reset-password?token=" + resetPasswordToken;
         emailSender.sendForgotPasswordMail(email, link);
     }
 }

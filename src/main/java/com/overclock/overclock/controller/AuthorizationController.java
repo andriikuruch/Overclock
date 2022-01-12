@@ -73,8 +73,7 @@ public class AuthorizationController {
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@Valid @RequestBody ForgotPasswordRequest forgotPasswordRequest) {
         try {
-            String email = forgotPasswordRequest.getEmail();
-            authorizationService.forgotPassword(email);
+            authorizationService.forgotPassword(forgotPasswordRequest);
             return ResponseEntity.ok().build();
         } catch (UsernameNotFoundException | IllegalStateException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

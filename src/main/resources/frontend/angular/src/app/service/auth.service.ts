@@ -32,6 +32,20 @@ export class AuthService {
     }, httpOptions);
   }
 
+  forgotPassword(request : any): Observable<any> {
+    return this.http.post(this.apiServerUrl + '/authorization/forgot-password', {
+      email: request.email,
+      frontUrl: this.getBaseUrl()
+    }, httpOptions);
+  }
+
+  resetPassword(request : any): Observable<any> {
+    return this.http.put(this.apiServerUrl + '/authorization/reset-password', {
+      resetPasswordToken: request.resetPasswordToken,
+      newPassword: request.newPassword
+    }, httpOptions);
+  }
+
   getBaseUrl() {
     if (Zone.current.get("originUrl")) {
       return Zone.current.get('originUrl');

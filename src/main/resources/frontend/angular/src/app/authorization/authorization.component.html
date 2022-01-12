@@ -26,13 +26,13 @@
     </div>
     <div *ngIf="!form.valid">
       <div class = "buttons">
-        <button class="forgotPassword" type="button">Забыли пароль?</button>
+        <button class="forgotPassword" type="button" (click)="openForgotPassword()">Забыли пароль?</button>
         <button id="authorizeDisabled" type="button" (click)="onSubmit()" disabled>Войти</button>
       </div>
     </div>
     <div *ngIf="form.valid">
       <div class = "buttons">
-        <button class="forgotPassword" type="button">Забыли пароль?</button>
+        <button class="forgotPassword" type="button" (click)="openForgotPassword()">Забыли пароль?</button>
         <button id="authorize" type="button" (click)="onSubmit()">Войти</button>
       </div>
     </div>
