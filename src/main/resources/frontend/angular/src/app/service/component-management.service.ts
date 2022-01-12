@@ -34,6 +34,22 @@ export class ComponentManagementService {
     return this.http.post<void>(`${this.apiServerUrl}/motherboard`, motherboard);
   }
 
+  public getMotherboardById(motherboardId: number): Observable<Motherboard> {
+    return this.http.get<Motherboard>(`${this.apiServerUrl}/motherboard/${motherboardId}`);
+  }
+
+  public getMotherboardsByName(name: string): Observable<Motherboard[]> {
+    return this.http.get<Motherboard[]>(`${this.apiServerUrl}/motherboard/search/${name}`);
+  }
+
+  public updateMotherboard(motherboard: Motherboard): Observable<void> {
+    return this.http.put<void>(`${this.apiServerUrl}/motherboard/${motherboard.id}`, motherboard);
+  }
+
+  public deleteMotherboard(motherboardId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiServerUrl}/motherboard/${motherboardId}`);
+  }
+
   // CPU
   public getCPUManufacturers(): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiServerUrl}/cpu/manufacturers`);
@@ -55,6 +71,22 @@ export class ComponentManagementService {
     return this.http.post<void>(`${this.apiServerUrl}/cpu`, cpu);
   }
 
+  public getCPUById(cpuId: number): Observable<CPU> {
+    return this.http.get<CPU>(`${this.apiServerUrl}/cpu/${cpuId}`);
+  }
+
+  public getCPUsByName(name: string): Observable<CPU[]> {
+    return this.http.get<CPU[]>(`${this.apiServerUrl}/cpu/search/${name}`);
+  }
+
+  public updateCPU(cpu: CPU): Observable<void> {
+    return this.http.put<void>(`${this.apiServerUrl}/cpu/${cpu.id}`, cpu);
+  }
+
+  public deleteCPU(cpuId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiServerUrl}/cpu/${cpuId}`);
+  }
+
   // GPU
   public getGPUChipManufacturers(): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiServerUrl}/gpu/chip_manufacturers`);
@@ -68,8 +100,40 @@ export class ComponentManagementService {
     return this.http.post<void>(`${this.apiServerUrl}/gpu`, gpu);
   }
 
+  public getGPUById(gpuId: number): Observable<GPU> {
+    return this.http.get<GPU>(`${this.apiServerUrl}/gpu/${gpuId}`);
+  }
+
+  public getGPUsByName(name: string): Observable<GPU[]> {
+    return this.http.get<GPU[]>(`${this.apiServerUrl}/gpu/search/${name}`);
+  }
+
+  public updateGPU(gpu: GPU): Observable<void> {
+    return this.http.put<void>(`${this.apiServerUrl}/gpu/${gpu.id}`, gpu);
+  }
+
+  public deleteGPU(gpuId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiServerUrl}/gpu/${gpuId}`);
+  }
+
   // RAM
   public addRAM(ram: RAM): Observable<void> {
     return this.http.post<void>(`${this.apiServerUrl}/ram`, ram);
+  }
+
+  public getRAMById(ramId: number): Observable<RAM> {
+    return this.http.get<RAM>(`${this.apiServerUrl}/ram/${ramId}`);
+  }
+
+  public getRAMsByName(name: string): Observable<RAM[]> {
+    return this.http.get<RAM[]>(`${this.apiServerUrl}/ram/search/${name}`);
+  }
+
+  public updateRAM(ram: RAM): Observable<void> {
+    return this.http.put<void>(`${this.apiServerUrl}/ram/${ram.id}`, ram);
+  }
+
+  public deleteRAM(ramId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiServerUrl}/ram/${ramId}`);
   }
 }

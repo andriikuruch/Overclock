@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @Scope("singleton")
@@ -162,5 +164,18 @@ public class CPUServiceImpl implements CPUService {
             }
         }
         return cpuByFamily;
+    }
+
+    @Override
+    public List<CPU> getCPUsByName(String name) {
+        List<CPU> cpus = new ArrayList<>();
+        Pattern pattern = Pattern.compile("(" + name + ")+", Pattern.CASE_INSENSITIVE);
+        for (CPU cpu : getAll()) {
+            Matcher matcher = pattern.matcher(cpu.getName());
+            if (matcher.find()) {
+                cpus.add(cpu);
+            }
+        }
+        return cpus;
     }
 }

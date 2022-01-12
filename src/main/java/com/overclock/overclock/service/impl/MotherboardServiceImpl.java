@@ -14,6 +14,8 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @Scope("singleton")
@@ -84,5 +86,18 @@ public class MotherboardServiceImpl implements MotherboardService {
             }
         }
         return motherboardChipsets;
+    }
+
+    @Override
+    public List<Motherboard> getMotherboardsByName(String name) {
+        List<Motherboard> motherboards = new ArrayList<>();
+        Pattern pattern = Pattern.compile("(" + name + ")+", Pattern.CASE_INSENSITIVE);
+        for (Motherboard motherboard : getAllMotherboards()) {
+            Matcher matcher = pattern.matcher(motherboard.getName());
+            if (matcher.find()) {
+                motherboards.add(motherboard);
+            }
+        }
+        return motherboards;
     }
 }

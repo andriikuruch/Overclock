@@ -68,15 +68,44 @@ export class ComponentManagementComponent implements OnInit {
   public gpuChips: string[] = [];
 
   public currentForm: number;
+  public currentAction: number;
   public patternName = /\S{4,100}/;
+  public patternSearch = /\S{3,100}/;
   public patternTimings = /(([1-3]\d-)|(40-)){3}(([2-5]\d)|(60))/;
+
+  public showObject: number = 1;
+
+  public findMotherboards: Motherboard[] = [];
+  public findCPUs: CPU[] = [];
+  public findGPUs: GPU[] = [];
+  public findRAMs: RAM[] = [];
+
+  public searchWord: string = '';
 
   constructor(private componentManagementService: ComponentManagementService,
               private appearanceService: AppearanceService) {
     this.currentForm = 0;
+    this.currentAction = 0;
+  }
+
+  public onSelectAction(type: any): void {
+    switch (type.target.value) {
+      case 'Добавление':
+        this.ngOnInit();
+        this.showObject = 1;
+        this.currentAction = 0;
+        break;
+      case 'Редактирование/Удаление':
+        this.showObject = 0;
+        this.currentAction = 1;
+        break;
+    }
   }
 
   public onSelectType(type: any): void {
+    if (this.currentAction == 1) {
+      this.showObject = 0;
+    }
     switch (type.target.value) {
       case 'Материнская плата':
         this.currentForm = 0;
@@ -151,6 +180,83 @@ export class ComponentManagementComponent implements OnInit {
 
   public onSubmitMotherboard(): void {
     this.addMotherboard();
+  }
+
+  public getMotherboardsByName(name: string): void {
+    this.searchWord = name;
+    this.componentManagementService.getMotherboardsByName(name).subscribe(
+      (response: Motherboard[]) => {
+        this.findMotherboards = response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public onEditingMotherboard(id: number): void {
+    this.showObject = 1;
+    this.componentManagementService.getMotherboardById(id).subscribe(
+      (response: Motherboard) => {
+        this.motherboard = response;
+
+        this.motherboardChipsetManufacturers = [this.motherboard.chipsetManufacturer!];
+        this.motherboardSockets = [this.motherboard.socket!];
+        this.motherboardChipsets = [this.motherboard.chipset!];
+
+        this.componentManagementService.getMotherboardChipsetManufacturers().subscribe(
+          (response: string[]) => {
+            this.motherboardChipsetManufacturers = response;
+            this.componentManagementService.getMotherboardSockets(this.motherboard.chipsetManufacturer!).subscribe(
+              (response: string[]) => {
+                this.motherboardSockets = response;
+                this.componentManagementService.getMotherboardChipsets(this.motherboard.socket!).subscribe(
+                  (response: string[]) => {
+                    this.motherboardChipsets = response;
+                  },
+                  (error: HttpErrorResponse) => {
+                    alert(error.message);
+                  }
+                );
+              },
+              (error: HttpErrorResponse) => {
+                alert(error.message);
+              }
+            );
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public onRemoveMotherboard(id: number): void {
+    this.componentManagementService.deleteMotherboard(id).subscribe(
+      (response: void) => {
+        this.getMotherboardsByName(this.searchWord);
+        this.showObject = 0;
+        this.appearanceService.customAlert('Успешно удалено!');
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public onSaveChangingMotherboard(id: number): void {
+    this.componentManagementService.updateMotherboard(this.motherboard).subscribe(
+      (response: void) => {
+        this.appearanceService.customAlert('Изменения сохранены!');
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
   }
 
   //CPU
@@ -230,6 +336,93 @@ export class ComponentManagementComponent implements OnInit {
     this.addCPU();
   }
 
+  public getCPUsByName(name: string): void {
+    this.searchWord = name;
+    this.componentManagementService.getCPUsByName(name).subscribe(
+      (response: CPU[]) => {
+        this.findCPUs = response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public onEditingCPU(id: number): void {
+    this.showObject = 1;
+    this.componentManagementService.getCPUById(id).subscribe(
+      (response: CPU) => {
+        this.cpu = response;
+
+        this.cpuManufacturers = [this.cpu.manufacturer!];
+        this.cpuSockets = [this.cpu.socket!];
+        this.cpuGenerations = [this.cpu.generation!];
+        this.cpuFamilies = [this.cpu.family!];
+
+        this.componentManagementService.getCPUManufacturers().subscribe(
+          (response: string[]) => {
+            this.cpuManufacturers = response;
+            this.componentManagementService.getCPUSockets(this.cpu.manufacturer!).subscribe(
+              (response: string[]) => {
+                this.cpuSockets = response;
+                this.componentManagementService.getCPUGenerations(this.cpu.socket!).subscribe(
+                  (response: string[]) => {
+                    this.cpuGenerations = response;
+                    this.componentManagementService.getCPUFamilies(this.cpu.generation!).subscribe(
+                      (response: string[]) => {
+                        this.cpuFamilies = response;
+                      },
+                      (error: HttpErrorResponse) => {
+                        alert(error.message);
+                      }
+                    );
+                  },
+                  (error: HttpErrorResponse) => {
+                    alert(error.message);
+                  }
+                );
+              },
+              (error: HttpErrorResponse) => {
+                alert(error.message);
+              }
+            );
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public onRemoveCPU(id: number): void {
+    this.componentManagementService.deleteCPU(id).subscribe(
+      (response: void) => {
+        this.getCPUsByName(this.searchWord);
+        this.showObject = 0;
+        this.appearanceService.customAlert('Успешно удалено!');
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public onSaveChangingCPU(id: number): void {
+    this.componentManagementService.updateCPU(this.cpu).subscribe(
+      (response: void) => {
+        this.appearanceService.customAlert('Изменения сохранены!');
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
   // GPU
   public addGPU(): void {
     this.componentManagementService.addGPU(this.gpu).subscribe(
@@ -276,6 +469,74 @@ export class ComponentManagementComponent implements OnInit {
     this.addGPU();
   }
 
+  public getGPUsByName(name: string): void {
+    this.searchWord = name;
+    this.componentManagementService.getGPUsByName(name).subscribe(
+      (response: GPU[]) => {
+        this.findGPUs = response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public onEditingGPU(id: number): void {
+    this.showObject = 1;
+    this.componentManagementService.getGPUById(id).subscribe(
+      (response: GPU) => {
+        this.gpu = response;
+
+        this.gpuChipManufacturers = [this.gpu.chipManufacturer!];
+        this.gpuChips = [this.gpu.chip!];
+
+        this.componentManagementService.getGPUChipManufacturers().subscribe(
+          (response: string[]) => {
+            this.gpuChipManufacturers = response;
+            this.componentManagementService.getGPUChips(this.gpu.chipManufacturer!).subscribe(
+              (response: string[]) => {
+                this.gpuChips = response;
+              },
+              (error: HttpErrorResponse) => {
+                alert(error.message);
+              }
+            );
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public onRemoveGPU(id: number): void {
+    this.componentManagementService.deleteGPU(id).subscribe(
+      (response: void) => {
+        this.getGPUsByName(this.searchWord);
+        this.showObject = 0;
+        this.appearanceService.customAlert('Успешно удалено!');
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public onSaveChangingGPU(id: number): void {
+    this.componentManagementService.updateGPU(this.gpu).subscribe(
+      (response: void) => {
+        this.appearanceService.customAlert('Изменения сохранены!');
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
   // RAM
   public addRAM(): void {
     this.componentManagementService.addRAM(this.ram).subscribe(
@@ -290,6 +551,77 @@ export class ComponentManagementComponent implements OnInit {
 
   public onSubmitRAM(): void {
     this.addRAM();
+  }
+
+  public getRAMsByName(name: string): void {
+    this.searchWord = name;
+    this.componentManagementService.getRAMsByName(name).subscribe(
+      (response: RAM[]) => {
+        this.findRAMs = response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public onEditingRAM(id: number): void {
+    this.showObject = 1;
+    this.componentManagementService.getRAMById(id).subscribe(
+      (response: RAM) => {
+        this.ram = response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public onRemoveRAM(id: number): void {
+    this.componentManagementService.deleteRAM(id).subscribe(
+      (response: void) => {
+        this.getRAMsByName(this.searchWord);
+        this.showObject = 0;
+        this.appearanceService.customAlert('Успешно удалено!');
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  public onSaveChangingRAM(id: number): void {
+    this.componentManagementService.updateRAM(this.ram).subscribe(
+      (response: void) => {
+        this.appearanceService.customAlert('Изменения сохранены!');
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
+  // Removing/editing
+
+  public onSearchComponent(name: string): void {
+    switch (this.currentForm) {
+      case 0:
+        this.getMotherboardsByName(name);
+        this.showObject = 2;
+        break;
+      case 1:
+        this.getCPUsByName(name);
+        this.showObject = 3;
+        break;
+      case 2:
+        this.getGPUsByName(name);
+        this.showObject = 4;
+        break;
+      case 3:
+        this.getRAMsByName(name);
+        this.showObject = 5;
+        break;
+    }
   }
 
   ngOnInit(): void {
@@ -321,6 +653,7 @@ export class ComponentManagementComponent implements OnInit {
         alert(error.message);
       }
     );
+    this.motherboard.name = '';
 
     // CPU
     this.componentManagementService.getCPUManufacturers().subscribe(
@@ -359,6 +692,11 @@ export class ComponentManagementComponent implements OnInit {
         alert(error.message);
       }
     );
+    this.cpu.name = '';
+    this.cpu.voltage = 0.5;
+    this.cpu.frequency = 1;
+    this.cpu.threadsNumber = 0;
+    this.cpu.coresNumber = 1;
 
     // GPU
     this.componentManagementService.getGPUChipManufacturers().subscribe(
@@ -379,5 +717,17 @@ export class ComponentManagementComponent implements OnInit {
         alert(error.message);
       }
     );
+    this.gpu.name = '';
+    this.gpu.memoryCapacity = 1;
+    this.gpu.coreFrequency = 1000;
+    this.gpu.memoryFrequency = 1000;
+    this.gpu.voltage = 0.5;
+
+    // RAM
+    this.ram.name = '';
+    this.ram.capacity = 1;
+    this.ram.frequency = 2133;
+    this.ram.voltage = 0.5;
+    this.ram.timings = '40-40-40-60';
   }
 }

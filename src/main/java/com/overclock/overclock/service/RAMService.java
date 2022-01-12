@@ -11,4 +11,5 @@ public interface RAMService {
     boolean save(RAM ram);
     boolean updateById(BigInteger id, RAM newRam);
     boolean delete(BigInteger id);
+    List<RAM> getRAMsByName(String name);
 }

@@ -24,4 +24,5 @@ public interface CPUService {
     List<CPU> getCPUsBySocket(CPUSocket socket);
     List<CPU> getCPUsByGeneration(CPUGeneration generation);
     List<CPU> getCPUsByFamily(CPUFamily family);
+    List<CPU> getCPUsByName(String name);
 }

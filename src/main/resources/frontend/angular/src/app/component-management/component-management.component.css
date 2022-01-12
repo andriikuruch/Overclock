@@ -27,7 +27,7 @@ input {
   border: 3px #48346B;
   border-radius: 3px;
   padding: 7px 10px;
-  width: 14%;
+  width: 33%;
   color: black;
 }
 
@@ -35,6 +35,6 @@ select{
   border: 3px #48346B;
   border-radius: 3px;
   padding: 7px 10px;
-  width: 15%;
+  width: 36%;
   color: black;
 }

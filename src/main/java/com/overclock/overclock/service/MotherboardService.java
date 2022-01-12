@@ -15,4 +15,5 @@ public interface MotherboardService {
     List<String> getMotherboardChipsetManufacturers();
     List<String> getMotherboardSockets(String chipsetManufacturer);
     List<String> getMotherboardChipsets(String socket);
+    List<Motherboard> getMotherboardsByName(String name);
 }

@@ -1,7 +1,12 @@
+<div style="color: #DFDFDF; font-size: 2.0em; padding-left: 15%; padding-bottom: 3%; float: left; width: 35%;">
+  <label class="headingOver">Действие: </label><br>
+  <select (change)="onSelectAction($event)">
+    <option>Добавление</option>
+    <option>Редактирование/Удаление</option>
+  </select>
+</div>
 
-<h1 style="color: #DFDFDF; font-size: 2.5em; padding-left: 15%;">Добавление комплектующего</h1>
-
-<div style="color: #DFDFDF; font-size: 2.0em; padding-left: 15%;">
+<div style="color: #DFDFDF; font-size: 2.0em; padding-right: 15%; float: right; width: 35%;">
   <div style="padding-bottom: 2%;">
     <label class="headingOver">Тип: </label><br>
     <select (change)="onSelectType($event)">
@@ -12,192 +17,261 @@
     </select>
   </div>
 
-  <div *ngIf="currentForm==0">
-    <form (ngSubmit)="onSubmitMotherboard()" #motherboardForm="ngForm">
-
-      <div style="padding-bottom: 1.5%;">
-        <label>Название: </label><br>
-        <input type="text" [(ngModel)]="motherboard.name" name="name" #name="ngModel" maxlength="100" [pattern]="patternName" [required]="true">
-        <label *ngIf="!name.valid" style="color: red; font-size: 0.5em;"><br>*минимум 4 символа</label>
-      </div>
-
-      <div style="padding-bottom: 1.5%;">
-        <label>Производитель чипсета: </label><br>
-        <select id="motherboardChipsetManufacturer" [(ngModel)]="motherboard.chipsetManufacturer" (ngModelChange)="onChangeMotherboardChipsetManufacturer(chipsetManufacturer.value)" name="chipsetManufacturer" #chipsetManufacturer="ngModel">
-          <option *ngFor="let manufacturer of motherboardChipsetManufacturers">{{manufacturer}}</option>
-        </select>
-      </div>
-
-      <div style="padding-bottom: 1.5%;">
-        <label>Сокет: </label><br>
-        <select id="motherboardSocket" [(ngModel)]="motherboard.socket" (ngModelChange)="onChangeMotherboardSocket(socket.value)" name="socket" #socket="ngModel">
-          <option *ngFor="let socket of motherboardSockets">{{socket}}</option>
-        </select>
-      </div>
-
-      <div style="padding-bottom: 1.5%;">
-        <label>Чипсет: </label><br>
-        <select id="motherboardChipset" [(ngModel)]="motherboard.chipset" name="chipset" #chipset="ngModel">
-          <option *ngFor="let chipset of motherboardChipsets">{{chipset}}</option>
-        </select>
-      </div>
-
-      <div style="padding-bottom: 1.5%;">
-        <button type="submit" [disabled]="!motherboardForm.valid">Добавить</button>
-      </div>
-    </form>
+  <div *ngIf="currentAction==1">
+    <div style="padding-bottom: 1.5%;">
+      <label>Найти: </label><br>
+      <input type="text" [(ngModel)]="searchWord" name="search"  #search="ngModel" maxlength="100" [pattern]="patternSearch" [required]="true">
+      <button type="button" [disabled]="!search.valid" (click)="onSearchComponent(search.value)">Поиск</button>
+      <label *ngIf="!search.valid" style="color: red; font-size: 0.5em;"><br>*минимум 4 символа</label>
+    </div>
   </div>
 
-  <div *ngIf="currentForm==1" style="padding-bottom: 10%;">
-    <form (ngSubmit)="onSubmitCPU()" #cpuForm="ngForm">
+  <div *ngIf="showObject==1" style="padding-bottom: 10%;">
+    <div *ngIf="currentForm==0">
+      <form (ngSubmit)="onSubmitMotherboard()" #motherboardForm="ngForm">
 
-      <div style="padding-bottom: 1.5%;">
-        <label>Название: </label><br>
-        <input type="text" [(ngModel)]="cpu.name" name="name" #name="ngModel" maxlength="100" [pattern]="patternName" [required]="true">
-        <label *ngIf="!name.valid" style="color: red; font-size: 0.5em;"><br>*минимум 4 символа</label>
-      </div>
+        <div style="padding-bottom: 1.5%;">
+          <label>Название: </label><br>
+          <input type="text" [(ngModel)]="motherboard.name" name="name" #name="ngModel" maxlength="100" [pattern]="patternName" [required]="true">
+          <label *ngIf="!name.valid" style="color: red; font-size: 0.5em;"><br>*минимум 4 символа</label>
+        </div>
 
-      <div style="padding-bottom: 1.5%;">
-        <label>Производитель: </label><br>
-        <select [(ngModel)]="cpu.manufacturer" (ngModelChange)="onChangeCPUManufacturer(manufacturer.value)" name="manufacturer" #manufacturer="ngModel">
-          <option *ngFor="let manufacturer of cpuManufacturers">{{manufacturer}}</option>
-        </select>
-      </div>
+        <div style="padding-bottom: 1.5%;">
+          <label>Производитель чипсета: </label><br>
+          <select id="motherboardChipsetManufacturer" [(ngModel)]="motherboard.chipsetManufacturer" (ngModelChange)="onChangeMotherboardChipsetManufacturer(chipsetManufacturer.value)" name="chipsetManufacturer" #chipsetManufacturer="ngModel">
+            <option *ngFor="let manufacturer of motherboardChipsetManufacturers">{{manufacturer}}</option>
+          </select>
+        </div>
 
-      <div style="padding-bottom: 1.5%;">
-        <label>Сокет: </label><br>
-        <select [(ngModel)]="cpu.socket" (ngModelChange)="onChangeCPUSocket(socket.value)" name="socket" #socket="ngModel">
-          <option *ngFor="let socket of cpuSockets">{{socket}}</option>
-        </select>
-      </div>
+        <div style="padding-bottom: 1.5%;">
+          <label>Сокет: </label><br>
+          <select id="motherboardSocket" [(ngModel)]="motherboard.socket" (ngModelChange)="onChangeMotherboardSocket(socket.value)" name="socket" #socket="ngModel">
+            <option *ngFor="let socket of motherboardSockets">{{socket}}</option>
+          </select>
+        </div>
 
-      <div style="padding-bottom: 1.5%;">
-        <label>Поколение: </label><br>
-        <select [(ngModel)]="cpu.generation" (ngModelChange)="onChangeCPUGeneration(generation.value)" name="generation" #generation="ngModel">
-          <option *ngFor="let generation of cpuGenerations">{{generation}}</option>
-        </select>
-      </div>
+        <div style="padding-bottom: 1.5%;">
+          <label>Чипсет: </label><br>
+          <select id="motherboardChipset" [(ngModel)]="motherboard.chipset" name="chipset" #chipset="ngModel">
+            <option *ngFor="let chipset of motherboardChipsets">{{chipset}}</option>
+          </select>
+        </div>
 
-      <div style="padding-bottom: 1.5%;">
-        <label>Семейство: </label><br>
-        <select [(ngModel)]="cpu.family" name="family" #family="ngModel">
-          <option *ngFor="let family of cpuFamilies">{{family}}</option>
-        </select>
-      </div>
+        <div style="padding-bottom: 1.5%;">
 
-      <div style="padding-bottom: 1.5%;">
-        <label>Количество ядер: </label><br>
-        <input type="number" [(ngModel)]="cpu.coresNumber" name="coresNumber" #coresNumber="ngModel" [min]="1" [max]="64" [required]="true">
-        <label *ngIf="!coresNumber.valid" style="color: red; font-size: 0.5em;"><br>*минимум 1, максимум 64</label>
-      </div>
+          <button *ngIf="currentAction==0" type="submit" [disabled]="!motherboardForm.valid">Добавить</button>
+          <button *ngIf="currentAction==1" type="button" [disabled]="!motherboardForm.valid" (click)="onSaveChangingMotherboard(motherboard.id!)">Сохранить</button>
+          <button *ngIf="currentAction==1" type="button" (click)="onRemoveMotherboard(motherboard.id!)">Удалить</button>
 
-      <div style="padding-bottom: 1.5%;">
-        <label>Количество потоков: </label><br>
-        <input type="number" [(ngModel)]="cpu.threadsNumber" name="threadsNumber" #threadsNumber="ngModel" [min]="0" [max]="128" [required]="true">
-        <label *ngIf="!threadsNumber.valid" style="color: red; font-size: 0.5em;"><br>*минимум 0, максимум 128</label>
-      </div>
+        </div>
+      </form>
+    </div>
 
-      <div style="padding-bottom: 1.5%;">
-        <label>Частота (ГГц): </label><br>
-        <input type="number" [(ngModel)]="cpu.frequency" name="frequency" #frequency="ngModel" [min]="1" [max]="6" [required]="true">
-        <label *ngIf="!frequency.valid" style="color: red; font-size: 0.5em;"><br>*минимум 1, максимум 6</label>
-      </div>
+    <div *ngIf="currentForm==1" style="padding-bottom: 10%;">
+      <form (ngSubmit)="onSubmitCPU()" #cpuForm="ngForm">
 
-      <div style="padding-bottom: 1.5%;">
-        <label>Напряжение (В): </label><br>
-        <input type="number" [(ngModel)]="cpu.voltage" name="voltage" #voltage="ngModel" [min]="0.5" [max]="3" [required]="true">
-        <label *ngIf="!voltage.valid" style="color: red; font-size: 0.5em;"><br>*минимум 0.5, максимум 3</label>
-      </div>
+        <div style="padding-bottom: 1.5%;">
+          <label>Название: </label><br>
+          <input type="text" [(ngModel)]="cpu.name" name="name" #name="ngModel" maxlength="100" [pattern]="patternName" [required]="true">
+          <label *ngIf="!name.valid" style="color: red; font-size: 0.5em;"><br>*минимум 4 символа</label>
+        </div>
 
-      <button type="submit" [disabled]="!cpuForm.valid">Добавить</button>
-    </form>
+        <div style="padding-bottom: 1.5%;">
+          <label>Производитель: </label><br>
+          <select [(ngModel)]="cpu.manufacturer" (ngModelChange)="onChangeCPUManufacturer(manufacturer.value)" name="manufacturer" #manufacturer="ngModel">
+            <option *ngFor="let manufacturer of cpuManufacturers">{{manufacturer}}</option>
+          </select>
+        </div>
+
+        <div style="padding-bottom: 1.5%;">
+          <label>Сокет: </label><br>
+          <select [(ngModel)]="cpu.socket" (ngModelChange)="onChangeCPUSocket(socket.value)" name="socket" #socket="ngModel">
+            <option *ngFor="let socket of cpuSockets">{{socket}}</option>
+          </select>
+        </div>
+
+        <div style="padding-bottom: 1.5%;">
+          <label>Поколение: </label><br>
+          <select [(ngModel)]="cpu.generation" (ngModelChange)="onChangeCPUGeneration(generation.value)" name="generation" #generation="ngModel">
+            <option *ngFor="let generation of cpuGenerations">{{generation}}</option>
+          </select>
+        </div>
+
+        <div style="padding-bottom: 1.5%;">
+          <label>Семейство: </label><br>
+          <select [(ngModel)]="cpu.family" name="family" #family="ngModel">
+            <option *ngFor="let family of cpuFamilies">{{family}}</option>
+          </select>
+        </div>
+
+        <div style="padding-bottom: 1.5%;">
+          <label>Количество ядер: </label><br>
+          <input type="number" [(ngModel)]="cpu.coresNumber" name="coresNumber" #coresNumber="ngModel" [min]="1" [max]="64" [required]="true">
+          <label *ngIf="!coresNumber.valid" style="color: red; font-size: 0.5em;"><br>*минимум 1, максимум 64</label>
+        </div>
+
+        <div style="padding-bottom: 1.5%;">
+          <label>Количество потоков: </label><br>
+          <input type="number" [(ngModel)]="cpu.threadsNumber" name="threadsNumber" #threadsNumber="ngModel" [min]="0" [max]="128" [required]="true">
+          <label *ngIf="!threadsNumber.valid" style="color: red; font-size: 0.5em;"><br>*минимум 0, максимум 128</label>
+        </div>
+
+        <div style="padding-bottom: 1.5%;">
+          <label>Частота (ГГц): </label><br>
+          <input type="number" [(ngModel)]="cpu.frequency" name="frequency" #frequency="ngModel" [min]="1" [max]="6" [required]="true">
+          <label *ngIf="!frequency.valid" style="color: red; font-size: 0.5em;"><br>*минимум 1, максимум 6</label>
+        </div>
+
+        <div style="padding-bottom: 1.5%;">
+          <label>Напряжение (В): </label><br>
+          <input type="number" [(ngModel)]="cpu.voltage" name="voltage" #voltage="ngModel" [min]="0.5" [max]="3" [required]="true">
+          <label *ngIf="!voltage.valid" style="color: red; font-size: 0.5em;"><br>*минимум 0.5, максимум 3</label>
+        </div>
+
+        <button *ngIf="currentAction==0" type="submit" [disabled]="!cpuForm.valid">Добавить</button>
+        <button *ngIf="currentAction==1" type="button" [disabled]="!cpuForm.valid" (click)="onSaveChangingCPU(cpu.id!)">Сохранить</button>
+        <button *ngIf="currentAction==1" type="button" (click)="onRemoveCPU(cpu.id!)">Удалить</button>
+
+      </form>
+    </div>
+
+    <div *ngIf="currentForm==2" style="padding-bottom: 10%;">
+      <form (ngSubmit)="onSubmitGPU()" #gpuForm="ngForm">
+
+        <div style="padding-bottom: 1.5%;">
+          <label>Название: </label><br>
+          <input type="text" [(ngModel)]="gpu.name" name="name" #name="ngModel" maxlength="100" [pattern]="patternName" [required]="true">
+          <label *ngIf="!name.valid" style="color: red; font-size: 0.5em;"><br>*минимум 4 символа</label>
+        </div>
+
+        <div style="padding-bottom: 1.5%;">
+          <label>Производитель чипа: </label><br>
+          <select [(ngModel)]="gpu.chipManufacturer" (ngModelChange)="onChangeGPUChipManufacturer(chipManufacturer.value)" name="chipManufacturer" #chipManufacturer="ngModel">
+            <option *ngFor="let chipManufacturer of gpuChipManufacturers">{{chipManufacturer}}</option>
+          </select>
+        </div>
+
+        <div style="padding-bottom: 1.5%;">
+          <label>Чип: </label><br>
+          <select [(ngModel)]="gpu.chip" name="chip" #chip="ngModel">
+            <option *ngFor="let chip of gpuChips">{{chip}}</option>
+          </select>
+        </div>
+
+        <div style="padding-bottom: 1.5%;">
+          <label>Объём памяти: </label><br>
+          <input type="number" [(ngModel)]="gpu.memoryCapacity" name="memoryCapacity" #memoryCapacity="ngModel" [min]="1" [max]="48" [required]="true">
+          <label *ngIf="!memoryCapacity.valid" style="color: red; font-size: 0.5em;"><br>*минимум 1, максимум 48</label>
+        </div>
+
+        <div style="padding-bottom: 1.5%;">
+          <label>Частота ядра (МГц): </label><br>
+          <input type="number" [(ngModel)]="gpu.coreFrequency" name="coreFrequency" #coreFrequency="ngModel" [min]="1000" [max]="2000" [required]="true">
+          <label *ngIf="!coreFrequency.valid" style="color: red; font-size: 0.5em;"><br>*минимум 1000, максимум 2000</label>
+        </div>
+
+        <div style="padding-bottom: 1.5%;">
+          <label>Частота памяти (МГц): </label><br>
+          <input type="number" [(ngModel)]="gpu.memoryFrequency" name="memoryFrequency" #memoryFrequency="ngModel" [min]="1000" [max]="23000" [required]="true">
+          <label *ngIf="!memoryFrequency.valid" style="color: red; font-size: 0.5em;"><br>*минимум 1000, максимум 23000</label>
+        </div>
+
+        <div style="padding-bottom: 1.5%;">
+          <label>Напряжение (В): </label><br>
+          <input type="number" [(ngModel)]="gpu.voltage" name="voltage" #voltage="ngModel" [min]="0.5" [max]="3" [required]="true">
+          <label *ngIf="!voltage.valid" style="color: red; font-size: 0.5em;"><br>*минимум 0.5, максимум 3</label>
+        </div>
+
+        <button *ngIf="currentAction==0" type="submit" [disabled]="!gpuForm.valid">Добавить</button>
+        <button *ngIf="currentAction==1" type="button" [disabled]="!gpuForm.valid" (click)="onSaveChangingGPU(gpu.id!)">Сохранить</button>
+        <button *ngIf="currentAction==1" type="button" (click)="onRemoveGPU(gpu.id!)">Удалить</button>
+
+      </form>
+    </div>
+
+    <div *ngIf="currentForm==3" style="padding-bottom: 10%;">
+      <form (ngSubmit)="onSubmitRAM()" #ramForm="ngForm">
+
+        <div style="padding-bottom: 1.5%;">
+          <label>Название: </label><br>
+          <input type="text" [(ngModel)]="ram.name" name="name" #name="ngModel" maxlength="100" [pattern]="patternName" [required]="true">
+          <label *ngIf="!name.valid" style="color: red; font-size: 0.5em;"><br>*минимум 4 символа</label>
+        </div>
+
+        <div style="padding-bottom: 1.5%;">
+          <label>Объём: </label><br>
+          <input type="number" [(ngModel)]="ram.capacity" name="capacity" #capacity="ngModel" [min]="1" [max]="256" [required]="true">
+          <label *ngIf="!capacity.valid" style="color: red; font-size: 0.5em;"><br>*минимум 1, максимум 256</label>
+        </div>
+
+        <div style="padding-bottom: 1.5%;">
+          <label>Частота (МГц): </label><br>
+          <input type="number" [(ngModel)]="ram.frequency" name="frequency" #frequency="ngModel" [min]="2133" [max]="5000" [required]="true">
+          <label *ngIf="!frequency.valid" style="color: red; font-size: 0.5em;"><br>*минимум 2133, максимум 5000</label>
+        </div>
+
+        <div style="padding-bottom: 1.5%;">
+          <label>Тайминги: </label><br>
+          <input type="text" [(ngModel)]="ram.timings" name="timings" #timings="ngModel" maxlength="12" [pattern]="patternTimings" [required]="true">
+          <label *ngIf="!timings.valid" style="color: red; font-size: 0.5em;"><br>*пределы значений: от 10-10-10-20 до 40-40-40-60</label>
+        </div>
+
+        <div style="padding-bottom: 1.5%;">
+          <label>Напряжение (В): </label><br>
+          <input type="number" [(ngModel)]="ram.voltage" name="voltage" #voltage="ngModel" [min]="0.5" [max]="3" [required]="true">
+          <label *ngIf="!voltage.valid" style="color: red; font-size: 0.5em;"><br>*минимум 0.5, максимум 3</label>
+        </div>
+
+        <button *ngIf="currentAction==0" type="submit" [disabled]="!ramForm.valid">Добавить</button>
+        <button *ngIf="currentAction==1" type="button" [disabled]="!ramForm.valid" (click)="onSaveChangingRAM(ram.id!)">Сохранить</button>
+        <button *ngIf="currentAction==1" type="button" (click)="onRemoveRAM(ram.id!)">Удалить</button>
+
+      </form>
+    </div>
   </div>
 
-  <div *ngIf="currentForm==2" style="padding-bottom: 10%;">
-    <form (ngSubmit)="onSubmitGPU()" #gpuForm="ngForm">
-
-      <div style="padding-bottom: 1.5%;">
-        <label>Название: </label><br>
-        <input type="text" [(ngModel)]="gpu.name" name="name" #name="ngModel" maxlength="100" [pattern]="patternName" [required]="true">
-        <label *ngIf="!name.valid" style="color: red; font-size: 0.5em;"><br>*минимум 4 символа</label>
+  <div *ngIf="showObject==2">
+    <div *ngIf="findMotherboards.length>0">
+      <div *ngFor="let motherboard of findMotherboards">
+        {{findMotherboards.length + 1 - (findMotherboards.length - findMotherboards.indexOf(motherboard))}}. {{motherboard.name}}
+        <button type="button" (click)="onEditingMotherboard(motherboard.id!)">Редактировать</button>
+        <button type="button" (click)="onRemoveMotherboard(motherboard.id!)">Удалить</button>
       </div>
-
-      <div style="padding-bottom: 1.5%;">
-        <label>Производитель чипа: </label><br>
-        <select [(ngModel)]="gpu.chipManufacturer" (ngModelChange)="onChangeGPUChipManufacturer(chipManufacturer.value)" name="chipManufacturer" #chipManufacturer="ngModel">
-          <option *ngFor="let chipManufacturer of gpuChipManufacturers">{{chipManufacturer}}</option>
-        </select>
-      </div>
-
-      <div style="padding-bottom: 1.5%;">
-        <label>Чип: </label><br>
-        <select [(ngModel)]="gpu.chip" name="chip" #chip="ngModel">
-          <option *ngFor="let chip of gpuChips">{{chip}}</option>
-        </select>
-      </div>
-
-      <div style="padding-bottom: 1.5%;">
-        <label>Объём памяти: </label><br>
-        <input type="number" [(ngModel)]="gpu.memoryCapacity" name="memoryCapacity" #memoryCapacity="ngModel" [min]="1" [max]="48" [required]="true">
-        <label *ngIf="!memoryCapacity.valid" style="color: red; font-size: 0.5em;"><br>*минимум 1, максимум 48</label>
-      </div>
-
-      <div style="padding-bottom: 1.5%;">
-        <label>Частота ядра (МГц): </label><br>
-        <input type="number" [(ngModel)]="gpu.coreFrequency" name="coreFrequency" #coreFrequency="ngModel" [min]="1000" [max]="2000" [required]="true">
-        <label *ngIf="!coreFrequency.valid" style="color: red; font-size: 0.5em;"><br>*минимум 1000, максимум 2000</label>
-      </div>
-
-      <div style="padding-bottom: 1.5%;">
-        <label>Частота памяти (МГц): </label><br>
-        <input type="number" [(ngModel)]="gpu.memoryFrequency" name="memoryFrequency" #memoryFrequency="ngModel" [min]="1000" [max]="23000" [required]="true">
-        <label *ngIf="!memoryFrequency.valid" style="color: red; font-size: 0.5em;"><br>*минимум 1000, максимум 23000</label>
-      </div>
-
-      <div style="padding-bottom: 1.5%;">
-        <label>Напряжение (В): </label><br>
-        <input type="number" [(ngModel)]="gpu.voltage" name="voltage" #voltage="ngModel" [min]="0.5" [max]="3" [required]="true">
-        <label *ngIf="!voltage.valid" style="color: red; font-size: 0.5em;"><br>*минимум 0.5, максимум 3</label>
-      </div>
-
-      <button type="submit" [disabled]="!gpuForm.valid">Добавить</button>
-    </form>
+    </div>
+    <div *ngIf="findMotherboards.length==0">Не найдено!</div>
   </div>
 
-  <div *ngIf="currentForm==3" style="padding-bottom: 10%;">
-    <form (ngSubmit)="onSubmitRAM()" #ramForm="ngForm">
-
-      <div style="padding-bottom: 1.5%;">
-        <label>Название: </label><br>
-        <input type="text" [(ngModel)]="ram.name" name="name" #name="ngModel" maxlength="100" [pattern]="patternName" [required]="true">
-        <label *ngIf="!name.valid" style="color: red; font-size: 0.5em;"><br>*минимум 4 символа</label>
+  <div *ngIf="showObject==3">
+    <div *ngIf="findCPUs.length>0">
+      <div *ngFor="let cpu of findCPUs">
+        {{findCPUs.length + 1 - (findCPUs.length - findCPUs.indexOf(cpu))}}. {{cpu.name}}
+        <button type="button" (click)="onEditingCPU(cpu.id!)">Редактировать</button>
+        <button type="button" (click)="onRemoveCPU(cpu.id!)">Удалить</button>
       </div>
-
-      <div style="padding-bottom: 1.5%;">
-        <label>Объём: </label><br>
-        <input type="number" [(ngModel)]="ram.capacity" name="capacity" #capacity="ngModel" [min]="1" [max]="256" [required]="true">
-        <label *ngIf="!capacity.valid" style="color: red; font-size: 0.5em;"><br>*минимум 1, максимум 256</label>
-      </div>
-
-      <div style="padding-bottom: 1.5%;">
-        <label>Частота (МГц): </label><br>
-        <input type="number" [(ngModel)]="ram.frequency" name="frequency" #frequency="ngModel" [min]="2133" [max]="5000" [required]="true">
-        <label *ngIf="!frequency.valid" style="color: red; font-size: 0.5em;"><br>*минимум 2133, максимум 5000</label>
-      </div>
-
-      <div style="padding-bottom: 1.5%;">
-        <label>Тайминги: </label><br>
-        <input type="text" [(ngModel)]="ram.timings" name="timings" #timings="ngModel" maxlength="12" [pattern]="patternTimings" [required]="true">
-        <label *ngIf="!timings.valid" style="color: red; font-size: 0.5em;"><br>*пределы значений: от 10-10-10-20 до 40-40-40-60</label>
-      </div>
-
-      <div style="padding-bottom: 1.5%;">
-        <label>Напряжение (В): </label><br>
-        <input type="number" [(ngModel)]="ram.voltage" name="voltage" #voltage="ngModel" [min]="0.5" [max]="3" [required]="true">
-        <label *ngIf="!voltage.valid" style="color: red; font-size: 0.5em;"><br>*минимум 0.5, максимум 3</label>
-      </div>
-
-      <button type="submit" [disabled]="!ramForm.valid">Добавить</button>
-    </form>
+    </div>
+    <div *ngIf="findCPUs.length==0">Не найдено!</div>
   </div>
+
+  <div *ngIf="showObject==4">
+    <div *ngIf="findGPUs.length>0">
+      <div *ngFor="let gpu of findGPUs">
+        {{findGPUs.length + 1 - (findGPUs.length - findGPUs.indexOf(gpu))}}. {{gpu.name}}
+        <button type="button" (click)="onEditingGPU(gpu.id!)">Редактировать</button>
+        <button type="button" (click)="onRemoveGPU(gpu.id!)">Удалить</button>
+      </div>
+    </div>
+    <div *ngIf="findGPUs.length==0">Не найдено!</div>
+  </div>
+
+  <div *ngIf="showObject==5">
+    <div *ngIf="findRAMs.length>0">
+      <div *ngFor="let ram of findRAMs">
+        {{findRAMs.length + 1 - (findRAMs.length - findRAMs.indexOf(ram))}}. {{ram.name}}
+        <button type="button" (click)="onEditingRAM(ram.id!)">Редактировать</button>
+        <button type="button" (click)="onRemoveRAM(ram.id!)">Удалить</button>
+      </div>
+    </div>
+    <div *ngIf="findRAMs.length==0">Не найдено!</div>
+  </div>
+
 </div>

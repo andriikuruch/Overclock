@@ -6,6 +6,7 @@ import com.overclock.overclock.service.CPUService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,6 +21,7 @@ public class CPUController {
     @Autowired
     private CPUService CPUService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> addCPU(@Valid @RequestBody CPU cpu) {
         CPUService.save(cpu);
@@ -31,12 +33,14 @@ public class CPUController {
         return CPUService.getAll();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{cpu_id}")
     public ResponseEntity<?> updateCPU(@Valid @RequestBody CPU cpu, @PathVariable("cpu_id") BigInteger id) {
         CPUService.updateById(id, cpu);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{cpu_id}")
     public ResponseEntity<?> deleteCPU(@PathVariable("cpu_id") BigInteger id) {
         CPUService.delete(id);
@@ -102,5 +106,10 @@ public class CPUController {
     @PostMapping("/by_family")
     public List<CPU> getCPUsByFamily(@RequestBody String family) {
         return CPUService.getCPUsByFamily(CPUFamily.valueOf(family));
+    }
+
+    @GetMapping("/search/{name}")
+    public List<CPU> getCPUsByName(@PathVariable("name") String name) {
+        return CPUService.getCPUsByName(name);
     }
 }

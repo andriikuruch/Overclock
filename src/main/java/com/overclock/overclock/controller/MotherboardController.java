@@ -5,6 +5,7 @@ import com.overclock.overclock.service.MotherboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ public class MotherboardController {
         this.motherboardService = motherboardService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{motherboard_id}")
     public ResponseEntity<?> deleteMotherboard(@PathVariable("motherboard_id") BigInteger id) {
         motherboardService.delete(id);
@@ -44,12 +46,14 @@ public class MotherboardController {
         return motherboardService.getMotherboardById(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{motherboard_id}")
     public ResponseEntity<?> updateMotherboard(@Valid @RequestBody Motherboard motherboard, @PathVariable("motherboard_id") BigInteger id) {
         motherboardService.updateById(id, motherboard);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> addMotherboard(@Valid @RequestBody Motherboard motherboard) {
         motherboardService.save(motherboard);
@@ -69,5 +73,10 @@ public class MotherboardController {
     @GetMapping("/chipsets/{socket}")
     public List<String> getMotherboardChipsets(@PathVariable("socket") String socket) {
         return motherboardService.getMotherboardChipsets(socket);
+    }
+
+    @GetMapping("/search/{name}")
+    public List<Motherboard> getMotherboardsByName(@PathVariable("name") String name) {
+        return motherboardService.getMotherboardsByName(name);
     }
 }

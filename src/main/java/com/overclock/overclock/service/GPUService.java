@@ -16,4 +16,5 @@ public interface GPUService {
     List<GPUChip> getGPUChipsByManufacturer(GPUChipManufacturer manufacturer);
     List<GPU> getGPUsByChip(GPUChip chip);
     List<GPU> getGPUsByManufacturer(GPUChipManufacturer manufacturer);
+    List<GPU> getGPUsByName(String name);
 }

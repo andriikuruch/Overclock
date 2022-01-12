@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @Scope("singleton")
@@ -87,5 +89,18 @@ public class GPUServiceImpl implements GPUService {
             }
         }
         return gpuByManufacturer;
+    }
+
+    @Override
+    public List<GPU> getGPUsByName(String name) {
+        List<GPU> gpus = new ArrayList<>();
+        Pattern pattern = Pattern.compile("(" + name + ")+", Pattern.CASE_INSENSITIVE);
+        for (GPU gpu : getAll()) {
+            Matcher matcher = pattern.matcher(gpu.getName());
+            if (matcher.find()) {
+                gpus.add(gpu);
+            }
+        }
+        return gpus;
     }
 }
