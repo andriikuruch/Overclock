@@ -8,6 +8,8 @@ import {Motherboard} from "../entities/motherboard";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
 import {AppearanceService} from "../service/appearance.service";
+import {Router} from "@angular/router";
+import { DataSharingService } from '../service/datasharing.service';
 
 @Component({
   selector: 'app-creating-assembly',
@@ -25,9 +27,21 @@ export class CreatingAssemblyComponent implements OnInit {
 
   private subscription: Subscription;
 
-  constructor(private assemblyService: AssemblyService, private appearanceService: AppearanceService, activateRoute: ActivatedRoute) {
-  this.subscription = activateRoute.params.subscribe(params=>this.assembly.id=params['id']);
-}
+  isLoggedIn : boolean = false;
+  isAdmin : boolean = false;
+
+  constructor(private assemblyService: AssemblyService, private appearanceService: AppearanceService, activateRoute: ActivatedRoute,
+              private router: Router, private dataSharingService: DataSharingService) {
+    this.subscription = activateRoute.params.subscribe(params=>this.assembly.id=params['id']);
+
+    this.dataSharingService.isLoggedIn.subscribe( value => {
+      this.isLoggedIn = value;
+    });
+    this.dataSharingService.isAdmin.subscribe(value => {
+      this.isAdmin = value;
+    })
+  }
+
   public createAssembly(): void {
     this.assembly = { id: 0, name: "default", motherboard: {}, ram: {}, gpu: {}, cpu: {}, author: 0, overclock: 0, comments: [], score: 0};
     let nameInput = (<HTMLInputElement>document.getElementById("name"));
@@ -110,10 +124,24 @@ export class CreatingAssemblyComponent implements OnInit {
     );
   }
 
+  openAuthorization(): void {
+    this.router.navigate(['/authorization']);
+  }
+
+  openHomePage(): void{
+    this.router.navigate(['/home']);
+  }
+
   ngOnInit(): void {
-    this.getAllMotherboards();
-    this.getAllCPUs();
-    this.getAllGPUs();
-    this.getAllRAMs();
+    if (this.isLoggedIn === false)
+      this.openAuthorization();
+    else if (this.isAdmin === true)
+      this.openHomePage();
+    else {
+      this.getAllMotherboards();
+      this.getAllCPUs();
+      this.getAllGPUs();
+      this.getAllRAMs();
+    }
   }
 }

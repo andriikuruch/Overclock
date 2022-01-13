@@ -3,6 +3,7 @@ import {MyAssembliesService} from "../service/my-assemblies.service";
 import {Assembly} from "../entities/assembly";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
+import { DataSharingService } from '../service/datasharing.service';
 
 @Component({
   selector: 'app-my-assemblies',
@@ -13,8 +14,17 @@ export class MyAssembliesComponent implements OnInit {
 
   myAssemblies: Assembly[] = [];
 
-  constructor(private myAssembliesService: MyAssembliesService, private router: Router) {
+  constructor(private myAssembliesService: MyAssembliesService, private router: Router, private dataSharingService: DataSharingService) {
+    this.dataSharingService.isLoggedIn.subscribe( value => {
+      this.isLoggedIn = value;
+    });
+    this.dataSharingService.isAdmin.subscribe(value => {
+      this.isAdmin = value;
+    })
   }
+
+  isLoggedIn : boolean = false;
+  isAdmin : boolean = false;
 
   public getAssemblies(): void {
     this.myAssembliesService.getAll().subscribe(
@@ -50,7 +60,20 @@ export class MyAssembliesComponent implements OnInit {
     this.router.navigate(['my_assemblies/creating']);
   }
 
+  openAuthorization(): void {
+    this.router.navigate(['/authorization']);
+  }
+
+  openHomePage(): void {
+    this.router.navigate(['/home']);
+  }
+
   ngOnInit() {
-    this.getAssemblies();
+    if (this.isLoggedIn === false)
+      this.openAuthorization();
+    else if (this.isAdmin === true)
+      this.openHomePage();
+    else
+      this.getAssemblies();
   }
 }

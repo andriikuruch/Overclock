@@ -6,6 +6,8 @@ import {AppearanceService} from "../service/appearance.service";
 import {CPU} from "../entities/cpu";
 import {GPU} from "../entities/gpu";
 import {RAM} from "../entities/ram";
+import {Router} from "@angular/router";
+import { DataSharingService } from '../service/datasharing.service';
 
 @Component({
   selector: 'app-component-management',
@@ -82,8 +84,17 @@ export class ComponentManagementComponent implements OnInit {
 
   public searchWord: string = '';
 
-  constructor(private componentManagementService: ComponentManagementService,
-              private appearanceService: AppearanceService) {
+  isLoggedIn : boolean = false;
+  isAdmin : boolean = false;
+
+  constructor(private componentManagementService: ComponentManagementService, private router: Router,
+              private appearanceService: AppearanceService, private dataSharingService: DataSharingService) {
+    this.dataSharingService.isLoggedIn.subscribe( value => {
+      this.isLoggedIn = value;
+    });
+    this.dataSharingService.isAdmin.subscribe(value => {
+      this.isAdmin = value;
+    })
     this.currentForm = 0;
     this.currentAction = 0;
   }
@@ -625,6 +636,11 @@ export class ComponentManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.isLoggedIn === false)
+      this.openAuthorization();
+    else if (this.isAdmin === false)
+      this.openHomePage();
+    else {
     // Motherboard
     this.componentManagementService.getMotherboardChipsetManufacturers().subscribe(
       (response: string[]) => {
@@ -729,5 +745,15 @@ export class ComponentManagementComponent implements OnInit {
     this.ram.frequency = 2133;
     this.ram.voltage = 0.5;
     this.ram.timings = '40-40-40-60';
+    }
   }
+
+  openAuthorization(): void {
+    this.router.navigate(['/authorization']);
+  }
+
+  openHomePage(): void{
+    this.router.navigate(['/home']);
+  }
+
 }

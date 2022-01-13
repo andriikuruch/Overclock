@@ -70,9 +70,9 @@
     <button type="button" (click)="reset();">Сбросить</button>
     <select id="pageNums" #selectItemsPerPage (change)='setItemsPerPage(selectItemsPerPage.value); resetPage();' ><option id="{{pn}}" *ngFor="let pn of pageNums">{{pn}}</option></select>
     <table border="1">
-      <th>Название сборки</th>
-      <th>Автор</th>
-      <th>Балл</th>
+      <th style="width: 65%;">Название сборки</th>
+      <th style="width: 25%;">Автор</th>
+      <th style="width: 10%;">Балл</th>
       <ng-container *ngIf="users.length == assemblies.length">
         <tr *ngFor="let assembly of assemblies
                     | searchFilter: searchText : 'name'

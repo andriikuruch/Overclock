@@ -81,10 +81,16 @@ export class AuthorizationComponent implements OnInit {
   }
 
   ngOnInit() : void {
+    if (this.isLoggedIn === true)
+      this.openHomePage();
   }
 
   openForgotPassword(): void {
     this.router.navigate(['/forgot-password']);
+  }
+
+  openHomePage(): void{
+    this.router.navigate(['/home']);
   }
 
 }

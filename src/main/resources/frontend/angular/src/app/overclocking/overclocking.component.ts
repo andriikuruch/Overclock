@@ -13,6 +13,7 @@ import {GPU} from "../entities/gpu";
 import {RAM} from "../entities/ram";
 import {Comment} from "../entities/comment";
 import {AppearanceService} from "../service/appearance.service";
+import {DataSharingService} from '../service/datasharing.service';
 
 @Component({
   selector: 'app-overclocking',
@@ -49,11 +50,23 @@ export class OverclockingComponent implements OnInit {
 
   public patternTimings = /(([1-3]\d-)|(40-)){3}(([2-5]\d)|(60))/;
 
+  isLoggedIn : boolean = false;
+  isAdmin : boolean = false;
+
   constructor(
     private overclockingService: OverclockingService,
     private assemblyService: AssemblyService,
     private appearanceService: AppearanceService,
-    private router: Router, activateRoute: ActivatedRoute) {
+    private router: Router, activateRoute: ActivatedRoute,
+    private dataSharingService: DataSharingService) {
+
+    this.dataSharingService.isLoggedIn.subscribe( value => {
+      this.isLoggedIn = value;
+    });
+    this.dataSharingService.isAdmin.subscribe(value => {
+      this.isAdmin = value;
+    })
+
     this.subscription = activateRoute.params.subscribe(params => this.assemblyId = params['id']);
   }
 
@@ -124,21 +137,35 @@ export class OverclockingComponent implements OnInit {
     this.router.navigate([`my_assemblies/${this.assemblyId}/testing`]);
   }
 
-  ngOnInit(): void {
-    this.overclockingService.setAssemblyId(this.assemblyId);
+  openAuthorization(): void {
+    this.router.navigate(['/authorization']);
+  }
 
-    this.assemblyService.getAssembly(this.assemblyId).subscribe(
-      (response: Assembly) => {
-        this.assembly = response;
-        if (this.assembly.overclock == null) {
-          this.getDefaultValues();
-        } else {
-          this.getOverclock();
+  openHomePage(): void {
+    this.router.navigate(['/home']);
+  }
+
+  ngOnInit(): void {
+    if (this.isLoggedIn === false)
+      this.openAuthorization();
+    else if (this.isAdmin === true)
+      this.openHomePage();
+    else {
+      this.overclockingService.setAssemblyId(this.assemblyId);
+
+      this.assemblyService.getAssembly(this.assemblyId).subscribe(
+        (response: Assembly) => {
+          this.assembly = response;
+          if (this.assembly.overclock == null) {
+            this.getDefaultValues();
+          } else {
+            this.getOverclock();
+          }
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
         }
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
+      );
+    }
   }
 }

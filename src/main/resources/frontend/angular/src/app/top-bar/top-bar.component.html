@@ -6,8 +6,7 @@
           <li class="top-bar"><a (click)="openComponents()" >Компоненты</a></li>
         </ng-template>
         <ng-template #userView>
-          <li class="top-bar" *ngIf="isLoggedIn"><a (click)="openMyAssemblies()">Мои сборки</a></li>
-          <li class="top-bar" *ngIf="!isLoggedIn"><a (click)="openAuthorization()">Мои сборки</a></li>
+          <li class="top-bar"><a (click)="openMyAssemblies()">Мои сборки</a></li>
         </ng-template>
         <li class="top-bar"><a (click)="openAssemblies()">Все сборки</a></li>
         <li class="top-bar"><a (click)="openRating()">Рейтинг</a></li>

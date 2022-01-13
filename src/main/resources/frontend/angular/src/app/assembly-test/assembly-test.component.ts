@@ -4,6 +4,7 @@ import {Subscription} from "rxjs";
 import {AssemblyService} from "../service/assembly.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpErrorResponse} from "@angular/common/http";
+import { DataSharingService } from '../service/datasharing.service';
 
 @Component({
   selector: 'app-assembly-test',
@@ -17,7 +18,17 @@ export class AssemblyTestComponent implements OnInit {
   public selectedProgram: string = this.programs[0];
   private subscription: Subscription;
 
-  constructor(private assemblyService: AssemblyService, activateRoute: ActivatedRoute, private router: Router) {
+  isLoggedIn : boolean = false;
+  isAdmin : boolean = false;
+
+  constructor(private assemblyService: AssemblyService, activateRoute: ActivatedRoute, private router: Router,
+              private dataSharingService: DataSharingService) {
+    this.dataSharingService.isLoggedIn.subscribe( value => {
+      this.isLoggedIn = value;
+    });
+    this.dataSharingService.isAdmin.subscribe(value => {
+      this.isAdmin = value;
+    })
     this.subscription = activateRoute.params.subscribe(params=>this.assembly.id=params['assemblyId']);
   }
 
@@ -81,8 +92,21 @@ export class AssemblyTestComponent implements OnInit {
     this.router.navigate([`/my_assemblies/${this.assembly.id}/partial_test/${component}`]);
   }
 
+  openAuthorization(): void {
+    this.router.navigate(['/authorization']);
+  }
+
+  openHomePage(): void{
+    this.router.navigate(['/home']);
+  }
+
   ngOnInit(): void {
-    this.getAssembly();
+    if (this.isLoggedIn === false)
+      this.openAuthorization();
+    else if (this.isAdmin === true)
+      this.openHomePage();
+    else
+      this.getAssembly();
   }
 
 }
