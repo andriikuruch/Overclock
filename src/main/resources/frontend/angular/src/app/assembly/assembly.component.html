@@ -19,7 +19,7 @@
       <h1>Информация о доп факторах:</h1>
       <p> Охлаждение: система жидкостного охлаждения Thermaltake Water 3.0 360 ARGB Sync </p>
       <p> Блок питания: Dark Power Pro 12 1200W </p>
-      <p> Жёсткий диск: Kingston FURY Renegade SSD 1TB M.2 2280 NVMe PCIe Gen 4.0 x4 3D TLC NAND </p>
+      <p> Накопитель: Kingston FURY Renegade SSD 1TB M.2 2280 NVMe PCIe Gen 4.0 x4 3D TLC NAND </p>
       <p> Окружающая среда: окружающая температура в тестах принимается за комнатную 20-25°C, остальные факторы влияния опущены </p>
       <p> Корпус: Fractal Design Meshify 2 Light Tempered Glass </p>
     </div>
@@ -42,6 +42,7 @@
                            previousLabel=""
                            nextLabel=""></pagination-controls>
     </div>
+    <p *ngIf="!isLoggedIn"> *Чтобы оставлять комментарии нужно зарегистрироваться и/или войти</p>
     <textarea *ngIf="isLoggedIn" id="commentMessage"></textarea> <br>
     <button *ngIf="isLoggedIn" type="button" (click)="onAddComment(assembly.id)">Оставить комментарий</button>
   </div>

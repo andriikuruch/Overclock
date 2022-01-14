@@ -102,9 +102,10 @@ a {
 
 #pageNums {
   margin-left: 15vh;
-  margin-top: 1.7vh;
-  height: 5.8vh;
-  width: 8vh;
+  margin-top: 2vh;
+  height: 5vh;
+  width: 5vh;
+  background-color: #2e0e4f;
 }
 
 .labels-inline {

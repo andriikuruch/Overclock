@@ -92,6 +92,11 @@ button {
   height: 450px;
 }
 
+#commentMessage {
+  width: 99%;
+  height: 100px;
+}
+
 pagination-controls ::ng-deep ul > li:not(.active) > a {
   background-color: #7f13f2 !important;
   color: #9686cf !important;

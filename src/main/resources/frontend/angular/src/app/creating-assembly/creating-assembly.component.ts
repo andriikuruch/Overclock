@@ -23,7 +23,7 @@ export class CreatingAssemblyComponent implements OnInit {
   public cpus: CPU[] = [];
   public gpus: GPU[] = [];
   public rams: RAM[] = [];
-  public text: string = "";
+  private notificationMessage: string = "";
 
   private subscription: Subscription;
 
@@ -86,7 +86,27 @@ export class CreatingAssemblyComponent implements OnInit {
 
     this.assemblyService.createAssembly(this.assembly).subscribe(
       (response: string) => {
-        this.appearanceService.customAlert(response);
+
+        switch (response) {
+          case "Motherboard and CPU are not compatible":
+            this.notificationMessage = "Материнская плата и процессор несовместимы";
+            break;
+          case "Motherboard is not valid":
+            this.notificationMessage = "Материнская плата имеет ошибочные характеристики. " +
+              "\nПожалуйста выберите другую из предложенного списка. Приносим свои извинения.";
+            break;
+          case "CPU is not valid":
+            this.notificationMessage = "Процессор имеет ошибочные характеристики. " +
+              "\nПожалуйста выберите другой из предложенного списка. Приносим свои извинения.";
+            break;
+          case "GPU is not valid":
+            this.notificationMessage = "Видеокарта имеет ошибочные характеристики. " +
+              "\nПожалуйста выберите другую из предложенного списка. Приносим свои извинения.";
+            break;
+          default:
+            this.notificationMessage = response;
+        }
+        this.appearanceService.customAlert(this.notificationMessage);
       }
     );
     nameInput.value = '';
