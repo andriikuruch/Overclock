@@ -87,6 +87,11 @@ public class AssemblyDAOImpl implements AssemblyDAO, QueryConstants {
     }
 
     @Override
+    public List<Assembly> getSortedByScoreAssemblies() {
+        return jdbcTemplate.query(QUERY_GET_ALL_SORTED_BY_SCORE, assemblyListRowMapper);
+    }
+
+    @Override
     public List<Assembly> getAssembliesByAuthorId(BigInteger author) {
         return jdbcTemplate.query(QUERY_GET_ALL_BY_AUTHOR_ID, assemblyListRowMapper, author);
     }

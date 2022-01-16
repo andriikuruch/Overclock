@@ -2,13 +2,21 @@
   <div id="left">
     <div class="bg"></div>
     <div id="text">
-    Название сборки: <input id="name"> <br>
-    Выбрать материнскую плату: <br> <select id="mb"><option id="{{mb.id}}" *ngFor="let mb of mbs">{{mb.name}}</option></select><br>
-    Выбрать процессор: <br> <select id="cpu"><option id="{{cpu.id}}" *ngFor="let cpu of cpus">{{cpu.name}}</option></select><br>
-    Выбрать видеокарту: <br> <select id="gpu"><option id="{{gpu.id}}" *ngFor="let gpu of gpus">{{gpu.name}}</option></select><br>
-    Выбрать оперативную память: <br> <select id="ram"><option id="{{ram.id}}" *ngFor="let ram of rams">{{ram.name}}</option></select><br>
-    <br>
-    <button (click)="createAssembly()" type="button">Сохранить</button>
+      Название сборки: <input id="name"> <br> <br>
+      Выбрать материнскую плату: <br>
+      <input id="_mb" placeholder="Материнкая плата" list="mb" name="mbs"> <button (click)="clear('_mb')" class="clear">X</button><br>
+      <datalist id="mb"><option id="{{mb.id}}" *ngFor="let mb of mbs">{{mb.name}}</option></datalist>
+      Выбрать процессор: <br>
+      <input id="_cpu" placeholder="Процесор" list="cpu" name="cpus"><button (click)="clear('_cpu')" class="clear">X</button><br>
+      <datalist id="cpu"><option id="{{cpu.id}}" *ngFor="let cpu of cpus">{{cpu.name}}</option></datalist>
+      Выбрать видеокарту: <br>
+      <input id="_gpu" placeholder="Видеокарта" list="gpu" name="gpus"><button (click)="clear('_gpu')" class="clear">X</button><br>
+      <datalist id="gpu"><option id="{{gpu.id}}" *ngFor="let gpu of gpus">{{gpu.name}}</option></datalist>
+      Выбрать оперативную память: <br>
+      <input id="_ram" placeholder="Оперативная память" list="ram" name="rams"><button (click)="clear('_ram')" class="clear">X</button><br>
+      <datalist id="ram"><option id="{{ram.id}}" *ngFor="let ram of rams">{{ram.name}}</option></datalist>
+      <br>
+      <button (click)="createAssembly()" type="button">Сохранить</button>
     </div>
   </div>
   <div id="right">
@@ -18,7 +26,7 @@
         <h1>Информация о доп. факторах:</h1>
         <p> Охлаждение: система жидкостного охлаждения Thermaltake Water 3.0 360 ARGB Sync </p>
         <p> Блок питания: Dark Power Pro 12 1200W </p>
-        <p> Жёсткий диск: Kingston FURY Renegade SSD 1TB M.2 2280 NVMe PCIe Gen 4.0 x4 3D TLC NAND </p>
+        <p> Накопитель: Kingston FURY Renegade SSD 1TB M.2 2280 NVMe PCIe Gen 4.0 x4 3D TLC NAND </p>
         <p> Окружающая среда: окружающая температура в тестах принимается за комнатную 20-25°C, остальные факторы влияния опущены </p>
         <p> Корпус: Fractal Design Meshify 2 Light Tempered Glass </p>
       </div>

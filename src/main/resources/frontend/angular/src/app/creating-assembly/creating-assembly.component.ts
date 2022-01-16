@@ -53,33 +53,49 @@ export class CreatingAssemblyComponent implements OnInit {
 
     this.assembly.name = name.toString();
 
-    let mb = (<HTMLSelectElement>document.getElementById("mb"));
-    let mbId: number = Number(mb.options[mb.selectedIndex].id);
-    let cpu = (<HTMLSelectElement>document.getElementById("cpu"));
-    let cpuId: number = Number(cpu.options[cpu.selectedIndex].id);
-    let gpu = (<HTMLSelectElement>document.getElementById("gpu"));
-    let gpuId: number = Number(gpu.options[gpu.selectedIndex].id);
-    let ram = (<HTMLSelectElement>document.getElementById("ram"));
-    let ramId: number = Number(ram.options[ram.selectedIndex].id);
+    let mb = (<HTMLInputElement>document.getElementById("_mb"));
+    let mbName: string = mb.value;
+    let cpu = (<HTMLInputElement>document.getElementById("_cpu"));
+    let cpuName: string = cpu.value;
+    let gpu = (<HTMLInputElement>document.getElementById("_gpu"));
+    let gpuName: string = gpu.value;
+    let ram = (<HTMLInputElement>document.getElementById("_ram"));
+    let ramName: string = ram.value;
 
+    if (mbName === "") {
+      this.appearanceService.customAlert("Материнская плата не была выбрана!");
+      return;
+    }
+    if (cpuName === "") {
+      this.appearanceService.customAlert("Процессор не был выбран!");
+      return;
+    }
+    if (gpuName === "") {
+      this.appearanceService.customAlert("Видеокарта не была выбрана!");
+      return;
+    }
+    if (ramName === "") {
+      this.appearanceService.customAlert("Оперативная память не была выбрана!");
+      return;
+    }
 
     for (let i = 0; i < this.mbs.length; i++) {
-      if (this.mbs[i].id == mbId) {
+      if (this.mbs[i].name == mbName) {
         this.assembly.motherboard = this.mbs[i];
       }
     }
     for (let i = 0; i < this.cpus.length; i++) {
-      if (this.cpus[i].id == cpuId) {
+      if (this.cpus[i].name == cpuName) {
         this.assembly.cpu = this.cpus[i];
       }
     }
     for (let i = 0; i < this.gpus.length; i++) {
-      if (this.gpus[i].id == gpuId) {
+      if (this.gpus[i].name == gpuName) {
         this.assembly.gpu = this.gpus[i];
       }
     }
     for (let i = 0; i < this.rams.length; i++) {
-      if (this.rams[i].id == ramId) {
+      if (this.rams[i].name == ramName) {
         this.assembly.ram = this.rams[i];
       }
     }
@@ -104,12 +120,16 @@ export class CreatingAssemblyComponent implements OnInit {
               "\nПожалуйста выберите другую из предложенного списка. Приносим свои извинения.";
             break;
           default:
+            nameInput.value = '';
+            mb.value = "";
+            cpu.value = "";
+            gpu.value = "";
+            ram.value = "";
             this.notificationMessage = response;
         }
         this.appearanceService.customAlert(this.notificationMessage);
       }
     );
-    nameInput.value = '';
   }
 
   public getAllMotherboards(): void {
@@ -148,14 +168,18 @@ export class CreatingAssemblyComponent implements OnInit {
     this.router.navigate(['/authorization']);
   }
 
-  openHomePage(): void{
+  openHomePage(): void {
     this.router.navigate(['/home']);
   }
 
+  clear(id: string): void {
+    (<HTMLInputElement>document.getElementById(id)).value = "";
+  }
+
   ngOnInit(): void {
-    if (this.isLoggedIn === false)
+    if (!this.isLoggedIn)
       this.openAuthorization();
-    else if (this.isAdmin === true)
+    else if (this.isAdmin)
       this.openHomePage();
     else {
       this.getAllMotherboards();

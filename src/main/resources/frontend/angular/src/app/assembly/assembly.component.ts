@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {Assembly} from "../entities/assembly";
 import {AssemblyService} from "../service/assembly.service";
 import {Comment} from "../entities/comment";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {UserService} from "../service/user.service";
 import {User} from "../entities/user";
 import {AppearanceService} from "../service/appearance.service";
-import {HttpErrorResponse} from "@angular/common/http";
 import {DataSharingService} from "../service/datasharing.service";
 
 @Component({
@@ -28,7 +27,7 @@ export class AssemblyComponent implements OnInit {
 
   isLoggedIn : boolean = false;
 
-  constructor(private assemblyService: AssemblyService, activateRoute: ActivatedRoute,
+  constructor(private assemblyService: AssemblyService, activateRoute: ActivatedRoute, private router: Router,
               private userService: UserService, private appearanceService: AppearanceService, private dataSharingService: DataSharingService) {
     this.subscription = activateRoute.params.subscribe(params=>this.assembly.id=params['id']);
     this.dataSharingService.isLoggedIn.subscribe( value => {
@@ -39,12 +38,16 @@ export class AssemblyComponent implements OnInit {
   public getAssembly(): void {
     this.assemblyService.getAssembly(this.assembly.id).subscribe(
       (response: Assembly) => {
-        this.assembly = response;
-        this.assembly.comments.sort(function(a, b) {
-          let aDate=new Date(a.dateOfComment), bDate=new Date(b.dateOfComment);
-          return aDate>bDate ? -1 : aDate<bDate ? 1 : 0;
-        })
-        this.getUserById(this.assembly.author);
+        if (response === null) {
+          this.router.navigate([`/assembly/${this.assembly.id}/not_found`]);
+        } else {
+          this.assembly = response;
+          this.assembly.comments.sort(function (a, b) {
+            let aDate = new Date(a.dateOfComment), bDate = new Date(b.dateOfComment);
+            return aDate > bDate ? -1 : aDate < bDate ? 1 : 0;
+          })
+          this.getUserById(this.assembly.author);
+        }
       }
     );
   }
@@ -88,6 +91,10 @@ export class AssemblyComponent implements OnInit {
 
   resetPage() : void {
     this.config.currentPage = 1;
+  }
+
+  redirectToNotFound() : void {
+    this.router.navigate([`/assembly_not_fount`]);
   }
 
   ngOnInit(): void {
