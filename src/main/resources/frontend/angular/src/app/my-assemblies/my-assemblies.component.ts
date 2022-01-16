@@ -69,11 +69,18 @@ export class MyAssembliesComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.isLoggedIn === false)
+    if (!this.isLoggedIn)
       this.openAuthorization();
-    else if (this.isAdmin === true)
+    else if (this.isAdmin)
       this.openHomePage();
     else
       this.getAssemblies();
+    let li = (<HTMLLIElement>document.getElementById("my_assemblies"));
+    li.style.textDecoration = "underline";
+  }
+
+  ngOnDestroy(): void {
+    let li = (<HTMLLIElement>document.getElementById("my_assemblies"));
+    li.style.textDecoration = "none";
   }
 }

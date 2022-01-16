@@ -86,5 +86,12 @@ export class RatingTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTopByDefault()
+    let li = (<HTMLLIElement>document.getElementById("rating"));
+    li.style.textDecoration = "underline"
+  }
+
+  ngOnDestroy(): void {
+    let li = (<HTMLLIElement>document.getElementById("rating"));
+    li.style.textDecoration = "none";
   }
 }

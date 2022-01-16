@@ -170,5 +170,12 @@ export class AssembliesComponent implements OnInit {
     this.getAllGPUs();
     this.getAllRAMs();
     this.getAll();
+    let li = (<HTMLLIElement>document.getElementById("all_assemblies"));
+    li.style.textDecoration = "underline";
+  }
+
+  ngOnDestroy(): void {
+    let li = (<HTMLLIElement>document.getElementById("all_assemblies"));
+    li.style.textDecoration = "none";
   }
 }
