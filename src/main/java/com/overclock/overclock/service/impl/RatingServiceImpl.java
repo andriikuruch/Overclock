@@ -31,6 +31,6 @@ public class RatingServiceImpl implements RatingService {
     }
 
     private List<Assembly> getAssemblies() {
-        return assemblyService.getAllAssemblies();
+        return assemblyService.getSortedByScoreAssemblies();
     }
 }

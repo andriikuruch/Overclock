@@ -4,10 +4,10 @@
     <div id="text">
       Название сборки: <input id="name"> <br> <br>
       Выбрать материнскую плату: <br>
-      <input id="_mb" placeholder="Материнкая плата" list="mb" name="mbs"> <button (click)="clear('_mb')" class="clear">X</button><br>
+      <input id="_mb" placeholder="Материнская плата" list="mb" name="mbs"> <button (click)="clear('_mb')" class="clear">X</button><br>
       <datalist id="mb"><option id="{{mb.id}}" *ngFor="let mb of mbs">{{mb.name}}</option></datalist>
       Выбрать процессор: <br>
-      <input id="_cpu" placeholder="Процесор" list="cpu" name="cpus"><button (click)="clear('_cpu')" class="clear">X</button><br>
+      <input id="_cpu" placeholder="Процессор" list="cpu" name="cpus"><button (click)="clear('_cpu')" class="clear">X</button><br>
       <datalist id="cpu"><option id="{{cpu.id}}" *ngFor="let cpu of cpus">{{cpu.name}}</option></datalist>
       Выбрать видеокарту: <br>
       <input id="_gpu" placeholder="Видеокарта" list="gpu" name="gpus"><button (click)="clear('_gpu')" class="clear">X</button><br>

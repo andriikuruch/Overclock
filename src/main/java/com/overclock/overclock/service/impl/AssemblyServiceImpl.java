@@ -102,6 +102,11 @@ public class AssemblyServiceImpl implements AssemblyService {
     }
 
     @Override
+    public List<Assembly> getSortedByScoreAssemblies() {
+        return assemblyDAO.getSortedByScoreAssemblies();
+    }
+
+    @Override
     public boolean save(Assembly assembly) {
         checkAssemblyValidation(assembly);
         return assemblyDAO.save(assembly);

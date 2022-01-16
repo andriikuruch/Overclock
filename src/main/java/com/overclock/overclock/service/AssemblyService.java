@@ -13,6 +13,7 @@ public interface AssemblyService {
     List<Assembly> getAssembliesByAuthorName(String author);
     List<Assembly> search(String searchParameter);
     List<Assembly> getAllAssemblies();
+    List<Assembly> getSortedByScoreAssemblies();
     boolean save(Assembly assembly);
     boolean delete(BigInteger id);
     boolean updateScore(BigInteger id, BigDecimal newScore);
