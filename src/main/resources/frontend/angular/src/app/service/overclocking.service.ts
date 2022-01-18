@@ -32,6 +32,10 @@ export class OverclockingService {
     return this.http.put<void>(`${this.overclockingUrl}/overclock/${newOverclock.id}`, newOverclock);
   }
 
+  public deleteOverclockByAssemblyId(assemblyId: number): Observable<void> {
+    return this.http.delete<void>(`${this.overclockingUrl}/overclock/${assemblyId}`);
+  }
+
   public setAssemblyId(assemblyId: number) {
     this.assemblyId = assemblyId;
   }

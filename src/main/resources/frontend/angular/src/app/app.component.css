@@ -44,3 +44,22 @@
 .popup_text {
   font-size: 1.4vw;
 }
+
+button{
+  width: 10%;
+  background-color: #02123E;
+  color: #DFDFDF;
+  border-radius: 1.2em;
+  border: 0.12em solid grey;
+  font-family: "Segoe UI", serif;
+  font-size: 1vw;
+  text-align: center;
+  line-height: 1.6vw;
+  padding: 0.4em;
+}
+
+button:hover{
+  background-color: #2c283b;
+  color: white;
+  border-color: #DFDFDF;
+}

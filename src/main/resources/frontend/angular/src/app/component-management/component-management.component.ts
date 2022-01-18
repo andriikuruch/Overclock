@@ -84,12 +84,12 @@ export class ComponentManagementComponent implements OnInit {
 
   public searchWord: string = '';
 
-  isLoggedIn : boolean = false;
-  isAdmin : boolean = false;
+  isLoggedIn: boolean = false;
+  isAdmin: boolean = false;
 
   constructor(private componentManagementService: ComponentManagementService, private router: Router,
               private appearanceService: AppearanceService, private dataSharingService: DataSharingService) {
-    this.dataSharingService.isLoggedIn.subscribe( value => {
+    this.dataSharingService.isLoggedIn.subscribe(value => {
       this.isLoggedIn = value;
     });
     this.dataSharingService.isAdmin.subscribe(value => {
@@ -132,6 +132,11 @@ export class ComponentManagementComponent implements OnInit {
         break;
     }
   }
+
+  private deletedMotherboardId: number = 0;
+  private deletedCPUId: number = 0;
+  private deletedGPUId: number = 0;
+  private deletedRAMId: number = 0;
 
   // Motherboard
   public addMotherboard(): void {
@@ -247,10 +252,28 @@ export class ComponentManagementComponent implements OnInit {
   }
 
   public onRemoveMotherboard(id: number): void {
-    this.componentManagementService.deleteMotherboard(id).subscribe(
+    this.deletedMotherboardId = id;
+
+    let allowButton = <HTMLButtonElement>document.getElementById('allowButton');
+    let denyButton = <HTMLButtonElement>document.getElementById('denyButton');
+    allowButton.addEventListener('click', () => this.allowRemoveMotherboard());
+    denyButton.addEventListener('click', this.denyRemoveComponent);
+
+    this.appearanceService.customQuestion('Вы действительно хотите удалить материнскую плату?');
+  }
+
+  allowRemoveMotherboard(): void {
+    let question = document.getElementById("question");
+    question!.style.display = "none";
+    let allowButton = <HTMLButtonElement>document.getElementById('allowButton');
+    allowButton.removeEventListener('click', allowButton.eventListeners!('click').pop()!);
+
+    this.componentManagementService.deleteMotherboard(this.deletedMotherboardId).subscribe(
       (response: void) => {
-        this.getMotherboardsByName(this.searchWord);
-        this.showObject = 0;
+        this.onSearchComponent(this.searchWord);
+        if (this.showObject != 2) {
+          this.showObject = 0;
+        }
         this.appearanceService.customAlert('Успешно удалено!');
       },
       (error: HttpErrorResponse) => {
@@ -411,10 +434,28 @@ export class ComponentManagementComponent implements OnInit {
   }
 
   public onRemoveCPU(id: number): void {
-    this.componentManagementService.deleteCPU(id).subscribe(
+    this.deletedCPUId = id;
+
+    let allowButton = <HTMLButtonElement>document.getElementById('allowButton');
+    let denyButton = <HTMLButtonElement>document.getElementById('denyButton');
+    allowButton.addEventListener('click', () => this.allowRemoveCPU());
+    denyButton.addEventListener('click', this.denyRemoveComponent);
+
+    this.appearanceService.customQuestion('Вы действительно хотите удалить процессор?');
+  }
+
+  allowRemoveCPU(): void {
+    let question = document.getElementById("question");
+    question!.style.display = "none";
+    let allowButton = <HTMLButtonElement>document.getElementById('allowButton');
+    allowButton.removeEventListener('click', allowButton.eventListeners!('click').pop()!);
+
+    this.componentManagementService.deleteCPU(this.deletedCPUId).subscribe(
       (response: void) => {
-        this.getCPUsByName(this.searchWord);
-        this.showObject = 0;
+        this.onSearchComponent(this.searchWord);
+        if (this.showObject != 3) {
+          this.showObject = 0;
+        }
         this.appearanceService.customAlert('Успешно удалено!');
       },
       (error: HttpErrorResponse) => {
@@ -525,10 +566,28 @@ export class ComponentManagementComponent implements OnInit {
   }
 
   public onRemoveGPU(id: number): void {
-    this.componentManagementService.deleteGPU(id).subscribe(
+    this.deletedGPUId = id;
+
+    let allowButton = <HTMLButtonElement>document.getElementById('allowButton');
+    let denyButton = <HTMLButtonElement>document.getElementById('denyButton');
+    allowButton.addEventListener('click', () => this.allowRemoveGPU());
+    denyButton.addEventListener('click', this.denyRemoveComponent);
+
+    this.appearanceService.customQuestion('Вы действительно хотите удалить видеокарту?');
+  }
+
+  allowRemoveGPU(): void {
+    let question = document.getElementById("question");
+    question!.style.display = "none";
+    let allowButton = <HTMLButtonElement>document.getElementById('allowButton');
+    allowButton.removeEventListener('click', allowButton.eventListeners!('click').pop()!);
+
+    this.componentManagementService.deleteGPU(this.deletedGPUId).subscribe(
       (response: void) => {
-        this.getGPUsByName(this.searchWord);
-        this.showObject = 0;
+        this.onSearchComponent(this.searchWord);
+        if (this.showObject != 4) {
+          this.showObject = 0;
+        }
         this.appearanceService.customAlert('Успешно удалено!');
       },
       (error: HttpErrorResponse) => {
@@ -589,10 +648,28 @@ export class ComponentManagementComponent implements OnInit {
   }
 
   public onRemoveRAM(id: number): void {
-    this.componentManagementService.deleteRAM(id).subscribe(
+    this.deletedRAMId = id;
+
+    let allowButton = <HTMLButtonElement>document.getElementById('allowButton');
+    let denyButton = <HTMLButtonElement>document.getElementById('denyButton');
+    allowButton.addEventListener('click', () => this.allowRemoveRAM());
+    denyButton.addEventListener('click', this.denyRemoveComponent);
+
+    this.appearanceService.customQuestion('Вы действительно хотите удалить оперативную память?');
+  }
+
+  allowRemoveRAM(): void {
+    let question = document.getElementById("question");
+    question!.style.display = "none";
+    let allowButton = <HTMLButtonElement>document.getElementById('allowButton');
+    allowButton.removeEventListener('click', allowButton.eventListeners!('click').pop()!);
+
+    this.componentManagementService.deleteRAM(this.deletedRAMId).subscribe(
       (response: void) => {
-        this.getRAMsByName(this.searchWord);
-        this.showObject = 0;
+        this.onSearchComponent(this.searchWord);
+        if (this.showObject != 5) {
+          this.showObject = 0;
+        }
         this.appearanceService.customAlert('Успешно удалено!');
       },
       (error: HttpErrorResponse) => {
@@ -612,7 +689,13 @@ export class ComponentManagementComponent implements OnInit {
     );
   }
 
-  // Removing/editing
+  denyRemoveComponent(): void {
+    let question = document.getElementById("question");
+    question!.style.display = "none";
+
+    let denyButton = <HTMLButtonElement>document.getElementById('denyButton');
+    denyButton.removeEventListener('click', denyButton.eventListeners!('click').pop()!);
+  }
 
   public onSearchComponent(name: string): void {
     switch (this.currentForm) {
@@ -641,110 +724,110 @@ export class ComponentManagementComponent implements OnInit {
     else if (this.isAdmin === false)
       this.openHomePage();
     else {
-    // Motherboard
-    this.componentManagementService.getMotherboardChipsetManufacturers().subscribe(
-      (response: string[]) => {
-        this.motherboardChipsetManufacturers = response;
-        this.motherboard.chipsetManufacturer = response[0];
-        this.componentManagementService.getMotherboardSockets(this.motherboard.chipsetManufacturer).subscribe(
-          (response: string[]) => {
-            this.motherboardSockets = response;
-            this.motherboard.socket = response[0];
-            this.componentManagementService.getMotherboardChipsets(this.motherboard.socket).subscribe(
-              (response: string[]) => {
-                this.motherboardChipsets = response;
-                this.motherboard.chipset = response[0];
-              },
-              (error: HttpErrorResponse) => {
-                alert(error.message);
-              }
-            );
-          },
-          (error: HttpErrorResponse) => {
-            alert(error.message);
-          }
-        );
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
-    this.motherboard.name = '';
+      // Motherboard
+      this.componentManagementService.getMotherboardChipsetManufacturers().subscribe(
+        (response: string[]) => {
+          this.motherboardChipsetManufacturers = response;
+          this.motherboard.chipsetManufacturer = response[0];
+          this.componentManagementService.getMotherboardSockets(this.motherboard.chipsetManufacturer).subscribe(
+            (response: string[]) => {
+              this.motherboardSockets = response;
+              this.motherboard.socket = response[0];
+              this.componentManagementService.getMotherboardChipsets(this.motherboard.socket).subscribe(
+                (response: string[]) => {
+                  this.motherboardChipsets = response;
+                  this.motherboard.chipset = response[0];
+                },
+                (error: HttpErrorResponse) => {
+                  alert(error.message);
+                }
+              );
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+      this.motherboard.name = '';
 
-    // CPU
-    this.componentManagementService.getCPUManufacturers().subscribe(
-      (response: string[]) => {
-        this.cpuManufacturers = response;
-        this.cpu.manufacturer = response[0];
-        this.componentManagementService.getCPUSockets(this.cpu.manufacturer).subscribe(
-          (response: string[]) => {
-            this.cpuSockets = response;
-            this.cpu.socket = response[0];
-            this.componentManagementService.getCPUGenerations(this.cpu.socket).subscribe(
-              (response: string[]) => {
-                this.cpuGenerations = response;
-                this.cpu.generation = response[0];
-                this.componentManagementService.getCPUFamilies(this.cpu.generation).subscribe(
-                  (response: string[]) => {
-                    this.cpuFamilies = response;
-                    this.cpu.family = response[0];
-                  },
-                  (error: HttpErrorResponse) => {
-                    alert(error.message);
-                  }
-                );
-              },
-              (error: HttpErrorResponse) => {
-                alert(error.message);
-              }
-            );
-          },
-          (error: HttpErrorResponse) => {
-            alert(error.message);
-          }
-        );
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
-    this.cpu.name = '';
-    this.cpu.voltage = 0.5;
-    this.cpu.frequency = 1;
-    this.cpu.threadsNumber = 0;
-    this.cpu.coresNumber = 1;
+      // CPU
+      this.componentManagementService.getCPUManufacturers().subscribe(
+        (response: string[]) => {
+          this.cpuManufacturers = response;
+          this.cpu.manufacturer = response[0];
+          this.componentManagementService.getCPUSockets(this.cpu.manufacturer).subscribe(
+            (response: string[]) => {
+              this.cpuSockets = response;
+              this.cpu.socket = response[0];
+              this.componentManagementService.getCPUGenerations(this.cpu.socket).subscribe(
+                (response: string[]) => {
+                  this.cpuGenerations = response;
+                  this.cpu.generation = response[0];
+                  this.componentManagementService.getCPUFamilies(this.cpu.generation).subscribe(
+                    (response: string[]) => {
+                      this.cpuFamilies = response;
+                      this.cpu.family = response[0];
+                    },
+                    (error: HttpErrorResponse) => {
+                      alert(error.message);
+                    }
+                  );
+                },
+                (error: HttpErrorResponse) => {
+                  alert(error.message);
+                }
+              );
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+      this.cpu.name = '';
+      this.cpu.voltage = 0.5;
+      this.cpu.frequency = 1;
+      this.cpu.threadsNumber = 0;
+      this.cpu.coresNumber = 1;
 
-    // GPU
-    this.componentManagementService.getGPUChipManufacturers().subscribe(
-      (response: string[]) => {
-        this.gpuChipManufacturers = response;
-        this.gpu.chipManufacturer = response[0];
-        this.componentManagementService.getGPUChips(this.gpu.chipManufacturer).subscribe(
-          (response: string[]) => {
-            this.gpuChips = response;
-            this.gpu.chip = response[0];
-          },
-          (error: HttpErrorResponse) => {
-            alert(error.message);
-          }
-        );
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
-    this.gpu.name = '';
-    this.gpu.memoryCapacity = 1;
-    this.gpu.coreFrequency = 1000;
-    this.gpu.memoryFrequency = 1000;
-    this.gpu.voltage = 0.5;
+      // GPU
+      this.componentManagementService.getGPUChipManufacturers().subscribe(
+        (response: string[]) => {
+          this.gpuChipManufacturers = response;
+          this.gpu.chipManufacturer = response[0];
+          this.componentManagementService.getGPUChips(this.gpu.chipManufacturer).subscribe(
+            (response: string[]) => {
+              this.gpuChips = response;
+              this.gpu.chip = response[0];
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+      this.gpu.name = '';
+      this.gpu.memoryCapacity = 1;
+      this.gpu.coreFrequency = 1000;
+      this.gpu.memoryFrequency = 1000;
+      this.gpu.voltage = 0.5;
 
-    // RAM
-    this.ram.name = '';
-    this.ram.capacity = 1;
-    this.ram.frequency = 2133;
-    this.ram.voltage = 0.5;
-    this.ram.timings = '40-40-40-60';
+      // RAM
+      this.ram.name = '';
+      this.ram.capacity = 1;
+      this.ram.frequency = 2133;
+      this.ram.voltage = 0.5;
+      this.ram.timings = '40-40-40-60';
     }
   }
 
@@ -752,8 +835,7 @@ export class ComponentManagementComponent implements OnInit {
     this.router.navigate(['/authorization']);
   }
 
-  openHomePage(): void{
+  openHomePage(): void {
     this.router.navigate(['/home']);
   }
-
 }

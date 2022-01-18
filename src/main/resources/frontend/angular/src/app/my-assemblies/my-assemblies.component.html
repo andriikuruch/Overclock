@@ -9,7 +9,7 @@
     </thead>
     <tbody>
     <tr style="font-size: 2.2em;" *ngFor="let assembly of myAssemblies">
-      <td style="border-right: 2px solid black; padding-left: 1.8%;" width="30%">{{myAssemblies.length + 1 - (myAssemblies.length - myAssemblies.indexOf(assembly))}}. {{assembly.name}}</td>
+      <td style="border-right: 2px solid black; padding-left: 1.8%;" width="30%">{{myAssemblies.length + 1 - (myAssemblies.length - myAssemblies.indexOf(assembly))}}. <a [routerLink]="['/assembly/'+assembly.id]" class="link">{{assembly.name}}</a></td>
       <td style="border-right: 2px solid black; text-align: center;" width="16%">{{assembly.score}}</td>
       <td align="center" width="25%">
         <button type="button" (click)="onTestAssembly(assembly.id)" style="height: 2.7em;">Тест</button>

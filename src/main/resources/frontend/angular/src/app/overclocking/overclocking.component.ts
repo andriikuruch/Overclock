@@ -50,8 +50,8 @@ export class OverclockingComponent implements OnInit {
 
   public patternTimings = /(([1-3]\d-)|(40-)){3}(([2-5]\d)|(60))/;
 
-  isLoggedIn : boolean = false;
-  isAdmin : boolean = false;
+  isLoggedIn: boolean = false;
+  isAdmin: boolean = false;
 
   constructor(
     private overclockingService: OverclockingService,
@@ -60,7 +60,7 @@ export class OverclockingComponent implements OnInit {
     private router: Router, activateRoute: ActivatedRoute,
     private dataSharingService: DataSharingService) {
 
-    this.dataSharingService.isLoggedIn.subscribe( value => {
+    this.dataSharingService.isLoggedIn.subscribe(value => {
       this.isLoggedIn = value;
     });
     this.dataSharingService.isAdmin.subscribe(value => {
@@ -104,6 +104,16 @@ export class OverclockingComponent implements OnInit {
     );
   }
 
+  public deleteOverclockByAssemblyId(): void {
+    this.overclockingService.deleteOverclockByAssemblyId(this.assemblyId).subscribe(
+      (response: void) => {
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
+
   public updateOverclock(newOverclock: Overclock): void {
     this.overclockingService.updateOverclock(newOverclock).subscribe(
       (response: void) => {
@@ -125,6 +135,8 @@ export class OverclockingComponent implements OnInit {
   }
 
   public onReset(): void {
+    this.deleteOverclockByAssemblyId();
+    this.assembly.overclock = null!;
     this.getDefaultValues();
   }
 

@@ -4,6 +4,7 @@ import {Assembly} from "../entities/assembly";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
 import { DataSharingService } from '../service/datasharing.service';
+import {AppearanceService} from "../service/appearance.service";
 
 @Component({
   selector: 'app-my-assemblies',
@@ -14,8 +15,13 @@ export class MyAssembliesComponent implements OnInit {
 
   myAssemblies: Assembly[] = [];
 
-  constructor(private myAssembliesService: MyAssembliesService, private router: Router, private dataSharingService: DataSharingService) {
-    this.dataSharingService.isLoggedIn.subscribe( value => {
+  private deletedAssemblyId: number = 0;
+
+  constructor(private myAssembliesService: MyAssembliesService,
+              private router: Router,
+              private dataSharingService: DataSharingService,
+              private appearanceService: AppearanceService) {
+    this.dataSharingService.isLoggedIn.subscribe(value => {
       this.isLoggedIn = value;
     });
     this.dataSharingService.isAdmin.subscribe(value => {
@@ -23,8 +29,8 @@ export class MyAssembliesComponent implements OnInit {
     })
   }
 
-  isLoggedIn : boolean = false;
-  isAdmin : boolean = false;
+  isLoggedIn: boolean = false;
+  isAdmin: boolean = false;
 
   public getAssemblies(): void {
     this.myAssembliesService.getAll().subscribe(
@@ -46,7 +52,31 @@ export class MyAssembliesComponent implements OnInit {
   }
 
   public onDeleteAssembly(assemblyId: number): void {
-    this.myAssembliesService.delete(assemblyId).subscribe(
+    this.deletedAssemblyId = assemblyId;
+    let assemblyName;
+    for (let i = 0; i < this.myAssemblies.length; i++) {
+      if (this.myAssemblies[i].id == assemblyId) {
+        assemblyName = this.myAssemblies[i].name;
+        break;
+      }
+    }
+
+    let allowButton = <HTMLButtonElement>document.getElementById('allowButton');
+    let denyButton = <HTMLButtonElement>document.getElementById('denyButton');
+    allowButton.addEventListener('click', () => this.allowDeleteAssembly());
+    denyButton.addEventListener('click', this.denyDeleteAssembly);
+
+    this.appearanceService.customQuestion('Вы действительно хотите удалить сборку ' + assemblyName + '?');
+  }
+
+  allowDeleteAssembly(): void {
+    let question = document.getElementById("question");
+    question!.style.display = "none";
+
+    let allowButton = <HTMLButtonElement>document.getElementById('allowButton');
+    allowButton.removeEventListener('click', allowButton.eventListeners!('click').pop()!);
+
+    this.myAssembliesService.delete(this.deletedAssemblyId).subscribe(
       (response: void) => {
         this.getAssemblies();
       },
@@ -54,6 +84,14 @@ export class MyAssembliesComponent implements OnInit {
         alert(error.message);
       }
     );
+  }
+
+  denyDeleteAssembly(): void {
+    let question = document.getElementById("question");
+    question!.style.display = "none";
+
+    let denyButton = <HTMLButtonElement>document.getElementById('denyButton');
+    denyButton.removeEventListener('click', denyButton.eventListeners!('click').pop()!);
   }
 
   public onAddAssembly() {

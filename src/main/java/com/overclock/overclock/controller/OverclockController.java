@@ -5,13 +5,7 @@ import com.overclock.overclock.service.OverclockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
 
@@ -40,6 +34,12 @@ public class OverclockController {
     @PutMapping("/overclock/{overclock_id}")
     public ResponseEntity<?> updateOverclock(@RequestBody Overclock newOverclock, @PathVariable("overclock_id") BigInteger id) {
         overclockService.update(id, newOverclock);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/overclock/{assembly_id}")
+    public ResponseEntity<?> deleteOverclockByAssemblyId(@PathVariable("assembly_id") BigInteger id) {
+        overclockService.deleteByAssemblyId(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 }
