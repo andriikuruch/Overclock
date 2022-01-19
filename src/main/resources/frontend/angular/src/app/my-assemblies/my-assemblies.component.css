@@ -25,3 +25,17 @@ a.link {
   text-decoration: none;
   color: #DFDFDF;
 }
+
+#paginationControls {
+  text-align: center;
+}
+
+pagination-controls ::ng-deep ul > li:not(.active) > a {
+  background-color: #8000ff !important;
+  color: #DFDFDF !important;
+}
+
+pagination-controls ::ng-deep ul > li {
+  background-color: #2e0e4f !important;
+  color: #DFDFDF !important;
+}

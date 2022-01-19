@@ -232,44 +232,68 @@
 
   <div *ngIf="showObject==2">
     <div *ngIf="findMotherboards.length>0">
-      <div *ngFor="let motherboard of findMotherboards">
+      <div *ngFor="let motherboard of findMotherboards | paginate: config">
         {{findMotherboards.length + 1 - (findMotherboards.length - findMotherboards.indexOf(motherboard))}}. {{motherboard.name}}
         <button type="button" (click)="onEditingMotherboard(motherboard.id!)">Редактировать</button>
         <button type="button" (click)="onRemoveMotherboard(motherboard.id!)">Удалить</button>
       </div>
+    </div>
+    <div class="paginationControls" *ngIf="findMotherboards.length>0">
+      <pagination-controls class = "pagination-buttons"
+                           (pageChange)="pageChanged($event)"
+                           previousLabel=""
+                           nextLabel=""></pagination-controls>
     </div>
     <div *ngIf="findMotherboards.length==0">Не найдено!</div>
   </div>
 
   <div *ngIf="showObject==3">
     <div *ngIf="findCPUs.length>0">
-      <div *ngFor="let cpu of findCPUs">
+      <div *ngFor="let cpu of findCPUs | paginate: config">
         {{findCPUs.length + 1 - (findCPUs.length - findCPUs.indexOf(cpu))}}. {{cpu.name}}
         <button type="button" (click)="onEditingCPU(cpu.id!)">Редактировать</button>
         <button type="button" (click)="onRemoveCPU(cpu.id!)">Удалить</button>
       </div>
+    </div>
+    <div class="paginationControls" *ngIf="findCPUs.length>0">
+      <pagination-controls class = "pagination-buttons"
+                           (pageChange)="pageChanged($event)"
+                           previousLabel=""
+                           nextLabel=""></pagination-controls>
     </div>
     <div *ngIf="findCPUs.length==0">Не найдено!</div>
   </div>
 
   <div *ngIf="showObject==4">
     <div *ngIf="findGPUs.length>0">
-      <div *ngFor="let gpu of findGPUs">
+      <div *ngFor="let gpu of findGPUs | paginate: config">
         {{findGPUs.length + 1 - (findGPUs.length - findGPUs.indexOf(gpu))}}. {{gpu.name}}
         <button type="button" (click)="onEditingGPU(gpu.id!)">Редактировать</button>
         <button type="button" (click)="onRemoveGPU(gpu.id!)">Удалить</button>
       </div>
+    </div>
+    <div class="paginationControls" *ngIf="findGPUs.length>0">
+      <pagination-controls class = "pagination-buttons"
+                           (pageChange)="pageChanged($event)"
+                           previousLabel=""
+                           nextLabel=""></pagination-controls>
     </div>
     <div *ngIf="findGPUs.length==0">Не найдено!</div>
   </div>
 
   <div *ngIf="showObject==5">
     <div *ngIf="findRAMs.length>0">
-      <div *ngFor="let ram of findRAMs">
+      <div *ngFor="let ram of findRAMs | paginate: config">
         {{findRAMs.length + 1 - (findRAMs.length - findRAMs.indexOf(ram))}}. {{ram.name}}
         <button type="button" (click)="onEditingRAM(ram.id!)">Редактировать</button>
         <button type="button" (click)="onRemoveRAM(ram.id!)">Удалить</button>
       </div>
+    </div>
+    <div class="paginationControls" *ngIf="findRAMs.length>0">
+      <pagination-controls class = "pagination-buttons"
+                           (pageChange)="pageChanged($event)"
+                           previousLabel=""
+                           nextLabel=""></pagination-controls>
     </div>
     <div *ngIf="findRAMs.length==0">Не найдено!</div>
   </div>

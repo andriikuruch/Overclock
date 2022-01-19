@@ -32,6 +32,11 @@ export class MyAssembliesComponent implements OnInit {
   isLoggedIn: boolean = false;
   isAdmin: boolean = false;
 
+  config = {
+    itemsPerPage: 8,
+    currentPage: 1
+  };
+
   public getAssemblies(): void {
     this.myAssembliesService.getAll().subscribe(
       (response: Assembly[]) => {
@@ -79,6 +84,7 @@ export class MyAssembliesComponent implements OnInit {
     this.myAssembliesService.delete(this.deletedAssemblyId).subscribe(
       (response: void) => {
         this.getAssemblies();
+        this.appearanceService.customAlert('Сборка удалена!');
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -104,6 +110,10 @@ export class MyAssembliesComponent implements OnInit {
 
   openHomePage(): void {
     this.router.navigate(['/home']);
+  }
+
+  pageChanged(event : any) : any {
+    this.config.currentPage = event;
   }
 
   ngOnInit() {

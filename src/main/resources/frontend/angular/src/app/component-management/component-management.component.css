@@ -38,3 +38,17 @@ select{
   width: 36%;
   color: black;
 }
+
+.paginationControls {
+  font-size: 0.5em;
+}
+
+pagination-controls ::ng-deep ul > li:not(.active) > a {
+  background-color: #8000ff !important;
+  color: #DFDFDF !important;
+}
+
+pagination-controls ::ng-deep ul > li {
+  background-color: #2e0e4f !important;
+  color: #DFDFDF !important;
+}

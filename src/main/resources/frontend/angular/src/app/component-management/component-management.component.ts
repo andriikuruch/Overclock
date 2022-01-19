@@ -87,6 +87,11 @@ export class ComponentManagementComponent implements OnInit {
   isLoggedIn: boolean = false;
   isAdmin: boolean = false;
 
+  config = {
+    itemsPerPage: 8,
+    currentPage: 1
+  };
+
   constructor(private componentManagementService: ComponentManagementService, private router: Router,
               private appearanceService: AppearanceService, private dataSharingService: DataSharingService) {
     this.dataSharingService.isLoggedIn.subscribe(value => {
@@ -100,6 +105,7 @@ export class ComponentManagementComponent implements OnInit {
   }
 
   public onSelectAction(type: any): void {
+    this.config.currentPage = 1;
     switch (type.target.value) {
       case 'Добавление':
         this.ngOnInit();
@@ -114,6 +120,7 @@ export class ComponentManagementComponent implements OnInit {
   }
 
   public onSelectType(type: any): void {
+    this.config.currentPage = 1;
     if (this.currentAction == 1) {
       this.showObject = 0;
     }
@@ -698,6 +705,7 @@ export class ComponentManagementComponent implements OnInit {
   }
 
   public onSearchComponent(name: string): void {
+    this.config.currentPage = 1;
     switch (this.currentForm) {
       case 0:
         this.getMotherboardsByName(name);
@@ -716,6 +724,10 @@ export class ComponentManagementComponent implements OnInit {
         this.showObject = 5;
         break;
     }
+  }
+
+  pageChanged(event : any) : any {
+    this.config.currentPage = event;
   }
 
   ngOnInit(): void {
