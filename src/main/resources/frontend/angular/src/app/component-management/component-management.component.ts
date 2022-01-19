@@ -829,6 +829,13 @@ export class ComponentManagementComponent implements OnInit {
       this.ram.voltage = 0.5;
       this.ram.timings = '40-40-40-60';
     }
+    let li = (<HTMLLIElement>document.getElementById("components"));
+    li.style.textDecoration = "underline"
+  }
+
+  ngOnDestroy(): void {
+    let li = (<HTMLLIElement>document.getElementById("components"));
+    li.style.textDecoration = "none";
   }
 
   openAuthorization(): void {

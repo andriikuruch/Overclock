@@ -41,7 +41,7 @@
 }
 
 #text {
-  padding: 2%;
+  padding-left: 2%;
 }
 
 .info {
@@ -55,3 +55,14 @@
 img {
   width: 400px;
 }
+
+input {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+button {
+  margin-bottom: 2%;
+}
+
+
